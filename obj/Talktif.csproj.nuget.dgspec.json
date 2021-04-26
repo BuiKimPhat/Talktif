@@ -1,26 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "F:\\School\\Projects\\PBL 3\\Talktif\\Talktif.csproj": {}
+    "D:\\PBL3\\Talktif\\Talktif.csproj": {}
   },
   "projects": {
-    "F:\\School\\Projects\\PBL 3\\Talktif\\Talktif.csproj": {
+    "D:\\PBL3\\Talktif\\Talktif.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\School\\Projects\\PBL 3\\Talktif\\Talktif.csproj",
+        "projectUniqueName": "D:\\PBL3\\Talktif\\Talktif.csproj",
         "projectName": "Talktif",
-        "projectPath": "F:\\School\\Projects\\PBL 3\\Talktif\\Talktif.csproj",
-        "packagesPath": "C:\\Users\\Phat\\.nuget\\packages\\",
-        "outputPath": "F:\\School\\Projects\\PBL 3\\Talktif\\obj\\",
+        "projectPath": "D:\\PBL3\\Talktif\\Talktif.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "D:\\PBL3\\Talktif\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Phat\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -31,6 +26,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -42,6 +38,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -60,7 +57,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
