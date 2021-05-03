@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Talktif\\Talktif\\Talktif.csproj": {}
+    "D:\\PBL3\\Talktif\\Talktif.csproj": {}
   },
   "projects": {
-    "E:\\Talktif\\Talktif\\Talktif.csproj": {
+    "D:\\PBL3\\Talktif\\Talktif.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Talktif\\Talktif\\Talktif.csproj",
+        "projectUniqueName": "D:\\PBL3\\Talktif\\Talktif.csproj",
         "projectName": "Talktif",
-        "projectPath": "E:\\Talktif\\Talktif\\Talktif.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "E:\\Talktif\\Talktif\\obj\\",
+        "projectPath": "D:\\PBL3\\Talktif\\Talktif.csproj",
+        "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+        "outputPath": "D:\\PBL3\\Talktif\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -43,6 +39,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.AspNet.WebApi.Client": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -61,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -78,12 +78,12 @@
     <div id="wrapper" class="collapse cont">
         <div class="form sign-in">
             <h2>Sign In</h2>
-            <form action="/dashboard.html" method="POST" class="form_user">
-                <input id="login_email" type="email" name="email" placeholder="Email Address" value="" oninput="CheckEmail(event)" />
+            <form action="/Login/Sign_In" method="post" class="form_user">
+                <input id="login_email" type="email" name="Email" placeholder="Email Address" value="" oninput="CheckEmail(event)" />
                 <div id="error_email" class="text-center"></div>
                 <input id="login_password" type="password" name="password" placeholder="Password" value="" oninput="CheckPassword(event)" />
                 <div id="error_password" class="text-center"></div>
-                <button type="submit" id="btnDangNhap" class="submit" type="button" onclick="Sign_In(event)">
+                <button type="submit" id="btnDangNhap" class="submit" type="button" >
             Sign In
           </button>
             </form>
@@ -119,16 +119,16 @@
             </div>
             <div class="form sign-up">
                 <h2>Sign Up</h2>
-                <form action="" method="POST" id="form_login">
-                    <input id="name" type="text" placeholder="Name" oninput="CheckName(event)" />
+                <form action="/Login/Sign_Up" method="post" id="form_login">
+                    <input id="name" type="text" name="Name" placeholder="Name" oninput="CheckName(event)" />
                     <div id="error_name" class="text-center"></div>
-                    <input id="email" type="email" placeholder="Email" oninput="CheckEmail_SignUp(event)" />
+                    <input id="email" type="email" name = "Email" placeholder="Email" oninput="CheckEmail_SignUp(event)" />
                     <div id="error_email_sign_up" class="text-center"></div>
-                    <input id="password" type="password" placeholder="Password" oninput="CheckPassword_SignUp()" />
+                    <input id="password" type="password" name = "Password" placeholder="Password" oninput="CheckPassword_SignUp()" />
                     <div id="error_password_sign_up" class="text-center"></div>
                     <input id="confirm_password" type="password" placeholder="Confirm Password" oninput="CheckConfirmPassword(event)" />
                     <div id="error_confirm_password" class="text-center"></div>
-                    <button id="Confirm_SignIn" type="button" class="submit submit_sign_up" data-toggle="collapse" aria-expanded="false" onclick="Sign_Up()">
+                    <button id="Confirm_SignIn" type="submit" class="submit submit_sign_up" data-toggle="collapse" aria-expanded="false" >
               Sign Up Now
             </button>
                 </form>
