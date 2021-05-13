@@ -20,9 +20,9 @@ namespace Program.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(User_Infor data)
+        public IActionResult Index()
         {
-            return View(data);
+            return View(Repo.Instance.data);
         }
 
         public IActionResult Privacy()

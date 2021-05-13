@@ -33,9 +33,9 @@ namespace Program.Controllers
                 string a = loginResult.Content.ReadAsStringAsync().Result;
                 Repo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
                 
-                //Repo.Instance.ShowInformation();
+                Repo.Instance.ShowInformation();
                 
-                return RedirectToAction("Index","Home",Repo.Instance.data);
+                return RedirectToAction("Index","Home");
             }
             return RedirectToAction("Login");
         }
