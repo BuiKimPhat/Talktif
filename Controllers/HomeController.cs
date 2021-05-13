@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Program.Models;
+using Program.Repository;
 
 namespace Program.Controllers
 {
@@ -18,9 +19,10 @@ namespace Program.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(User_Infor data)
         {
-            return View();
+            return View(data);
         }
 
         public IActionResult Privacy()
