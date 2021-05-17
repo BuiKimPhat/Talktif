@@ -14407,6 +14407,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\User\\Home.cshtml",
+      "TargetPath": "Views\\User\\Home.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\PBL3\\Talktif\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
@@ -14419,6 +14424,11 @@
     {
       "FilePath": "d:\\PBL3\\Talktif\\Views\\Shared\\Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\Admin\\Home.cshtml",
+      "TargetPath": "Views\\Admin\\Home.cshtml",
       "FileKind": "mvc"
     },
     {

@@ -22,8 +22,29 @@ namespace Program.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(Repo.Instance.data);
-        }
+            if(Repo.Instance.data == null)
+            {
+                Repo.Instance.data = new User_Infor();
+                return RedirectToAction("Login","Login");
+            } 
+            //return View(Repo.Instance.data);
+            if(Repo.Instance.data.isAdmin == false) return RedirectToAction("Home","User");
+            else return RedirectToAction("Home","Admin");
+        } 
+        
+        // [HttpGet]
+        // [Route("VerifyEmail")]
+        // public IActionResult VerifyEmail(int id,string token)
+        // {
+        //     try{
+        //         Console.WriteLine(id+ " "+token);
+        //         Repo.Instance.VertifyEmail(id,token);
+        //         return RedirectToAction("Login","Login"); 
+        //     }catch (Exception e){
+        //         Console.WriteLine(e.Message);
+        //         return RedirectToAction("Login","Login");
+        //     }
+        // }
 
         public IActionResult Privacy()
         {

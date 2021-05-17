@@ -77,3 +77,5 @@ D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.cshtml.g.cs
 D:\PBL3\Talktif\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 D:\PBL3\Talktif\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\PBL3\Talktif\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\User\Home.cshtml.g.cs
+D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Home.cshtml.g.cs

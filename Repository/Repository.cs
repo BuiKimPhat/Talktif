@@ -1,14 +1,13 @@
 using System;
 using System.Net.Http;
 using Program.Models;
+using Talktif.Models;
 
 namespace Program.Repository
 {
     public class Repo
     {
         public User_Infor data { get; set; }
-
-        private const string UriString = "http://localhost:4000/";
         private static Repo _Instance;
         public static Repo Instance {
             get 
@@ -16,12 +15,13 @@ namespace Program.Repository
                 if(_Instance == null)
                 {
                     _Instance = new Repo();
-                    _Instance.data = new User_Infor();
+                    //_Instance.data = new User_Infor();
                 } 
                 return _Instance;
             }
             private set { }
         }
+        private const string UriString = "https://talktifapi.azurewebsites.net/";
         public HttpResponseMessage Sign_In(LoginRequest lr){
             using(var client = new HttpClient())
             {
@@ -47,10 +47,22 @@ namespace Program.Repository
                 return SignUpResult;
             }
         }
+        public HttpResponseMessage VertifyEmail(int id, string token)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);var vertify = client.PostAsJsonAsync("api/Users/VertifyEmail",
+                                                                                            new VertifyEmailRequest { Id = id, Token = token });
+                vertify.Wait();
+                var SignUpResult = vertify.Result;
+                return SignUpResult;
+            }
+        }
+
         public void ShowInformation()
         {
-            Console.WriteLine("ID= {0}\nName= {1}\nEmail= {2}\nGender= {3}\nHobbies= {4}\nToken= {5}",
-            data.id,data.name,data.email,data.gender,data.hobbies,data.token);
+            Console.WriteLine("ID= {0}\nName= {1}\nEmail= {2}\nGender= {3}\nisAdmin= {4}\nisActive= {5}\nHobbies= {6}\nToken= {7}",
+            data.id,data.name,data.email,data.gender,data.isAdmin,data.isActive,data.hobbies,data.token);
         }
     }
 }

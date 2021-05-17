@@ -29,11 +29,12 @@ namespace Program.Controllers
         {
             LoginRequest lr = new LoginRequest(){Email = form["Email"].ToString(),Password = form["Password"].ToString(),Device = "LAPTOP-2T731P5F"};
             var loginResult = Repo.Instance.Sign_In(lr);
+            
             if(loginResult.IsSuccessStatusCode){
                 string a = loginResult.Content.ReadAsStringAsync().Result;
                 Repo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
                 
-                Repo.Instance.ShowInformation();
+                //Repo.Instance.ShowInformation();
                 
                 return RedirectToAction("Index","Home");
             }
@@ -52,11 +53,12 @@ namespace Program.Controllers
                 Device = "local address",
             };
             var signUpResult = Repo.Instance.Sign_Up(sr);
+            Console.WriteLine(signUpResult.Content.ReadAsStringAsync().Result);
             if(signUpResult.IsSuccessStatusCode)
             {
                 string a = signUpResult.Content.ReadAsStringAsync().Result;
                 Repo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
-                return RedirectToAction("Privacy","Home");
+                return RedirectToAction("Index","Home");
             }
             return RedirectToAction("Login");
         }
