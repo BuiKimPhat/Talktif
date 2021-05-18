@@ -1,25 +1,8 @@
-﻿@model global::Talktif.Models.ViewModel;
+@model global::Talktif.Models.ViewModel;
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Chat";
 }
 
-@if (Model == null)
-{
-    @using(Html.BeginForm("Index", "Home" ,FormMethod.Post)){
-    <form class="container">
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-2">User ID</div>
-            <div class="col-2">@Html.TextBoxFor(m => m.UserID)</div>
-        </div>
-        <div class="row">
-            <div class="col-2"><input type="submit" id="displayBtn" value="Display" /></div>
-        </div>
-    </form>
-    }
-}
-else
-{
     <h3 id="roomID">@Model.RoomID</h3>
     <form class="container">
         <div class="row">&nbsp;</div>
@@ -35,7 +18,7 @@ else
         @foreach (var item in Model.UserFavs)
         {
             <div class="m-2">
-                @using(Html.BeginForm("Index", "Home", new {userID = Model.UserID , toID = item.ID} ,FormMethod.Post)){
+                @using(Html.BeginForm("Chat", "Home", new {fromID = Model.UserID , toID = item.ID} ,FormMethod.Post)){
                 <button name="chatUser" class="btn btn-success" value=@item.ID>@item.ToString()</button>
                 }
             </div>
