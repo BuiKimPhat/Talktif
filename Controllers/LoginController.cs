@@ -27,9 +27,9 @@ namespace Program.Controllers
         [HttpPost]
         public IActionResult Sign_In(IFormCollection form)
         {
-            LoginRequest lr = new LoginRequest(){Email = form["Email"].ToString(),Password = form["Password"].ToString(),Device = "LAPTOP-2T731P5F"};
+            LoginRequest lr = new LoginRequest(){Email = form["Email"].ToString(),Password = form["Password"].ToString(),Device = (System.Environment.MachineName).ToString()};
             var loginResult = Repo.Instance.Sign_In(lr);
-            
+            Console.WriteLine(loginResult);
             if(loginResult.IsSuccessStatusCode){
                 string a = loginResult.Content.ReadAsStringAsync().Result;
                 Repo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
@@ -48,12 +48,11 @@ namespace Program.Controllers
                 Email = form["Email"].ToString(),
                 Password = form["Password"].ToString(),
                 Gender = true,
-                Address = "Viet Nam",
+                CityId = 49,
                 Hobbies = "hook up",
-                Device = "local address",
+                Device = System.Environment.MachineName,
             };
             var signUpResult = Repo.Instance.Sign_Up(sr);
-            Console.WriteLine(signUpResult.Content.ReadAsStringAsync().Result);
             if(signUpResult.IsSuccessStatusCode)
             {
                 string a = signUpResult.Content.ReadAsStringAsync().Result;
@@ -61,6 +60,10 @@ namespace Program.Controllers
                 return RedirectToAction("Index","Home");
             }
             return RedirectToAction("Login");
+        }
+        public IActionResult ForgotPass()
+        {
+            return View();
         }
     }
 }

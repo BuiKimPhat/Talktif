@@ -24,6 +24,10 @@ namespace Program.Controllers
             //if(Repo.Instance.data.isAdmin == true) return NotFound();
             return View(Repo.Instance.data);
         }
+        public IActionResult History()
+        {
+            return View(Repo.Instance.data);
+        }
         [HttpPost]
         public IActionResult Home(IFormCollection formCollection)
         {

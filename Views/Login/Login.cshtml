@@ -84,10 +84,11 @@
                 <input id="login_password" type="password" name="password" placeholder="Password" value="" oninput="CheckPassword(event)" />
                 <div id="error_password" class="text-center"></div>
                 <button type="submit" id="btnDangNhap" class="submit" type="button" >
-            Sign In
-          </button>
+                    Sign In
+                </button>
             </form>
-            <p class="forgot-pass">Forgot Password ?</p>
+            <p class="forgot-pass"><a asp-controller="Login" asp-action="ForgotPass">Forgot Password ?</a></p>
+            
 
             <div class="social-media">
                 <ul>

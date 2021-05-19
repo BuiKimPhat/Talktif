@@ -14412,6 +14412,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\Login\\ForgotPass.cshtml",
+      "TargetPath": "Views\\Login\\ForgotPass.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\PBL3\\Talktif\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
@@ -14447,8 +14452,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\User\\History.cshtml",
+      "TargetPath": "Views\\User\\History.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\PBL3\\Talktif\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\Shared\\_UserLayoutPage.cshtml",
+      "TargetPath": "Views\\Shared\\_UserLayoutPage.cshtml",
       "FileKind": "mvc"
     }
   ],
