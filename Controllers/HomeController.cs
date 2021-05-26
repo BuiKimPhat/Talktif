@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Program.Models;
-using Program.Repository;
+using Talktif.Models;
+using Talktif.Repository;
 
 namespace Program.Controllers
 {
@@ -24,8 +24,7 @@ namespace Program.Controllers
         {
             if(UserRepo.Instance.data == null)
             {
-                UserRepo.Instance.data = new User_Infor();
-                return RedirectToAction("Login","Login");
+                return RedirectToAction("Index","Login");
             }
             if(UserRepo.Instance.data.isAdmin == false) return RedirectToAction("Home","User");
             else return RedirectToAction("Home","Admin");

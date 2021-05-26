@@ -1,4 +1,4 @@
-namespace Program.Models
+namespace Talktif.Models
 {
     public class ResetPassRequest
     {

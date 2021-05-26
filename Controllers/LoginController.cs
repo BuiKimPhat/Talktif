@@ -5,8 +5,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Program.Models;
-using Program.Repository;
+using Talktif.Models;
+using Talktif.Repository;
 using Newtonsoft.Json;
 
 namespace Program.Controllers
@@ -20,7 +20,7 @@ namespace Program.Controllers
             _logger = logger;
         }
         [HttpGet]
-        public IActionResult Login(MessageRequest m)
+        public IActionResult Index(MessageRequest m)
         {
             return View(m);
         }
@@ -32,6 +32,7 @@ namespace Program.Controllers
             //Console.WriteLine(loginResult);
             string a = loginResult.Content.ReadAsStringAsync().Result;
             if(loginResult.IsSuccessStatusCode){
+                UserRepo.Instance.data = new User_Infor();
                 UserRepo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
                 return RedirectToAction("Index","Home");
             }

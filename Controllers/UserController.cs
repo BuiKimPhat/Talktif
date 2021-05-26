@@ -5,11 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Program.Models;
-using Program.Repository;
+using Talktif.Models;
+using Talktif.Repository;
 using Microsoft.AspNetCore.Http;
 
-namespace Program.Controllers
+namespace Talktif.Controllers
 {
     public class UserController : Controller
     {
@@ -32,7 +32,7 @@ namespace Program.Controllers
         public IActionResult Home(IFormCollection formCollection)
         {
             UserRepo.Instance.data = null;
-            return RedirectToAction("Login","Login");
+            return RedirectToAction("Index","Login");
         }
         public IActionResult Setting()
         {
