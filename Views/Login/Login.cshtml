@@ -1,7 +1,11 @@
 @{
     Layout = null;
 }
-
+@using Program.Models;
+@model MessageRequest;
+@{
+    ViewData["Message"] = (Model != null) ? Model.Message : "";
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,6 +54,7 @@
                         <h2 class="name">Chat App Community</h2>
                         <p>
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi dolorum eligendi.
+                            @ViewData["Message"]
                         </p>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">

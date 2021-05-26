@@ -14407,6 +14407,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\Login\\ResetPasswordEmail.cshtml",
+      "TargetPath": "Views\\Login\\ResetPasswordEmail.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\PBL3\\Talktif\\Views\\User\\Home.cshtml",
       "TargetPath": "Views\\User\\Home.cshtml",
       "FileKind": "mvc"
@@ -14419,6 +14424,11 @@
     {
       "FilePath": "d:\\PBL3\\Talktif\\Views\\Home\\Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\PBL3\\Talktif\\Views\\User\\Setting.cshtml",
+      "TargetPath": "Views\\User\\Setting.cshtml",
       "FileKind": "mvc"
     },
     {

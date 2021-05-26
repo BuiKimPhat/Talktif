@@ -20,8 +20,8 @@ namespace Program.Controllers
         }
         public IActionResult Home()
         {
-            if(Repo.Instance.data.isAdmin != true) return NotFound();
-            return View(Repo.Instance.data);
+            if(UserRepo.Instance.data.isAdmin != true) return NotFound();
+            return View(UserRepo.Instance.data);
         }
     }
 }

@@ -22,17 +22,21 @@ namespace Program.Controllers
         public IActionResult Home()
         {
             //if(Repo.Instance.data.isAdmin == true) return NotFound();
-            return View(Repo.Instance.data);
+            return View(UserRepo.Instance.data);
         }
         public IActionResult History()
         {
-            return View(Repo.Instance.data);
+            return View(UserRepo.Instance.data);
         }
         [HttpPost]
         public IActionResult Home(IFormCollection formCollection)
         {
-            Repo.Instance.data = null;
+            UserRepo.Instance.data = null;
             return RedirectToAction("Login","Login");
+        }
+        public IActionResult Setting()
+        {
+            return View(UserRepo.Instance.data);
         }
     }
 }

@@ -82,3 +82,5 @@ D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\Admin\Home.cshtml.g.cs
 D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\Login\ForgotPass.cshtml.g.cs
 D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_UserLayoutPage.cshtml.g.cs
 D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\User\History.cshtml.g.cs
+D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\User\Setting.cshtml.g.cs
+D:\PBL3\Talktif\obj\Debug\netcoreapp3.1\Razor\Views\Login\ResetPasswordEmail.cshtml.g.cs

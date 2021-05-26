@@ -5,16 +5,16 @@ using Talktif.Models;
 
 namespace Program.Repository
 {
-    public class Repo
+    public class UserRepo
     {
         public User_Infor data { get; set; }
-        private static Repo _Instance;
-        public static Repo Instance {
+        private static UserRepo _Instance;
+        public static UserRepo Instance {
             get 
             {
                 if(_Instance == null)
                 {
-                    _Instance = new Repo();
+                    _Instance = new UserRepo();
                     //_Instance.data = new User_Infor();
                 } 
                 return _Instance;
@@ -32,7 +32,7 @@ namespace Program.Repository
                 
                 var login = client.PostAsJsonAsync("api/Users/SignIn",lr);
                 login.Wait();
-                
+                //Console.WriteLine(login.Result.Content.ReadAsStringAsync().Result);
                 var loginResult = login.Result;
                 return loginResult;
             }
@@ -41,10 +41,34 @@ namespace Program.Repository
         {
             using(var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(UriString);var signUp = client.PostAsJsonAsync("api/Users/SignUp",Sr);
+                client.BaseAddress = new Uri(UriString);
+                var signUp = client.PostAsJsonAsync("api/Users/SignUp",Sr);
                 signUp.Wait();
                 var SignUpResult = signUp.Result;
+                Console.WriteLine(signUp.Result);
                 return SignUpResult;
+            }
+        }
+        public HttpResponseMessage ResetPass(ResetPassRequest r)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                var resetPass = client.PostAsJsonAsync("api/Users/ResetPass",r);
+                resetPass.Wait();
+                var resetPassResult = resetPass.Result;
+                return resetPassResult;
+            }
+        }
+        public HttpResponseMessage ResetPasswordEmail(ResetPassEmailRequest r)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                var resetPasswordEmail = client.PostAsJsonAsync("api/Users/ResetPasswordEmail",r);
+                resetPasswordEmail.Wait();
+                var resetPasswordEmailResult = resetPasswordEmail.Result;
+                return resetPasswordEmailResult;
             }
         }
         public HttpResponseMessage VertifyEmail(int id, string token)
