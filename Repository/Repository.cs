@@ -1,9 +1,8 @@
 using System;
 using System.Net.Http;
-using Program.Models;
 using Talktif.Models;
 
-namespace Program.Repository
+namespace Talktif.Repository
 {
     public class Repo
     {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Talktif.Models;
 using Talktif.Data;
+using Talktif.Repository;
 
 namespace Program.Controllers
 {

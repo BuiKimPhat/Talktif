@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Program.Models;
-using Program.Repository;
+using Talktif.Models;
+using Talktif.Repository;
 using Microsoft.AspNetCore.Http;
 
 namespace Program.Controllers

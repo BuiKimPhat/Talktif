@@ -1,6 +1,6 @@
 using System;
 
-namespace Program.Models
+namespace Talktif.Models
 {
     public class User_Infor
     {

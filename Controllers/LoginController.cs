@@ -5,8 +5,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Program.Models;
-using Program.Repository;
+using Talktif.Models;
+using Talktif.Repository;
 using Newtonsoft.Json;
 
 namespace Program.Controllers
