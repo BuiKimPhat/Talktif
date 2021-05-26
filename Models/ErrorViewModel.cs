@@ -1,6 +1,6 @@
 using System;
 
-namespace Talktif.Models
+namespace Program.Models
 {
     public class ErrorViewModel
     {

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Talktif.Hubs;
 using Talktif.Data;
 
-namespace Talktif
+namespace Program
 {
     public class Startup
     {
@@ -43,7 +43,7 @@ namespace Talktif
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
