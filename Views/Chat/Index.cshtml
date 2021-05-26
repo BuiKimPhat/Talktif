@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Chat";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Chat.css" />
+</head>
+
+<body>
+    <div class="row chat-page">
+        <div class="container mx-auto chat-box">
+            <div class="container chat-content">
+            </div>
+            <div class="container chat-action">
+                <form class="form-inline p-3">
+                    <input class="form-control chat-input mr-auto" type="text" placeholder="Nhập tin nhắn"/>
+                    <button type="submit" class="btn btn-primary ml-auto">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementsByTagName("form")[0].addEventListener("submit", e => {
+            e.preventDefault();
+        });
+    </script>
+</body>

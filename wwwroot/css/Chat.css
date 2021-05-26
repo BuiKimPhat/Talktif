@@ -1,0 +1,23 @@
+.chat-page {
+    height: 70vh;
+    text-align: center;
+}
+.chat-box {
+    height: 100%;
+    max-width: 80vh;
+    border: 2px solid #dddddd;
+    border-radius: 8%;
+    position: relative;
+}
+.chat-action {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.chat-input {
+    border-radius: 30px;
+    width: 75% !important;
+    min-width: 10vw;
+    max-width: 80vw;
+}
