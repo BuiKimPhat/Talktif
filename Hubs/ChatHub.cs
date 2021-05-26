@@ -7,7 +7,7 @@ namespace Talktif.Hubs
     {
         public async Task SendMessage(string user, string groupName, string message)
         {
-            await Clients.Group(groupName).ReceiveMessage(user, message);
+            await Clients.Group(groupName).ReceiveMessage(Context.ConnectionId, message);
         }
         public async Task AddToGroup(string groupName)
         {
