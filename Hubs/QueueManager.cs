@@ -40,11 +40,11 @@ namespace Talktif.Hubs
         }
         public RandomRoom Enqueue(WaitUser usr)
         {
-            RoomManager.Instance.RemoveRoom(usr.ConnectionID);
+            // RoomManager.Instance.RemoveRoom(usr);
             for (int i = 0; i < UserQueue.Count; i++)
             {
                 // TODO: Filter
-                if (true)
+                if (usr.ConnectionID != UserQueue[i].ConnectionID && !usr.SkipID.Contains(UserQueue[i].ConnectionID))
                 {
                     RandomRoom room = RoomManager.Instance.CreateRoom(new WaitUser[] {
                         usr,

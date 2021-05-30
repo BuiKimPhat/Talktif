@@ -2,7 +2,6 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 var userID;
 
-
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
@@ -13,7 +12,10 @@ connection.on("ReceiveMessage", function (user, message) {
     .replace(/>/g, "&gt;");
   // var encodedMsg = user + " says " + msg;
   var span = document.createElement("span");
-  span.className = user != userID ? "msgtext p-2 mr-auto mb-1" : "msgtext-self p-2 ml-auto mb-1";
+  span.className =
+    user != userID
+      ? "msgtext p-2 mr-auto mb-1"
+      : "msgtext-self p-2 ml-auto mb-1";
   span.textContent = msg;
   var div = document.createElement("div");
   div.className = "row w-100 m-0";
@@ -58,6 +60,15 @@ document
     var message = document.getElementById("messageInput").value;
     document.getElementById("messageInput").value = "";
     connection.invoke("SendMessage", message).catch(function (err) {
+      return console.error(err.toString());
+    });
+  });
+
+document
+  .getElementById("skipButton")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    connection.invoke("SkipChat").catch((err) => {
       return console.error(err.toString());
     });
   });

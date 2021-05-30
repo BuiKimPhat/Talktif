@@ -66,20 +66,33 @@ namespace Talktif.Hubs
             RoomList.Add(room);
             return room;
         }
-        public RandomRoom RemoveRoom(string uid)
+        public RandomRoom RemoveRoom(WaitUser user)
         {
             for (int i = 0; i < RoomList.Count; i++)
             {
                 foreach (WaitUser usr in RoomList[i].Members)
                 {
-                    if (usr.ConnectionID == uid)
+                    if (usr.ConnectionID == user.ConnectionID)
                     {
+                        usr.SkipID = user.SkipID;
                         RandomRoom room = RoomList[i];
                         RoomList.RemoveAt(i);
+
+                        // Enqueue room memeber after removal
                         foreach (WaitUser usr1 in room.Members)
                         {
-                            if (usr1.ConnectionID != uid) QueueManager.Instance.Enqueue(usr1);
+                            if (user.SkipID.Count > 0)
+                            {
+                                if (usr1.ConnectionID != user.ConnectionID) QueueManager.Instance.Enqueue(usr1);
+                                else QueueManager.Instance.Enqueue(user);
+                            }
+                            else
+                            {
+                                if (usr1.ConnectionID != user.ConnectionID) QueueManager.Instance.Enqueue(usr1);
+                            }
                         }
+
+                        // return old room before removal
                         return room;
                     }
                 }
