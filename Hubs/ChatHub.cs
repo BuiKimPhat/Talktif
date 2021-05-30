@@ -1,26 +1,44 @@
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using Talktif.Models;
 
 namespace Talktif.Hubs
 {
     public class ChatHub : Hub<IChatClient>
     {
-        public async Task SendMessage(string user, string groupName, string message)
+        public async Task SendMessage(string message)
         {
-            await Clients.Group(groupName).ReceiveMessage(Context.ConnectionId, message);
+            RandomRoom room = RoomManager.Instance.GetRoom(Context.ConnectionId);
+            await Clients.Group(room.ID).ReceiveMessage(Context.ConnectionId, message);
         }
-        public async Task AddToGroup(string groupName)
+        public async Task AddToQueue()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            RandomRoom room = QueueManager.Instance.Enqueue(new WaitUser
+            {
+                ConnectionID = Context.ConnectionId
+            });
 
-            await Clients.Group(groupName).BroadcastMessage($"{Context.ConnectionId} has joined the group {groupName}.");
+            if (room != null)
+            {
+                foreach (WaitUser usr in room.Members)
+                {
+                    await Groups.AddToGroupAsync(usr.ConnectionID, room.ID);
+                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã tham gia phòng chat {room.ID}.");
+                }
+            }
         }
 
-        public async Task RemoveFromGroup(string groupName)
+        public async Task LeaveChat()
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
-
-            await Clients.Group(groupName).BroadcastMessage($"{Context.ConnectionId} has left the group {groupName}.");
+            RandomRoom room = RoomManager.Instance.RemoveRoom(Context.ConnectionId);
+            if (room != null)
+            {
+                foreach (WaitUser usr in room.Members)
+                {
+                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, room.ID);
+                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã rời khỏi phòng chat {room.ID}.");
+                }
+            }
         }
     }
 }

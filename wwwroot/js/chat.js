@@ -37,7 +37,7 @@ connection
   .then(function () {
     if (!userID) userID = connection.connectionId;
     document.getElementById("sendButton").disabled = false;
-    connection.invoke("AddToGroup", "1").catch((err) => {
+    connection.invoke("AddToQueue").catch((err) => {
       return console.error(err.toString());
     });
   })
@@ -46,7 +46,7 @@ connection
   });
 
 window.onbeforeunload = function () {
-  connection.invoke("RemoveFromGroup", "1").catch((err) => {
+  connection.invoke("LeaveChat").catch((err) => {
     return console.error(err.toString());
   });
 };
@@ -55,10 +55,9 @@ document
   .getElementsByTagName("form")[0]
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    var user = "Bạn";
     var message = document.getElementById("messageInput").value;
     document.getElementById("messageInput").value = "";
-    connection.invoke("SendMessage", user, "1", message).catch(function (err) {
+    connection.invoke("SendMessage", message).catch(function (err) {
       return console.error(err.toString());
     });
   });

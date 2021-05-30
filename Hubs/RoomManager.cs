@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using Talktif.Models;
+
+namespace Talktif.Hubs
+{
+    public class RoomManager
+    {
+        public List<RandomRoom> RoomList { get; set; }
+        private RoomManager()
+        {
+            RoomList = new List<RandomRoom>();
+        }
+        private static RoomManager _Instance;
+        public static RoomManager Instance
+        {
+            get
+            {
+                if (_Instance == null) _Instance = new RoomManager();
+                return _Instance;
+            }
+            private set
+            {
+            }
+        }
+        public RandomRoom SearchRoom(string id)
+        {
+            foreach (RandomRoom r in RoomList)
+            {
+                if (r.ID == id) return r;
+            }
+            return null;
+        }
+        public RandomRoom GetRoom(string uid)
+        {
+            foreach (RandomRoom r in RoomList)
+            {
+                foreach (WaitUser usr in r.Members)
+                {
+                    if (usr.ConnectionID == uid) return r;
+                }
+            }
+            return null;
+        }
+        public RandomRoom CreateRoom(WaitUser[] members)
+        {
+            string roomID;
+            do
+            {
+                // create a random string of 8 characters
+                string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                char[] stringChars = new char[8];
+                Random random = new Random();
+                for (int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = chars[random.Next(chars.Length)];
+                }
+                roomID = new String(stringChars);
+            } while (SearchRoom(roomID) != null);
+
+            RandomRoom room = new RandomRoom
+            {
+                ID = roomID,
+                Members = members
+            };
+            RoomList.Add(room);
+            return room;
+        }
+        public RandomRoom RemoveRoom(string uid)
+        {
+            for (int i = 0; i < RoomList.Count; i++)
+            {
+                foreach (WaitUser usr in RoomList[i].Members)
+                {
+                    if (usr.ConnectionID == uid)
+                    {
+                        RandomRoom room = RoomList[i];
+                        RoomList.RemoveAt(i);
+                        foreach (WaitUser usr1 in room.Members)
+                        {
+                            if (usr1.ConnectionID != uid) QueueManager.Instance.Enqueue(usr1);
+                        }
+                        return room;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+}
