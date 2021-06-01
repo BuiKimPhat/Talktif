@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
+using Newtonsoft.Json;
 using Talktif.Models;
 
 namespace Talktif.Repository
@@ -40,6 +42,54 @@ namespace Talktif.Repository
                 fetchallchatroom.Wait();
                 var result = fetchallchatroom.Result;
                 return result;
+            }
+        }
+        public HttpResponseMessage FecthMessage(FetchMessageRequest request)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
+                var fetchMessage = client.GetAsync("FetchMessage/" + request.RoomId +"/" + request.Top);
+                fetchMessage.Wait();
+                var result = fetchMessage.Result;
+                return result;
+            }
+        }
+        public HttpResponseMessage GetChatRoomInfo(GetChatRoomInfoRequest room)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
+                var addMessage = client.GetAsync("GetChatRoomInfo/" + room.Id + "/" + room.UserId);
+                addMessage.Wait();
+                var  result = addMessage.Result;
+                return result;
+            }
+        }
+        public HttpResponseMessage AddMessage(AddMessageRequest mess)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
+                var addMessage = client.PostAsJsonAsync("AddMessage",mess);
+                addMessage.Wait();
+                var request = addMessage.Result;
+                return request;
+            }
+        }
+        public HttpResponseMessage  DeleteChatRoom(DeleteChatRoomRequest d)
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
+                var deleteChatRoom = client.DeleteAsync("Delete/" + d.UserId + "/" + d.RoomId);
+                deleteChatRoom.Wait();
+                var request = deleteChatRoom.Result;
+                return request;
             }
         }
     } 

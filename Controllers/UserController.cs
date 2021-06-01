@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Talktif.Models;
 using Talktif.Repository;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Talktif.Controllers
 {
