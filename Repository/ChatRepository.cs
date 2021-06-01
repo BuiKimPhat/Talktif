@@ -28,8 +28,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var createchatroom = client.PostAsJsonAsync("CreateChatRoom",newchatroom);
                 createchatroom.Wait();
-                var result = createchatroom.Result;
-                return result;
+                return createchatroom.Result;
             }
         }
         public HttpResponseMessage FetchAllChatRoom(int userid)
@@ -40,8 +39,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var fetchallchatroom = client.GetAsync("FetchAllChatRoom/" + userid);
                 fetchallchatroom.Wait();
-                var result = fetchallchatroom.Result;
-                return result;
+                return fetchallchatroom.Result;
             }
         }
         public HttpResponseMessage FecthMessage(FetchMessageRequest request)
@@ -52,8 +50,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var fetchMessage = client.GetAsync("FetchMessage/" + request.RoomId +"/" + request.Top);
                 fetchMessage.Wait();
-                var result = fetchMessage.Result;
-                return result;
+                return fetchMessage.Result;
             }
         }
         public HttpResponseMessage GetChatRoomInfo(GetChatRoomInfoRequest room)
@@ -62,10 +59,9 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
-                var addMessage = client.GetAsync("GetChatRoomInfo/" + room.Id + "/" + room.UserId);
-                addMessage.Wait();
-                var  result = addMessage.Result;
-                return result;
+                var getChatRoomInfo = client.GetAsync("GetChatRoomInfo/" + room.Id + "/" + room.UserId);
+                getChatRoomInfo.Wait();
+                return getChatRoomInfo.Result;
             }
         }
         public HttpResponseMessage AddMessage(AddMessageRequest mess)
@@ -76,8 +72,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var addMessage = client.PostAsJsonAsync("AddMessage",mess);
                 addMessage.Wait();
-                var request = addMessage.Result;
-                return request;
+                return addMessage.Result;
             }
         }
         public HttpResponseMessage  DeleteChatRoom(DeleteChatRoomRequest d)
@@ -88,8 +83,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var deleteChatRoom = client.DeleteAsync("Delete/" + d.UserId + "/" + d.RoomId);
                 deleteChatRoom.Wait();
-                var request = deleteChatRoom.Result;
-                return request;
+                return deleteChatRoom.Result;
             }
         }
     } 

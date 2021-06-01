@@ -29,9 +29,7 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 var signUp = client.PostAsJsonAsync("SignUp",Sr);
                 signUp.Wait();
-                var SignUpResult = signUp.Result;
-                Console.WriteLine(signUp.Result);
-                return SignUpResult;
+                return signUp.Result;
             }
         }
         public HttpResponseMessage Sign_In(LoginRequest lr){
@@ -42,8 +40,7 @@ namespace Talktif.Repository
                 //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var login = client.PostAsJsonAsync("SignIn",lr);
                 login.Wait();
-                var loginResult = login.Result;
-                return loginResult;
+                return login.Result;
             }
         }
         public HttpResponseMessage ResetPass(ResetPassRequest r)
@@ -53,8 +50,7 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 var resetPass = client.PostAsJsonAsync("ResetPass",r);
                 resetPass.Wait();
-                var resetPassResult = resetPass.Result;
-                return resetPassResult;
+                return resetPass.Result;
             }
         }
         public HttpResponseMessage ResetPasswordEmail(ResetPassEmailRequest r)
@@ -64,8 +60,7 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 var resetPasswordEmail = client.PostAsJsonAsync("ResetPasswordEmail",r);
                 resetPasswordEmail.Wait();
-                var resetPasswordEmailResult = resetPasswordEmail.Result;
-                return resetPasswordEmailResult;
+                return resetPasswordEmail.Result;
             }
         }
         public HttpResponseMessage GetAllCountry()
@@ -75,8 +70,7 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 var getAllCountry = client.GetAsync("GetAllCountry");
                 getAllCountry.Wait();
-                var result = getAllCountry.Result;
-                return result;
+                return getAllCountry.Result;
             }
         }
         public HttpResponseMessage GetAllCityCountry(int id)
@@ -86,8 +80,7 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 var getAllCityCountry = client.GetAsync("GetAllCityCountry/"+id);
                 getAllCityCountry.Wait();
-                var result = getAllCityCountry.Result;
-                return result;
+                return getAllCityCountry.Result;
             }
         }
         public HttpResponseMessage GetUserByID(int id)
@@ -98,8 +91,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var getUserByID = client.PostAsJsonAsync(id.ToString(),id);
                 getUserByID.Wait();
-                var result = getUserByID.Result;
-                return result;
+                return getUserByID.Result;
             }
         }
         public HttpResponseMessage UpdateUserInfor(UpdateInfoRequest update)
@@ -110,8 +102,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var upDateUser = client.PostAsJsonAsync("UpdateInfo",update);
                 upDateUser.Wait();
-                var result = upDateUser.Result;
-                return result;
+                return upDateUser.Result;
             }
         }
         public HttpResponseMessage InActiveUser(int id)
@@ -122,8 +113,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
                 var inActiveUser = client.GetAsync("InActiveUser/"+ id);
                 inActiveUser.Wait();
-                var result = inActiveUser.Result;
-                return result;
+                return inActiveUser.Result;
             }
         }
         public HttpResponseMessage RefreshToken(RefreshTokenRequest r)
@@ -133,8 +123,7 @@ namespace Talktif.Repository
                 client.BaseAddress = new Uri(UriString);
                 var refreshToken = client.PostAsJsonAsync("refresh-token",r);
                 refreshToken.Wait();
-                var refreshTokenResult = refreshToken.Result;
-                return refreshTokenResult;
+                return refreshToken.Result;
             }
         }
         public HttpResponseMessage Report(ReportRequest request)
@@ -145,8 +134,7 @@ namespace Talktif.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserRepo.Instance.data.token);
                 var rePort = client.PostAsJsonAsync("Report", request);
                 rePort.Wait();
-                var result = rePort.Result;
-                return result;
+                return rePort.Result;
             }
         }
         public void ShowInformation()
