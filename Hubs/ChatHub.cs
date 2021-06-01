@@ -15,13 +15,18 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            System.Console.WriteLine("Room");
+            System.Console.WriteLine("\nRoom");
             foreach (RandomRoom item in RoomManager.Instance.RoomList)
             {
                 System.Console.WriteLine(item.ID);
                 foreach (WaitUser usr in item.Members)
                 {
                     System.Console.WriteLine(usr.ConnectionID);
+                    System.Console.WriteLine("Skip");
+                    foreach (string sid in usr.SkipID)
+                    {
+                        System.Console.WriteLine(sid);
+                    }
                 }
             }
             System.Console.WriteLine("Queue");
@@ -47,13 +52,18 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            System.Console.WriteLine("Room");
+            System.Console.WriteLine("\nRoom");
             foreach (RandomRoom item in RoomManager.Instance.RoomList)
             {
                 System.Console.WriteLine(item.ID);
                 foreach (WaitUser usr in item.Members)
                 {
                     System.Console.WriteLine(usr.ConnectionID);
+                    System.Console.WriteLine("Skip");
+                    foreach (string sid in usr.SkipID)
+                    {
+                        System.Console.WriteLine(sid);
+                    }
                 }
             }
             System.Console.WriteLine("Queue");
@@ -67,6 +77,7 @@ namespace Talktif.Hubs
         {
             if (RoomManager.Instance.GetRoom(Context.ConnectionId) != null)
             {
+                // If user leaves while in a room
                 RandomRoom room = RoomManager.Instance.RemoveRoom(new WaitUser
                 {
                     ConnectionID = Context.ConnectionId
@@ -77,22 +88,39 @@ namespace Talktif.Hubs
                     {
                         await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã rời khỏi phòng chat {room.ID}.");
                         await Groups.RemoveFromGroupAsync(usr.ConnectionID, room.ID);
+
+                        // Join possible room after leave old room
+                        RandomRoom newroom = RoomManager.Instance.GetRoom(usr.ConnectionID);
+                        if (newroom != null)
+                        {
+                            foreach (WaitUser usr1 in newroom.Members)
+                            {
+                                await Groups.AddToGroupAsync(usr1.ConnectionID, newroom.ID);
+                                await Clients.Group(newroom.ID).BroadcastMessage($"Người dùng {usr1.ConnectionID} đã tham gia phòng chat {newroom.ID}.");
+                            }
+                        }
                     }
                 }
             }
             else
             {
+                // If user leaves while in queue
                 QueueManager.Instance.Dequeue(Context.ConnectionId);
             }
 
             // DEBUG
-            System.Console.WriteLine("Room");
+            System.Console.WriteLine("\nRoom");
             foreach (RandomRoom item in RoomManager.Instance.RoomList)
             {
                 System.Console.WriteLine(item.ID);
                 foreach (WaitUser usr in item.Members)
                 {
                     System.Console.WriteLine(usr.ConnectionID);
+                    System.Console.WriteLine("Skip");
+                    foreach (string sid in usr.SkipID)
+                    {
+                        System.Console.WriteLine(sid);
+                    }
                 }
             }
             System.Console.WriteLine("Queue");
@@ -128,21 +156,22 @@ namespace Talktif.Hubs
                 {
                     await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã rời khỏi phòng chat {room.ID}.");
                     await Groups.RemoveFromGroupAsync(usr.ConnectionID, room.ID);
-                }
-            }
 
-            room = RoomManager.Instance.GetRoom(user.ConnectionID);
-            if (room != null)
-            {
-                foreach (WaitUser usr in room.Members)
-                {
-                    await Groups.AddToGroupAsync(usr.ConnectionID, room.ID);
-                    await Clients.Group(room.ID).BroadcastMessage($"Người dùng {usr.ConnectionID} đã tham gia phòng chat {room.ID}.");
+                    // Join possible room after leave old room
+                    RandomRoom newroom = RoomManager.Instance.GetRoom(usr.ConnectionID);
+                    if (newroom != null)
+                    {
+                        foreach (WaitUser usr1 in newroom.Members)
+                        {
+                            await Groups.AddToGroupAsync(usr1.ConnectionID, newroom.ID);
+                            await Clients.Group(newroom.ID).BroadcastMessage($"Người dùng {usr1.ConnectionID} đã tham gia phòng chat {newroom.ID}.");
+                        }
+                    }
                 }
             }
 
             // DEBUG
-            System.Console.WriteLine("Room");
+            System.Console.WriteLine("\nRoom");
             foreach (RandomRoom item in RoomManager.Instance.RoomList)
             {
                 System.Console.WriteLine(item.ID);
@@ -161,6 +190,7 @@ namespace Talktif.Hubs
             {
                 System.Console.WriteLine(item.ConnectionID);
             }
+
         }
     }
 }

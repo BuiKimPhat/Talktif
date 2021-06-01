@@ -12,5 +12,13 @@ namespace Talktif.Models
         {
             SkipID = new List<string>();
         }
+        public void Display()
+        {
+            System.Console.WriteLine("UserID: " + ConnectionID);
+            for (int i = 0 ; i< SkipID.Count;i++)
+            {
+                System.Console.WriteLine("Skip: " + SkipID[i]);
+            }
+        }
     }
 }

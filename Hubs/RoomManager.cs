@@ -70,21 +70,22 @@ namespace Talktif.Hubs
         {
             for (int i = 0; i < RoomList.Count; i++)
             {
-                foreach (WaitUser usr in RoomList[i].Members)
+                for (int j=0;j<RoomList[i].Members.Length;j++)
                 {
-                    if (usr.ConnectionID == user.ConnectionID)
+                    if (RoomList[i].Members[j].ConnectionID == user.ConnectionID)
                     {
-                        usr.SkipID = user.SkipID;
+                        RoomList[i].Members.SetValue(user,j);
                         RandomRoom room = RoomList[i];
-                        RoomList.RemoveAt(i);
 
-                        // Enqueue room memeber after removal
+                        room.Display();
+                        RoomList.RemoveAt(i);
+                        
+                        // Enqueue room memebers after removal
                         foreach (WaitUser usr1 in room.Members)
                         {
                             if (user.SkipID.Count > 0)
                             {
-                                if (usr1.ConnectionID != user.ConnectionID) QueueManager.Instance.Enqueue(usr1);
-                                else QueueManager.Instance.Enqueue(user);
+                                QueueManager.Instance.Enqueue(usr1);
                             }
                             else
                             {
@@ -93,6 +94,18 @@ namespace Talktif.Hubs
                         }
 
                         // return old room before removal
+                        // System.Console.WriteLine("\nDebug");
+                        // System.Console.WriteLine("UserSkip");
+                        // foreach (string sid in user.SkipID)
+                        // {
+                        //     System.Console.WriteLine(sid);
+                        // }
+                        // System.Console.WriteLine("arrSkip");
+                        // foreach (string sid in RoomList[i].Members[j].SkipID)
+                        // {
+                        //     System.Console.WriteLine(sid);
+                        // }
+                        
                         return room;
                     }
                 }
