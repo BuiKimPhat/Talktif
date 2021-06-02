@@ -70,16 +70,15 @@ namespace Talktif.Hubs
         {
             for (int i = 0; i < RoomList.Count; i++)
             {
-                for (int j=0;j<RoomList[i].Members.Length;j++)
+                for (int j = 0; j < RoomList[i].Members.Length; j++)
                 {
                     if (RoomList[i].Members[j].ConnectionID == user.ConnectionID)
                     {
-                        RoomList[i].Members.SetValue(user,j);
+                        RoomList[i].Members.SetValue(user, j);
                         RandomRoom room = RoomList[i];
 
-                        room.Display();
                         RoomList.RemoveAt(i);
-                        
+
                         // Enqueue room memebers after removal
                         foreach (WaitUser usr1 in room.Members)
                         {
@@ -94,18 +93,6 @@ namespace Talktif.Hubs
                         }
 
                         // return old room before removal
-                        // System.Console.WriteLine("\nDebug");
-                        // System.Console.WriteLine("UserSkip");
-                        // foreach (string sid in user.SkipID)
-                        // {
-                        //     System.Console.WriteLine(sid);
-                        // }
-                        // System.Console.WriteLine("arrSkip");
-                        // foreach (string sid in RoomList[i].Members[j].SkipID)
-                        // {
-                        //     System.Console.WriteLine(sid);
-                        // }
-                        
                         return room;
                     }
                 }

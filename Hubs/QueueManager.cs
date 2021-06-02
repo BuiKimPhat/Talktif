@@ -44,7 +44,8 @@ namespace Talktif.Hubs
             for (int i = 0; i < UserQueue.Count; i++)
             {
                 // TODO: Filter
-                if (usr.ConnectionID != UserQueue[i].ConnectionID && !usr.SkipID.Contains(UserQueue[i].ConnectionID))
+                if (usr.ConnectionID != UserQueue[i].ConnectionID && !usr.SkipID.Contains(UserQueue[i].ConnectionID)
+                    && !UserQueue[i].SkipID.Contains(usr.ConnectionID))
                 {
                     RandomRoom room = RoomManager.Instance.CreateRoom(new WaitUser[] {
                         usr,

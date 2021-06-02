@@ -15,25 +15,20 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            System.Console.WriteLine("\nRoom");
-            foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            {
-                System.Console.WriteLine(item.ID);
-                foreach (WaitUser usr in item.Members)
-                {
-                    System.Console.WriteLine(usr.ConnectionID);
-                    System.Console.WriteLine("Skip");
-                    foreach (string sid in usr.SkipID)
-                    {
-                        System.Console.WriteLine(sid);
-                    }
-                }
-            }
-            System.Console.WriteLine("Queue");
-            foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            {
-                System.Console.WriteLine(item.ConnectionID);
-            }
+            // System.Console.WriteLine("\nRoom");
+            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
+            // {
+            //     System.Console.WriteLine(item.ID);
+            //     foreach (WaitUser usr in item.Members)
+            //     {
+            //         System.Console.WriteLine(usr.ConnectionID);
+            //     }
+            // }
+            // System.Console.WriteLine("Queue");
+            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
+            // {
+            //     System.Console.WriteLine(item.ConnectionID);
+            // }
         }
         public async Task AddToQueue()
         {
@@ -52,25 +47,20 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            System.Console.WriteLine("\nRoom");
-            foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            {
-                System.Console.WriteLine(item.ID);
-                foreach (WaitUser usr in item.Members)
-                {
-                    System.Console.WriteLine(usr.ConnectionID);
-                    System.Console.WriteLine("Skip");
-                    foreach (string sid in usr.SkipID)
-                    {
-                        System.Console.WriteLine(sid);
-                    }
-                }
-            }
-            System.Console.WriteLine("Queue");
-            foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            {
-                System.Console.WriteLine(item.ConnectionID);
-            }
+            // System.Console.WriteLine("\nRoom");
+            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
+            // {
+            //     System.Console.WriteLine(item.ID);
+            //     foreach (WaitUser usr in item.Members)
+            //     {
+            //         System.Console.WriteLine(usr.ConnectionID);
+            //     }
+            // }
+            // System.Console.WriteLine("Queue");
+            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
+            // {
+            //     System.Console.WriteLine(item.ConnectionID);
+            // }
         }
 
         public async Task LeaveChat()
@@ -109,25 +99,25 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            System.Console.WriteLine("\nRoom");
-            foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            {
-                System.Console.WriteLine(item.ID);
-                foreach (WaitUser usr in item.Members)
-                {
-                    System.Console.WriteLine(usr.ConnectionID);
-                    System.Console.WriteLine("Skip");
-                    foreach (string sid in usr.SkipID)
-                    {
-                        System.Console.WriteLine(sid);
-                    }
-                }
-            }
-            System.Console.WriteLine("Queue");
-            foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            {
-                System.Console.WriteLine(item.ConnectionID);
-            }
+            // System.Console.WriteLine("\nRoom");
+            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
+            // {
+            //     System.Console.WriteLine(item.ID);
+            //     foreach (WaitUser usr in item.Members)
+            //     {
+            //         System.Console.WriteLine(usr.ConnectionID);
+            //         System.Console.WriteLine("Skip");
+            //         foreach (string sid in usr.SkipID)
+            //         {
+            //             System.Console.WriteLine(sid);
+            //         }
+            //     }
+            // }
+            // System.Console.WriteLine("Queue");
+            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
+            // {
+            //     System.Console.WriteLine(item.ConnectionID);
+            // }
         }
 
         public async Task SkipChat()
@@ -171,26 +161,20 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            System.Console.WriteLine("\nRoom");
-            foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            {
-                System.Console.WriteLine(item.ID);
-                foreach (WaitUser usr in item.Members)
-                {
-                    System.Console.WriteLine(usr.ConnectionID);
-                    System.Console.WriteLine("Skip");
-                    foreach (string sid in usr.SkipID)
-                    {
-                        System.Console.WriteLine(sid);
-                    }
-                }
-            }
-            System.Console.WriteLine("Queue");
-            foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            {
-                System.Console.WriteLine(item.ConnectionID);
-            }
-
+            // System.Console.WriteLine("\nRoom");
+            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
+            // {
+            //     System.Console.WriteLine(item.ID);
+            //     foreach (WaitUser usr in item.Members)
+            //     {
+            //         System.Console.WriteLine(usr.ConnectionID);
+            //     }
+            // }
+            // System.Console.WriteLine("Queue");
+            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
+            // {
+            //     System.Console.WriteLine(item.ConnectionID);
+            // }
         }
     }
 }
