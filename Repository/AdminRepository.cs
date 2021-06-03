@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 using Talktif.Models;
 
 namespace Talktif.Repository
@@ -8,14 +10,30 @@ namespace Talktif.Repository
     public class AdminRepo
     {
         private static AdminRepo _Instance;
+        private static List<City> _Cities;
         public static AdminRepo Instance {
             get 
             {
                 if(_Instance == null)
-                _Instance = new AdminRepo();
+                {
+                    _Instance = new AdminRepo();
+                }
                 return _Instance;
             }
             private set { }
+        }
+        public static List<City> Cities 
+        {
+            get
+            {
+                if(_Cities == null)
+                {
+                    _Cities = new List<City>();
+                    _Cities = AdminRepo.Instance.GetCity();
+                }
+                return _Cities;
+            }
+            private set{}
         }
         private const string UriString = "https://talktifapi.azurewebsites.net/api/Admin/";
         public HttpResponseMessage Statistic()
@@ -29,13 +47,13 @@ namespace Talktif.Repository
                 return statistics.Result;
             }
         }
-        public HttpResponseMessage GetAllUser(GetAllUserRequest request)
+        public HttpResponseMessage GetAllUser(int From,int To)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
-                var getAllUser = client.GetAsync("GetAllUser/" + request.From + "/" + request.To + "/UserId");
+                var getAllUser = client.GetAsync("GetAllUser/" + From + "/" + To + "/UserId");
                 getAllUser.Wait();
                 return getAllUser.Result;
             }
@@ -105,6 +123,22 @@ namespace Talktif.Repository
                 createNewAdmin.Wait();
                 return createNewAdmin.Result;
             }
+        }
+        private List<City> GetCity()
+        {
+            List<City> cities = new List<City>();
+            var result = UserRepo.Instance.GetAllCityCountry(1);
+            string Result = result.Content.ReadAsStringAsync().Result;
+            cities = JsonConvert.DeserializeObject<List<City>>(Result);
+            return cities;
+        }
+        public string GetNameCity(int id)
+        {
+            foreach (var city in AdminRepo.Cities)
+            {
+                if(id == city.id) return city.name;
+            }
+            return "";
         }
     }
 }

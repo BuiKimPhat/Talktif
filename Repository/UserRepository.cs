@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 using Talktif.Models;
 
 namespace Talktif.Repository
@@ -15,7 +16,6 @@ namespace Talktif.Repository
                 if(_Instance == null)
                 {
                     _Instance = new UserRepo();
-                    //_Instance.data = new User_Infor();
                 } 
                 return _Instance;
             }
@@ -43,22 +43,22 @@ namespace Talktif.Repository
                 return login.Result;
             }
         }
-        public HttpResponseMessage ResetPass(ResetPassRequest r)
+        public HttpResponseMessage ResetPass(ResetPassRequest resetPassRequest)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var resetPass = client.PostAsJsonAsync("ResetPass",r);
+                var resetPass = client.PostAsJsonAsync("ResetPass",resetPassRequest);
                 resetPass.Wait();
                 return resetPass.Result;
             }
         }
-        public HttpResponseMessage ResetPasswordEmail(ResetPassEmailRequest r)
+        public HttpResponseMessage ResetPasswordEmail(ResetPassEmailRequest resetPassEmailRequest)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var resetPasswordEmail = client.PostAsJsonAsync("ResetPasswordEmail",r);
+                var resetPasswordEmail = client.PostAsJsonAsync("ResetPasswordEmail",resetPassEmailRequest);
                 resetPasswordEmail.Wait();
                 return resetPasswordEmail.Result;
             }
@@ -83,24 +83,24 @@ namespace Talktif.Repository
                 return getAllCityCountry.Result;
             }
         }
-        public HttpResponseMessage GetUserByID(int id)
+        public HttpResponseMessage GetUserByID(int ID)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
-                var getUserByID = client.PostAsJsonAsync(id.ToString(),id);
+                var getUserByID = client.PostAsJsonAsync(ID.ToString(),ID);
                 getUserByID.Wait();
                 return getUserByID.Result;
             }
         }
-        public HttpResponseMessage UpdateUserInfor(UpdateInfoRequest update)
+        public HttpResponseMessage UpdateUserInfor(UpdateInfoRequest updateInfoRequest)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
-                var upDateUser = client.PostAsJsonAsync("UpdateInfo",update);
+                var upDateUser = client.PostAsJsonAsync("UpdateInfo",updateInfoRequest);
                 upDateUser.Wait();
                 return upDateUser.Result;
             }
@@ -116,12 +116,12 @@ namespace Talktif.Repository
                 return inActiveUser.Result;
             }
         }
-        public HttpResponseMessage RefreshToken(RefreshTokenRequest r)
+        public HttpResponseMessage RefreshToken(RefreshTokenRequest refreshTokenRequest)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var refreshToken = client.PostAsJsonAsync("refresh-token",r);
+                var refreshToken = client.PostAsJsonAsync("RefreshToken",refreshTokenRequest);
                 refreshToken.Wait();
                 return refreshToken.Result;
             }

@@ -30,7 +30,7 @@ namespace Talktif.Controllers
             return View(UserRepo.Instance.data);
         }
         [HttpPost]
-        public IActionResult Home(IFormCollection formCollection)
+        public IActionResult Logout(IFormCollection formCollection)
         {
             UserRepo.Instance.data = null;
             return RedirectToAction("Index","Login");

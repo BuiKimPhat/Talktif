@@ -2,6 +2,6 @@ namespace Talktif.Models
 {
     public class RefreshTokenRequest
     {
-        public string email { get; set; }
+        public string Email { get; set; }
     }
 }
