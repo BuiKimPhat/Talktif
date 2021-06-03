@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,27 +11,21 @@ using Talktif.Repository;
 
 namespace Talktif.Controllers
 {
-    public class HomeController : Controller
+    public class ChatController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUserFavRepository _repository;
 
-        public HomeController(ILogger<HomeController> logger, IUserFavRepository repository)
+        public ChatController(ILogger<HomeController> logger, IUserFavRepository repository)
         {
             _logger = logger;
             _repository = repository;
         }
 
-        [HttpGet]
         public IActionResult Index()
         {
-            if(UserRepo.Instance.data == null)
-            {
-                return RedirectToAction("Index","Login");
-            }
-            if(UserRepo.Instance.data.isAdmin == false) return RedirectToAction("Home","User");
-            else return RedirectToAction("Home","Admin");
-        }
+            return View();
+        } 
 
         [HttpPost]
         public IActionResult Index(int userID, int toID = -1)

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Talktif
 {
-    public class Program
+    public class Talktif
     {
         public static void Main(string[] args)
         {
