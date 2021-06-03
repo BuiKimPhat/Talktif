@@ -176,5 +176,22 @@ namespace Talktif.Hubs
             //     System.Console.WriteLine(item.ConnectionID);
             // }
         }
+
+        // Friend Chat
+        public async Task JoinFriendChat(string roomID)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomID);
+            await Clients.Group(roomID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã tham gia phòng chat {roomID}.");
+        }
+        public async Task LeaveFriendChat(string roomID)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomID);
+            await Clients.Group(roomID).BroadcastMessage($"Người dùng {Context.ConnectionId} đã tham gia phòng chat {roomID}.");
+        }
+        public async Task SendFriendMessage(string roomID, string message)
+        {
+            await Clients.Group(roomID).ReceiveMessage(Context.ConnectionId, message);
+        }
+
     }
 }

@@ -33,17 +33,17 @@ namespace Talktif.Controllers
             else return RedirectToAction("Home","Admin");
         }
 
-        [HttpPost]
-        public IActionResult Index(int userID, int toID = -1)
-        {
-            ViewModel vm = new ViewModel(userID, _repository.FetchRoomID(userID, toID), _repository.FetchUserFavs(userID));
-            return View(vm);
-        }
+        // [HttpPost]
+        // public IActionResult Index(int userID, int toID = -1)
+        // {
+        //     ViewModel vm = new ViewModel(userID, _repository.FetchRoomID(userID, toID), _repository.FetchUserFavs(userID));
+        //     return View(vm);
+        // }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        // public IActionResult Privacy()
+        // {
+        //     return View();
+        // }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

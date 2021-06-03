@@ -42,7 +42,7 @@ namespace Talktif.Repository
                 return fetchallchatroom.Result;
             }
         }
-        public HttpResponseMessage FecthMessage(FetchMessageRequest request)
+        public HttpResponseMessage FetchMessage(FetchMessageRequest request)
         {
             using(var client = new HttpClient())
             {
