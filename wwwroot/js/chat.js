@@ -1,6 +1,6 @@
 ("use strict");
 var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
-var userID;
+var userCnnID;
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
@@ -13,7 +13,7 @@ connection.on("ReceiveMessage", function (user, message) {
   // var encodedMsg = user + " says " + msg;
   var span = document.createElement("span");
   span.className =
-    user != userID
+    user != userCnnID
       ? "msgtext p-2 mr-auto mb-1"
       : "msgtext-self p-2 ml-auto mb-1";
   span.textContent = msg;
@@ -37,9 +37,9 @@ connection.on("BroadcastMessage", function (message) {
 connection
   .start()
   .then(function () {
-    if (!userID) userID = connection.connectionId;
+    if (!userCnnID) userCnnID = connection.connectionId;
     document.getElementById("sendButton").disabled = false;
-    connection.invoke("AddToQueue").catch((err) => {
+    connection.invoke("AddToQueue", userID, username).catch((err) => {
       return console.error(err.toString());
     });
   })
@@ -48,7 +48,7 @@ connection
   });
 
 window.onbeforeunload = function () {
-  connection.invoke("LeaveChat").catch((err) => {
+  connection.invoke("LeaveChat", userID, username).catch((err) => {
     return console.error(err.toString());
   });
 };
@@ -64,11 +64,22 @@ document
     });
   });
 
+if (userID) {
+  document
+    .getElementById("addFriendButton")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      connection.invoke("AddFriend").catch((err) => {
+        return console.error(err.toString());
+      });
+    });
+}
+
 document
   .getElementById("skipButton")
   .addEventListener("click", function (event) {
     event.preventDefault();
-    connection.invoke("SkipChat").catch((err) => {
+    connection.invoke("SkipChat", userID, username).catch((err) => {
       return console.error(err.toString());
     });
   });

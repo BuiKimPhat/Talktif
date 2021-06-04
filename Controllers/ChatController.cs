@@ -25,7 +25,8 @@ namespace Talktif.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            User_Infor usr = UserRepo.Instance.data;
+            return View(usr);
         }
         public IActionResult Friends(int? id)
         {
