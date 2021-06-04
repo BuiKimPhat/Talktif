@@ -9,6 +9,7 @@ namespace Talktif.Repository
 {
     public class AdminRepo
     {
+        public Statistic data { get; set; }
         private static AdminRepo _Instance;
         private static List<City> _Cities;
         public static AdminRepo Instance {
@@ -17,6 +18,7 @@ namespace Talktif.Repository
                 if(_Instance == null)
                 {
                     _Instance = new AdminRepo();
+                    _Instance.data = new Statistic();
                 }
                 return _Instance;
             }

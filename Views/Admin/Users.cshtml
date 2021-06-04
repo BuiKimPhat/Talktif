@@ -13,7 +13,7 @@
                     <h2>Manage <b>User</b></h2>
                 </div>
                 <div class="col-sm-6">
-                    <a href="#addUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                    <a href="#addUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Admin</span></a>
                     <a href="#deleteUserModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>      
                 </div>
             </div>
@@ -27,6 +27,7 @@
                             <label for="selectAll"></label>
                         </span>
                     </th>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Gender</th>
@@ -45,6 +46,9 @@
                                 <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                 <label for="checkbox1"></label>
                             </span>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.id)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.name)
@@ -76,7 +80,7 @@
             </tbody>
         </table>
     <div class="clearfix">
-        <div class="hint-text">Showing <b>8</b> out of <b>100</b> entries</div>
+        <div class="hint-text">Showing <b>@(Model.Count() < 8 ? Model.Count() : 8)</b> out of <b>@Model.Count()</b> entries</div>
         <ul class="pagination">
             <li class="page-item disabled"><a href="#">Previous</a></li>
             <li class="page-item active"><a href="#" class="page-link">1</a></li>
@@ -290,7 +294,6 @@
                         <div class="gender-details">
                             <input type="radio" name="gender" id="dot-1" />
                             <input type="radio" name="gender" id="dot-2" />
-                            <input type="radio" name="gender" id="dot-3" />
                             <div class="category">
                                 <label for="dot-1">
                                     <span class="dot one"></span>
@@ -299,10 +302,6 @@
                                 <label for="dot-2">
                                     <span class="dot two"></span>
                                     <span class="gender">Male</span>
-                                </label>
-                                <label for="dot-3">
-                                    <span class="dot three"></span>
-                                    <span class="gender">Underfied</span>
                                 </label>
                             </div>
                         </div>
