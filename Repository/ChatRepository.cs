@@ -42,13 +42,13 @@ namespace Talktif.Repository
                 return fetchallchatroom.Result;
             }
         }
-        public HttpResponseMessage FecthMessage(FetchMessageRequest request)
+        public HttpResponseMessage FecthMessage(int UserID, int RoomID, int Top)
         {
             using(var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",UserRepo.Instance.data.token);
-                var fetchMessage = client.GetAsync("FetchMessage/" + request.RoomId +"/" + request.Top);
+                var fetchMessage = client.GetAsync("FetchMessage/" + UserID + "/" + RoomID +"/" + Top);
                 fetchMessage.Wait();
                 return fetchMessage.Result;
             }

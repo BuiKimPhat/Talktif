@@ -149,6 +149,7 @@ namespace Talktif.Repository
             handler.CookieContainer = cookies;
             HttpClient client = new HttpClient(handler);
             client.BaseAddress = new Uri(UriString);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", UserRepo.Instance.data.token);
             cookies.Add(client.BaseAddress, new Cookie("RefreshToken", rtoken.Refreshtoken));
             cookies.Add(client.BaseAddress, new Cookie("RefreshTokenId", rtoken.RefreshTokenId.ToString()));
             var refreshToken = client.PostAsJsonAsync("RefreshToken", refreshTokenRequest);

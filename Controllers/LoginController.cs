@@ -37,7 +37,7 @@ namespace Talktif.Controllers
                 return RedirectToAction("Index","Home");
             }
             MessageRequest m = new MessageRequest(){Message = a};
-            return RedirectToAction("Login",m);
+            return RedirectToAction("Index",m);
         }
         [HttpPost]
         public IActionResult Sign_Up(IFormCollection form)
@@ -47,8 +47,8 @@ namespace Talktif.Controllers
                 Email = form["Email"].ToString(),
                 Password = form["Password"].ToString(),
                 Gender = true,
-                CityId = 15,
-                Hobbies = "",
+                CityId = 29,
+                Hobbies = "Travel",
                 Device = System.Environment.MachineName,
             };
             var signUpResult = UserRepo.Instance.Sign_Up(sr);
@@ -59,7 +59,7 @@ namespace Talktif.Controllers
                 return RedirectToAction("Index","Home");
             }
             MessageRequest m = new MessageRequest(){Message = a};
-            return RedirectToAction("Login",m);
+            return RedirectToAction("Index",m);
         }
         public IActionResult ForgotPass()
         {

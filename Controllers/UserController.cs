@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Talktif.Models;
 using Talktif.Repository;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Talktif.Service;
 
 namespace Talktif.Controllers
 {
@@ -22,22 +18,22 @@ namespace Talktif.Controllers
         }
         public IActionResult Home()
         {
-            //if(Repo.Instance.data.isAdmin == true) return NotFound();
             return View(UserRepo.Instance.data);
         }
         public IActionResult History()
         {
             return View(UserRepo.Instance.data);
         }
-        [HttpPost]
-        public IActionResult Logout(IFormCollection formCollection)
+        public IActionResult Logout()
         {
-            UserRepo.Instance.data = null;
+            UserService.Instance.RemoveData();
             return RedirectToAction("Index","Login");
         }
         public IActionResult Setting()
         {
-            return View(UserRepo.Instance.data);
+            ViewBag.Data = UserRepo.Instance.data;
+            ViewBag.Cities = AdminRepo.Cities;
+            return View();
         }
     }
 }

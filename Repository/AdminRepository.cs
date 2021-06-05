@@ -49,7 +49,7 @@ namespace Talktif.Repository
                 return statistics.Result;
             }
         }
-        public HttpResponseMessage GetAllUser(int From,int To)
+        public HttpResponseMessage GetAllUser(long From,long To)
         {
             using(var client = new HttpClient())
             {

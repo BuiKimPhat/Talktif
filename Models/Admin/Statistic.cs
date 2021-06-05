@@ -2,9 +2,9 @@ namespace Talktif.Models
 {
     public class Statistic
     {
-        public int numOfUser { get; set; }
-        public int numOfReport { get; set; }
-        public int numOfChatRoom { get; set; }
-        public int numOfMessage { get; set; }
+        public long numOfUser { get; set; }
+        public long numOfReport { get; set; }
+        public long numOfChatRoom { get; set; }
+        public long numOfMessage { get; set; }
     }
 }

@@ -1,14 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Talktif.Models;
-using Talktif.Repository;
+using Talktif.Service;
 
 namespace Talktif.Controllers
 {
@@ -22,78 +17,31 @@ namespace Talktif.Controllers
         }
         public IActionResult Home()
         {
-            if (UserRepo.Instance.data.isAdmin != true) return NotFound();
-            AdminRepo.Instance.data = GetData();
-            return View(AdminRepo.Instance.data);
+            if (UserService.Instance.IsAdmin() != true) return NotFound();
+            return View(AdminService.Instance.GetStatisticData());
         }
-        public IActionResult Users()
+        public IActionResult Users(string PageNum)
         {
-            if (UserRepo.Instance.data.isAdmin != true) return NotFound();
+            if (UserService.Instance.IsAdmin() != true) return NotFound();
+            long first = 8, last = 0;
+            if(String.IsNullOrEmpty(PageNum) == false)
+            {
+                last = first * (Int64.Parse(PageNum) -1 );
+                first = ( first*(Int64.Parse(PageNum)) > AdminService.Instance.GetNumberofUser() ) ? AdminService.Instance.GetNumberofUser() : first*(Int64.Parse(PageNum));
+            }
             List<user> users = new List<user>();
-            try
-            {
-                HttpResponseMessage result = AdminRepo.Instance.GetAllUser(8, 0);
-                string a = result.Content.ReadAsStringAsync().Result;
-                users = JsonConvert.DeserializeObject<List<user>>(a);
-                for (int i = 0; i < users.Count; i++)
-                {
-                    users[i].cityID = AdminRepo.Instance.GetNameCity(Int32.Parse(users[i].cityID));
-                }
-                return View(users);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-
-                UserRepo.Instance.data.token = RefreshToken();
-
-                HttpResponseMessage result = AdminRepo.Instance.GetAllUser(8, 0);
-                string a = result.Content.ReadAsStringAsync().Result;
-                users = JsonConvert.DeserializeObject<List<user>>(a);
-                for (int i = 0; i < users.Count; i++)
-                {
-                    users[i].cityID = AdminRepo.Instance.GetNameCity(Int32.Parse(users[i].cityID));
-                }
-                return View(users);
-            }
+            users = AdminService.Instance.GetUser(first, last);
+            return View(users);
         }
         public IActionResult ReportUser()
         {
-            if (UserRepo.Instance.data.isAdmin != true) return NotFound();
+            if (UserService.Instance.IsAdmin() != true) return NotFound();
             return View();
         }
         public IActionResult Setting()
         {
-            if (UserRepo.Instance.data.isAdmin != true) return NotFound();
+            if (UserService.Instance.IsAdmin() != true) return NotFound();
             return View();
-        }
-        private Statistic GetData()
-        {
-            Statistic stat = new Statistic();
-            try
-            {
-                var result = AdminRepo.Instance.Statistic();
-                var statisticsResult = result.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Statistic>(statisticsResult);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                
-                UserRepo.Instance.data.token = RefreshToken();
-
-                var result = AdminRepo.Instance.Statistic();
-                var statisticsResult = result.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Statistic>(statisticsResult);
-            }
-        }
-        private string RefreshToken()
-        {
-            RefreshTokenRequest r = new RefreshTokenRequest() { Email = UserRepo.Instance.data.email };
-            var refreshToken = UserRepo.Instance.RefreshToken(r);
-            var result = refreshToken.Content.ReadAsStringAsync().Result;
-            Token t = JsonConvert.DeserializeObject<Token>(result);
-            return t.token;
         }
     }
 }
