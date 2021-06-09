@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Service;
 
@@ -10,38 +11,69 @@ namespace Talktif.Controllers
     public class AdminController : Controller
     {
         private readonly ILogger<AdminController> _logger;
+        private IUserService _userService;
+        private IAdminService _adminService;
 
-        public AdminController(ILogger<AdminController> logger)
+        public AdminController(
+            ILogger<AdminController> logger, 
+            IUserService userService, 
+            IAdminService adminService)
         {
             _logger = logger;
+            _userService = userService;
+            _adminService = adminService;
         }
         public IActionResult Home()
         {
-            if (UserService.Instance.IsAdmin() != true) return NotFound();
-            return View(AdminService.Instance.GetStatisticData());
+            if (IsAdmin() != true) return NotFound();
+            return View(_adminService.GetStatisticData(ReadCookie()));
         }
         public IActionResult Users(string PageNum)
         {
-            if (UserService.Instance.IsAdmin() != true) return NotFound();
+            if (IsAdmin() != true) return NotFound();
             long first = 8, last = 0;
             if(String.IsNullOrEmpty(PageNum) == false)
             {
                 last = first * (Int64.Parse(PageNum) -1 );
-                first = ( first*(Int64.Parse(PageNum)) > AdminService.Instance.GetNumberofUser() ) ? AdminService.Instance.GetNumberofUser() : first*(Int64.Parse(PageNum));
+                first = ( first*(Int64.Parse(PageNum)) > _adminService.GetNumberofUser(ReadCookie()) ) ? _adminService.GetNumberofUser(ReadCookie()) : first*(Int64.Parse(PageNum));
             }
             List<user> users = new List<user>();
-            users = AdminService.Instance.GetUser(first, last);
-            return View(users);
+            users = _adminService.GetUser(first, last, ReadCookie());
+            ViewBag.Users = users;
+            ViewBag.NumberofUser = _adminService.GetNumberofUser(ReadCookie());
+            return View();
         }
         public IActionResult ReportUser()
         {
-            if (UserService.Instance.IsAdmin() != true) return NotFound();
+            if (IsAdmin() != true) return NotFound();
             return View();
         }
         public IActionResult Setting()
         {
-            if (UserService.Instance.IsAdmin() != true) return NotFound();
+            if (IsAdmin() != true) return NotFound();
             return View();
         }
+        //Cookie Service
+        private bool IsAdmin()
+        {
+            string key = "user";
+            string cookievalue = Request.Cookies[key];
+            Cookie_Data a = JsonConvert.DeserializeObject<Cookie_Data>(cookievalue);
+            return a.IsAdmin;
+        }
+        private Cookie_Data ReadCookie()
+        {
+            string key = "user";
+            string cookievalue = Request.Cookies[key];
+            if(String.IsNullOrEmpty(cookievalue))
+            return null;
+            else
+            {
+                Cookie_Data a = new Cookie_Data();
+                a = JsonConvert.DeserializeObject<Cookie_Data>(cookievalue);
+                return a;
+            }
+        }
+        //Cookie Service
     }
 }

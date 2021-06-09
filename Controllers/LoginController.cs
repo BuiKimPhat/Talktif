@@ -8,32 +8,39 @@ using System.Net.Http.Headers;
 using Talktif.Models;
 using Talktif.Repository;
 using Newtonsoft.Json;
+using Talktif.Service;
 
 namespace Talktif.Controllers
 {
     public class LoginController : Controller
     {
         private readonly ILogger<LoginController> _logger;
+        private IUserService _userService;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILogger<LoginController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
         [HttpGet]
         public IActionResult Index(MessageRequest m)
         {
-            return View(m);
+            ViewBag.Message = m;
+            ViewBag.Cities = _userService.GetCity();
+            return View();
         }
         [HttpPost]
         public IActionResult Sign_In(IFormCollection form)
         {
             LoginRequest lr = new LoginRequest(){Email = form["Email"].ToString(),Password = form["Password"].ToString(),Device = (System.Environment.MachineName).ToString()};
-            var loginResult = UserRepo.Instance.Sign_In(lr);
-            //Console.WriteLine(loginResult);
+            var loginResult = _userService.Sign_In(lr);
             string a = loginResult.Content.ReadAsStringAsync().Result;
             if(loginResult.IsSuccessStatusCode){
-                UserRepo.Instance.data = new User_Infor();
-                UserRepo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
+                Console.WriteLine("login success");
+                //create cookie
+                User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
+                CreateCookie(new Cookie_Data(){id = user.id,IsAdmin = user.isAdmin,token = user.token});
+                //create cookie
                 return RedirectToAction("Index","Home");
             }
             MessageRequest m = new MessageRequest(){Message = a};
@@ -51,11 +58,14 @@ namespace Talktif.Controllers
                 Hobbies = "Travel",
                 Device = System.Environment.MachineName,
             };
-            var signUpResult = UserRepo.Instance.Sign_Up(sr);
+            var signUpResult = _userService.Sign_Up(sr);
             string a = signUpResult.Content.ReadAsStringAsync().Result;
             if(signUpResult.IsSuccessStatusCode)
             {
-                UserRepo.Instance.data = JsonConvert.DeserializeObject<User_Infor>(a);
+                //create cookie
+                User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
+                CreateCookie(new Cookie_Data(){id = user.id,IsAdmin = user.isAdmin,token = user.token});
+                //create cookie
                 return RedirectToAction("Index","Home");
             }
             MessageRequest m = new MessageRequest(){Message = a};
@@ -69,7 +79,7 @@ namespace Talktif.Controllers
         public IActionResult ForgotPass(IFormCollection form)
         {
             ResetPassRequest rp = new ResetPassRequest(){Email = form["Email"].ToString()};
-            var resetPassResult = UserRepo.Instance.ResetPass(rp);
+            var resetPassResult = _userService.ResetPass(rp);
             Console.WriteLine(resetPassResult);
             string a = resetPassResult.Content.ReadAsStringAsync().Result;
             if(resetPassResult.IsSuccessStatusCode)
@@ -88,5 +98,29 @@ namespace Talktif.Controllers
         {
             return NotFound();
         }
+        //Cookie Service
+        private void CreateCookie(Cookie_Data data)
+        {
+            string key = "user";
+            string value = JsonConvert.SerializeObject(data);
+            CookieOptions option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(1)
+            };
+            Response.Cookies.Append(key, value, option);
+            if(CheckCookie() == false)
+            {
+                Console.WriteLine("Error : Can't create cookie");
+            } 
+        }
+        private bool CheckCookie()
+        {
+            string key = "user";
+            string cookievalue = Request.Cookies[key];
+            if(String.IsNullOrEmpty(cookievalue))
+            return false;
+            else return true;
+        }
+        //Cookie Service
     }
 }

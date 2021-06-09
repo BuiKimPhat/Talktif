@@ -1,10 +1,14 @@
 @using Talktif.Models
-@using Talktif.Service
-@model List<user>
 @{
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
     ViewData["Title"] = "All User";
     <link rel="stylesheet" href="../css/AdminUser.css" />
+    List<user> users = new List<user>();
+    if(ViewBag.Users != null)
+    {
+        users = ViewBag.Users;
+    }
+    long NumberofUser = ViewBag.NumberofUser;
 }
 <div class="container admin-user">
     <div class="table-wrapper">
@@ -41,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
+                @foreach (var item in users)
                 {
                     <tr>
                         <td>
@@ -87,17 +91,17 @@
         <div class="clearfix">
             <div class="hint-text">Showing
                 <b>
-                    @(Model.Count() < 8 ? Model.Count() : 8)
+                    @(users.Count() < 8 ? users.Count() : 8)
                 </b>
                 out of
                 <b>
-                    @AdminService.Instance.GetNumberofUser()
+                    @NumberofUser
                 </b>
                 entries
             </div>
             <ul class="pagination">
                 @{
-                    long a = AdminService.Instance.GetNumberofUser();
+                    long a = NumberofUser;
                     long x = (a < 8) ? 1 : (a / (8) + (((a % (8)) != 0) ? 1 : 0));
                     long i = 1;
                     <li class="page-item"><a href="/Admin/Users" class="page-link">1</a></li>

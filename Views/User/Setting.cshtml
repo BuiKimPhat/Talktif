@@ -8,6 +8,7 @@
     }
     User_Infor user = new User_Infor();
     user = ViewBag.Data;
+    ViewData["Name"] = user.name;
     <link rel="stylesheet" href="../css/Setting.css" />
 }
 <div class="container-fluid">
@@ -105,19 +106,13 @@
                                     Female
                                 </td>
                             </label>
-                            @* <td>
-                                <select name="GioiTinh" id="GioiTinh">
-                                <option value="Male" selected = "@((user != null) && (user.gender == true))">Male</option>
-                                <option value="Nữ" selected = "@((user != null) && (user.gender == false))">Nữ</option>
-                                </select>
-                                </td> *@
                         </div>
                     </div>
                     <div class="city d-flex justify-content-center align-items-center mb-3">
                         <select name="format" id="format">
                             @foreach (var city in cities)
                             {
-                                <option value="@city.id" selected="@((user != null) && (user.id == city.id))">
+                                <option value="@city.id" selected="@((user != null) && (user.cityId == city.id))">
                                     @city.name
                                 </option>
                             }

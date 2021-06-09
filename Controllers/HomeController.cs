@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Talktif.Models;
-using Talktif.Repository;
+using Talktif.Service;
 
 namespace Talktif.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -22,13 +23,29 @@ namespace Talktif.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if(UserRepo.Instance.data == null)
+            if( ReadCookie() == null )
             {
                 return RedirectToAction("Index","Login");
             }
-            if(UserRepo.Instance.data.isAdmin == false) return RedirectToAction("Home","User");
+            if((ReadCookie()).IsAdmin == false) return RedirectToAction("Home","User");
             else return RedirectToAction("Home","Admin");
         }
+
+        //Cookie Service
+        private Cookie_Data ReadCookie()
+        {
+            string key = "user";
+            string cookievalue = Request.Cookies[key];
+            if(String.IsNullOrEmpty(cookievalue))
+            return null;
+            else
+            {
+                Cookie_Data a = new Cookie_Data();
+                a = JsonConvert.DeserializeObject<Cookie_Data>(cookievalue);
+                return a;
+            }
+        }
+        //Cookie Service
 
         public IActionResult Privacy()
         {
