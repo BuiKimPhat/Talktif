@@ -4,26 +4,49 @@ using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Repository;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace Talktif.Service
 {
     public interface IUserService
     {
+        void CreateCookie(HttpResponse Response, Cookie_Data data);
+        Cookie_Data ReadCookie(HttpRequest Request);
+        bool IsAdmin(HttpRequest Request);
+        void RemoveCookie(HttpResponse Response);
         HttpResponseMessage Sign_Up(SignUpRequest sr);
         HttpResponseMessage Sign_In(LoginRequest lr);
-        HttpResponseMessage Get_User_Infor(Cookie_Data cd);
         HttpResponseMessage ResetPass(string email);
-        string RefreshToken(string email, string token);
+        User_Infor Get_User_Infor(HttpRequest Request, HttpResponse Response);
+        void RefreshToken(HttpResponse Response, Cookie_Data cookie);
         List<City> GetCity();
     }
     public class UserService : IUserService
     {
         private IUserRepo _userRepo;
-        public UserService(IUserRepo userRepo)
+        private ICookieService _cookieService;
+        public UserService(IUserRepo userRepo, ICookieService cookieService)
         {
             _userRepo = userRepo;
+            _cookieService = cookieService;
         }
 
+        public void CreateCookie(HttpResponse Response, Cookie_Data data)
+        {
+            _cookieService.CreateCookie(Response, data);
+        }
+        public Cookie_Data ReadCookie(HttpRequest Request)
+        {
+            return _cookieService.ReadCookie(Request);
+        }
+        public bool IsAdmin(HttpRequest Request)
+        {
+            return _cookieService.IsAdmin(Request);
+        }
+        public void RemoveCookie(HttpResponse Response)
+        {
+            _cookieService.RemoveCookie(Response);
+        }
         public HttpResponseMessage Sign_Up(SignUpRequest sr)
         {
             return _userRepo.Sign_Up(sr);
@@ -32,22 +55,36 @@ namespace Talktif.Service
         {
             return _userRepo.Sign_In(lr);
         }
-        public HttpResponseMessage Get_User_Infor(Cookie_Data cd)
-        {
-            if(cd == null) Console.WriteLine("User Service errol can't get Cookie data");
-            return _userRepo.GetUserByID(cd.id,cd.token);
-        }
         public HttpResponseMessage ResetPass(string email)
         {
-            return _userRepo.ResetPass( new ResetPassRequest(){Email = email});
+            return _userRepo.ResetPass(new ResetPassRequest() { Email = email });
         }
-        public string RefreshToken(string email, string token)
+        public User_Infor Get_User_Infor(HttpRequest Request, HttpResponse Response)
         {
-            RefreshTokenRequest r = new RefreshTokenRequest() { Email = email };
-            var refreshToken = _userRepo.RefreshToken(r, token);
+            var cookie = _cookieService.ReadCookie(Request);
+            var result = _userRepo.GetUserByID(cookie.id, cookie.token);
+            string a = result.Content.ReadAsStringAsync().Result;
+            if (result.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<User_Infor>(a);
+            }
+            else
+            {
+                RefreshToken(Response, cookie);
+                cookie = _cookieService.ReadCookie(Request);
+                result = _userRepo.GetUserByID(cookie.id, cookie.token);
+                a = result.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<User_Infor>(a);
+            }
+        }
+        public void RefreshToken(HttpResponse Response, Cookie_Data cookie)
+        {
+            RefreshTokenRequest r = new RefreshTokenRequest() { Email = cookie.email };
+            var refreshToken = _userRepo.RefreshToken(r, cookie.token);
             var result = refreshToken.Content.ReadAsStringAsync().Result;
             Token t = JsonConvert.DeserializeObject<Token>(result);
-            return t.token;
+            cookie.token = t.token;
+            _cookieService.UpdateCookie(Response, cookie);
         }
         public List<City> GetCity()
         {

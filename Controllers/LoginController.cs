@@ -40,7 +40,7 @@ namespace Talktif.Controllers
                 Console.WriteLine("login success");
                 //create cookie
                 User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
-                CreateCookie(new Cookie_Data() { id = user.id, IsAdmin = user.isAdmin, email = user.email, token = user.token });
+                _userService.CreateCookie(Response, new Cookie_Data() { id = user.id, IsAdmin = user.isAdmin, email = user.email, token = user.token });
                 //create cookie
                 return RedirectToAction("Index", "Home");
             }
@@ -66,7 +66,7 @@ namespace Talktif.Controllers
             {
                 //create cookie
                 User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
-                CreateCookie(new Cookie_Data() { id = user.id, IsAdmin = user.isAdmin, email = user.email, token = user.token });
+                _userService.CreateCookie(Response, new Cookie_Data() { id = user.id, IsAdmin = user.isAdmin, email = user.email, token = user.token });
                 //create cookie
                 return RedirectToAction("Index", "Home");
             }
@@ -88,7 +88,7 @@ namespace Talktif.Controllers
                 //sent a to new page
                 return RedirectToAction("ResetPasswordEmail");
             }//else sent to old page and the message
-            return RedirectToAction("Index",new MessageRequest() { Message = a });
+            return RedirectToAction("Index", new MessageRequest() { Message = a });
         }
         public IActionResult ResetPasswordEmail()
         {
@@ -99,29 +99,5 @@ namespace Talktif.Controllers
         {
             return NotFound();
         }
-        //Cookie Service
-        private void CreateCookie(Cookie_Data data)
-        {
-            string key = "user";
-            string value = JsonConvert.SerializeObject(data);
-            CookieOptions option = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1)
-            };
-            Response.Cookies.Append(key, value, option);
-            if (CheckCookie() == false)
-            {
-                Console.WriteLine("Error : Can't create cookie");
-            }
-        }
-        private bool CheckCookie()
-        {
-            string key = "user";
-            string cookievalue = Request.Cookies[key];
-            if (String.IsNullOrEmpty(cookievalue))
-                return false;
-            else return true;
-        }
-        //Cookie Service
     }
 }

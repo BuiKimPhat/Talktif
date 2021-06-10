@@ -30,6 +30,7 @@ namespace Talktif
                 .AddSingleton<IChatRepo,ChatRepo>()
                 .AddSingleton<IUserRepo,UserRepo>(); 
             services
+                .AddScoped<ICookieService, CookieService>()
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IAdminService, AdminService>();
             services.AddControllersWithViews();

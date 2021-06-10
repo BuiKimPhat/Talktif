@@ -15,37 +15,26 @@ namespace Talktif.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger)
+        private IUserService _userService;
+        public HomeController(ILogger<HomeController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            if( ReadCookie() == null )
-            {
-                return RedirectToAction("Index","Login");
-            }
-            if((ReadCookie()).IsAdmin == false) return RedirectToAction("Home","User");
-            else return RedirectToAction("Home","Admin");
-        }
+            Cookie_Data data = new Cookie_Data();
+            data = _userService.ReadCookie(Request);
 
-        //Cookie Service
-        private Cookie_Data ReadCookie()
-        {
-            string key = "user";
-            string cookievalue = Request.Cookies[key];
-            if(String.IsNullOrEmpty(cookievalue))
-            return null;
-            else
+            if (data == null)
             {
-                Cookie_Data a = new Cookie_Data();
-                a = JsonConvert.DeserializeObject<Cookie_Data>(cookievalue);
-                return a;
+                return RedirectToAction("Index", "Login");
             }
+            if (data.IsAdmin == false) return RedirectToAction("Home", "User");
+            else return RedirectToAction("Home", "Admin");
         }
-        //Cookie Service
 
         public IActionResult Privacy()
         {
