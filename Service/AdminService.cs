@@ -9,9 +9,11 @@ namespace Talktif.Service
 {
     public interface IAdminService
     {
-        Statistic GetStatisticData(Cookie_Data user);
-        List<user> GetUser(long first, long last, Cookie_Data user);
-        long GetNumberofUser(Cookie_Data cookie);
+        Statistic GetStatisticData(string token);
+        HttpResponseMessage GetUser(long first, long last, string token);
+        HttpResponseMessage GetReport(long first,long last,string token);
+        long GetNumberofUser(string token);
+        long GetNumberofReport(string token);
         string GetNameCity(int cityID);
     }
     public class AdminService : IAdminService
@@ -25,28 +27,29 @@ namespace Talktif.Service
             _userService = userService;
             _adminRepo = adminRepo;
         }
-        public Statistic GetStatisticData(Cookie_Data user)
+        public Statistic GetStatisticData(string token)
         {
-            var result = _adminRepo.Statistic(user.token);
+            var result = _adminRepo.Statistic(token);
             var statisticsResult = result.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<Statistic>(statisticsResult);
         }
-        public List<user> GetUser(long first, long last, Cookie_Data user)
+        public HttpResponseMessage GetUser(long first, long last, string token)
         {
-            List<user> users = new List<user>();
-            HttpResponseMessage result = _adminRepo.GetAllUser(first, last, user.token);
-            string a = result.Content.ReadAsStringAsync().Result;
-            users = JsonConvert.DeserializeObject<List<user>>(a);
-            for (int i = 0; i < users.Count; i++)
-            {
-                users[i].cityID = GetNameCity(Int32.Parse(users[i].cityID));
-            }
-            return users;
+            return _adminRepo.GetAllUser(first, last, token);
         }
-        public long GetNumberofUser(Cookie_Data cookie)
+        public HttpResponseMessage GetReport(long first,long last, string token)
         {
-            Statistic a = GetStatisticData(cookie);
+            return _adminRepo.GetAllReport(first,last,token);
+        }
+        public long GetNumberofUser(string token)
+        {
+            Statistic a = GetStatisticData(token);
             return a.numOfUser;
+        }
+        public long GetNumberofReport(string token)
+        {
+            Statistic a = GetStatisticData(token);
+            return a.numOfReport;
         }
         public string GetNameCity(int cityID)
         {

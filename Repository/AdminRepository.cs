@@ -12,7 +12,7 @@ namespace Talktif.Repository
     {
         HttpResponseMessage Statistic(string token);
         HttpResponseMessage GetAllUser(long From,long To, string token);
-        HttpResponseMessage GetAllReport(GetAllReportRequest request, string token);
+        HttpResponseMessage GetAllReport(long From, long To, string token);
         HttpResponseMessage UpdateReport(UpdateReportRequest request,string token);
         HttpResponseMessage UpdateUser(UpdateUserRequest request, string token);
         HttpResponseMessage DeleteUser(int id, string token);
@@ -44,13 +44,13 @@ namespace Talktif.Repository
                 return getAllUser.Result;
             }
         }
-        public HttpResponseMessage GetAllReport(GetAllReportRequest request, string token)
+        public HttpResponseMessage GetAllReport(long From, long To, string token)
         {
             using(var client = new HttpClient())
             {  
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var getAllReport = client.GetAsync("GetAllReport/" + request.From + "/" + request.To + "/ReportId");
+                var getAllReport = client.GetAsync("GetAllReport/" + From + "/" + To + "/ReportId");
                 getAllReport.Wait();
                 return getAllReport.Result;
             }
