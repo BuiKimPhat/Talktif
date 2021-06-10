@@ -12,8 +12,8 @@ namespace Talktif.Service
         HttpResponseMessage Sign_Up(SignUpRequest sr);
         HttpResponseMessage Sign_In(LoginRequest lr);
         HttpResponseMessage Get_User_Infor(Cookie_Data cd);
-        HttpResponseMessage ResetPass(ResetPassRequest resetPassRequest);
-        string RefreshToken(User_Infor user);
+        HttpResponseMessage ResetPass(string email);
+        string RefreshToken(string email, string token);
         List<City> GetCity();
     }
     public class UserService : IUserService
@@ -37,14 +37,14 @@ namespace Talktif.Service
             if(cd == null) Console.WriteLine("User Service errol can't get Cookie data");
             return _userRepo.GetUserByID(cd.id,cd.token);
         }
-        public HttpResponseMessage ResetPass(ResetPassRequest resetPassRequest)
+        public HttpResponseMessage ResetPass(string email)
         {
-            return _userRepo.ResetPass(resetPassRequest);
+            return _userRepo.ResetPass( new ResetPassRequest(){Email = email});
         }
-        public string RefreshToken(User_Infor user)
+        public string RefreshToken(string email, string token)
         {
-            RefreshTokenRequest r = new RefreshTokenRequest() { Email = user.email };
-            var refreshToken = _userRepo.RefreshToken(r, user.token);
+            RefreshTokenRequest r = new RefreshTokenRequest() { Email = email };
+            var refreshToken = _userRepo.RefreshToken(r, token);
             var result = refreshToken.Content.ReadAsStringAsync().Result;
             Token t = JsonConvert.DeserializeObject<Token>(result);
             return t.token;

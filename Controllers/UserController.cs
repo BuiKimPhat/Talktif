@@ -21,16 +21,12 @@ namespace Talktif.Controllers
         }
         public IActionResult Home()
         {
-            var result = _userService.Get_User_Infor(ReadCookie());
-            string a = result.Content.ReadAsStringAsync().Result;
-            User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
+            User_Infor user = Get_User_Infor();
             return View(user);
         }
         public IActionResult History()
         {
-            var result = _userService.Get_User_Infor(ReadCookie());
-            string a = result.Content.ReadAsStringAsync().Result;
-            User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
+            User_Infor user = Get_User_Infor();
             return View(user);
         }
         public IActionResult Logout()
@@ -40,14 +36,49 @@ namespace Talktif.Controllers
         }
         public IActionResult Setting()
         {
-            var result = _userService.Get_User_Infor(ReadCookie());
-            string a = result.Content.ReadAsStringAsync().Result;
-            User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
+            User_Infor user = Get_User_Infor();
             ViewBag.Data = user;
             ViewBag.Cities = _userService.GetCity();
             return View();
         }
+        private User_Infor Get_User_Infor()
+        {
+            var cookie = ReadCookie();
+            var result = _userService.Get_User_Infor(cookie);
+            if(result.IsSuccessStatusCode)
+            {
+                string a = result.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<User_Infor>(a);
+            }else
+            {
+                RefreshToken(cookie);
+                cookie = ReadCookie();
+                result = _userService.Get_User_Infor(cookie);
+                string a = result.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<User_Infor>(a);
+            }
+        }
+        private void RefreshToken(Cookie_Data cookie)
+        {
+            cookie.token = _userService.RefreshToken(cookie.email,cookie.token);
+            UpdateCookie(cookie);
+
+        }
         //Cookie Service
+        private void UpdateCookie(Cookie_Data cookie)
+        {
+            string key = "user";
+            string value = JsonConvert.SerializeObject(cookie);
+            CookieOptions option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(1)
+            };
+            Response.Cookies.Append(key, value, option);
+            if(CheckCookie() == false)
+            {
+                Console.WriteLine("Error : Can't update cookie");
+            } 
+        }
         private Cookie_Data ReadCookie()
         {
             string key = "user";

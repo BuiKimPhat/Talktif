@@ -194,20 +194,20 @@
                         </div>
                     </div>
 
-                    <div class="gender-details">
-                        <input type="radio" name="gender" id="dot-1" />
-                        <input type="radio" name="gender" id="dot-2" />
-                        <div class="gender-title">Gender</div>
+                   <div class="gender-details">
+                        <span class="gender-title">Gender</span>
                         <div class="category">
-
-                            <label for="dot-1">
-                                <span class="dot one"></span>
-                                <span class="gender">Female</span>
+                            <label>
+                                @Html.RadioButton("Gender","Male")
+                                <td>
+                                    Male
+                                </td>
                             </label>
-
-                            <label for="dot-2" class="justify-content-center">
-                                <span class="dot two"></span>
-                                <span class="gender">Male</span>
+                            <label>
+                                @Html.RadioButton("Gender","Female")
+                                <td>
+                                    Female
+                                </td>
                             </label>
                         </div>
                     </div>
