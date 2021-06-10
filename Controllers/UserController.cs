@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Talktif.Models;
-using Talktif.Repository;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using Talktif.Service;
-using System;
 
 namespace Talktif.Controllers
 {

@@ -3,7 +3,6 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Repository;
-using System;
 using Microsoft.AspNetCore.Http;
 
 namespace Talktif.Service

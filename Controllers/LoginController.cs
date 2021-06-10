@@ -1,12 +1,8 @@
 using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using Talktif.Models;
-using Talktif.Repository;
 using Newtonsoft.Json;
 using Talktif.Service;
 

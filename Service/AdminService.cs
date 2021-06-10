@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Talktif.Models;
