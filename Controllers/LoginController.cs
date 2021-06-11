@@ -19,9 +19,8 @@ namespace Talktif.Controllers
             _userService = userService;
         }
         [HttpGet]
-        public IActionResult Index(MessageRequest m)
+        public IActionResult Index()
         {
-            ViewBag.Message = m;
             ViewBag.Cities = _userService.GetCity();
             return View();
         }
@@ -33,15 +32,13 @@ namespace Talktif.Controllers
             string a = loginResult.Content.ReadAsStringAsync().Result;
             if (loginResult.IsSuccessStatusCode)
             {
-                Console.WriteLine("login success");
-                //create cookie
                 User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
                 _userService.CreateCookie(Response, new Cookie_Data() { id = user.id, IsAdmin = user.isAdmin, email = user.email, token = user.token });
-                //create cookie
                 return RedirectToAction("Index", "Home");
             }
             MessageRequest m = new MessageRequest() { Message = a };
-            return RedirectToAction("Index", m);
+            ViewBag.Message = a;
+            return View("Index");
         }
         [HttpPost]
         public IActionResult Sign_Up(IFormCollection form)
@@ -66,8 +63,8 @@ namespace Talktif.Controllers
                 //create cookie
                 return RedirectToAction("Index", "Home");
             }
-            MessageRequest m = new MessageRequest() { Message = a };
-            return RedirectToAction("Index", m);
+            ViewBag.Message = a;
+            return View("Index");
         }
         public IActionResult ForgotPass()
         {
@@ -81,14 +78,11 @@ namespace Talktif.Controllers
             Console.WriteLine(a);
             if (resetPassResult.IsSuccessStatusCode)
             {
-                //sent a to new page
-                return RedirectToAction("ResetPasswordEmail");
-            }//else sent to old page and the message
-            return RedirectToAction("Index", new MessageRequest() { Message = a });
-        }
-        public IActionResult ResetPasswordEmail()
-        {
-            return View();
+                ViewBag.Email = "chuongthai885@gmail.com";
+                return View("ResetPasswordEmail");
+            }
+            ViewBag.Message = a;
+            return View("ForgotPass");
         }
         [HttpPost]
         public IActionResult ResetPasswordEmail(IFormCollection form)

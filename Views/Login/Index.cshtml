@@ -1,8 +1,7 @@
 @using Talktif.Models;
 @{
     Layout = null;
-    MessageRequest message = ViewBag.Message;
-    string Message = (message != null) ? message.Message : "";
+    string Message = (ViewBag.Message != null) ? ViewBag.Message : "";
     List<City> cities = new List<City>();
     if (ViewBag.Cities != null)
     {
