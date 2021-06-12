@@ -34,13 +34,13 @@
     @if (Model != null)
     {
         <script type="text/javascript">
-            var userID = @Model.id, username = "@Model.name";
+            var userID = @Model.id, username = "@Model.name", token = "@Model.token";
         </script>
     }
     else
     {
         <script type="text/javascript">
-            var userID = 0, username = null;
+            var userID = 0, username = null, token = null;
         </script>
     }
     <script src="~/js/chat.js"></script>

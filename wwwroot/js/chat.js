@@ -69,7 +69,7 @@ if (userID) {
     .getElementById("addFriendButton")
     .addEventListener("click", function (event) {
       event.preventDefault();
-      connection.invoke("AddFriend").catch((err) => {
+      connection.invoke("AddFriend", token).catch((err) => {
         return console.error(err.toString());
       });
     });

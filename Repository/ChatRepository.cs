@@ -9,7 +9,7 @@ namespace Talktif.Repository
     {
         HttpResponseMessage CreateChatRoom(CreateChatRoomRequest newchatroom, string token);
         HttpResponseMessage FetchAllChatRoom(int userid, string token);
-        HttpResponseMessage FecthMessage(int UserID, int RoomID, int Top, string token);
+        HttpResponseMessage FetchMessage(int UserID, int RoomID, int Top, string token);
         HttpResponseMessage GetChatRoomInfo(GetChatRoomInfoRequest room, string token);
         HttpResponseMessage AddMessage(AddMessageRequest mess, string token);
         HttpResponseMessage  DeleteChatRoom(DeleteChatRoomRequest d, string token);
@@ -39,7 +39,7 @@ namespace Talktif.Repository
                 return fetchallchatroom.Result;
             }
         }
-        public HttpResponseMessage FecthMessage(int UserID, int RoomID, int Top, string token)
+        public HttpResponseMessage FetchMessage(int UserID, int RoomID, int Top, string token)
         {
             using(var client = new HttpClient())
             {

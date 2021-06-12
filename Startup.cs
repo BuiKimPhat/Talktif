@@ -36,7 +36,6 @@ namespace Talktif
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IAdminService, AdminService>();
             services.AddControllersWithViews();
-            services.AddTransient<IUserFavRepository, UserFavRepository>();
             services.AddSignalR();
         }
 
