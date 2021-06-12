@@ -1,0 +1,259 @@
+@using Talktif.Models
+@model User_Infor
+@{
+    Layout = "~/Views/Shared/_UserLayoutHistoryChat.cshtml";
+    ViewData["Name"] = (Model != null)?Model.name:"";
+}
+<div class="container-fluid">
+        <div class="wrapper">
+            <div class="user-history">
+                <header>
+                    <ul>
+                        <li class="active">
+                            <a asp-controller="User" asp-action="Home">
+                                <i class="fab fa-discourse"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="User" asp-action="History">
+                                <i class="fas fa-user-friends"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="User" asp-action="Setting">
+                                <i class="fas fa-cogs"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </header>
+                <div class="main-history-user">
+                    <div class="title-chatting">
+                        <h4>Friend Chat</h4>
+                        <div>
+                            <input type="checkbox" class="checkbox" id="chk" />
+                            <label class="label" for="chk">
+                  <i class="fas fa-moon"></i>
+                  <i class="fas fa-sun"></i>
+                  <div class="ball"></div>
+                </label>
+                        </div>
+                    </div>
+                    <div class="search">
+                        <input type="text" placeholder="Search..." />
+                        <span class="ti-search"></span>
+                    </div>
+                    <div class="user-history-profile">
+                        <div class="user-history-item">
+                           
+
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                        <div class="user-history-item">
+                           
+                            <div class="name-user">
+                                <p>Hải Quý</p>
+                                <span>Are you meeting today here you?</span>
+                            </div>
+                            <div class="time-chat">3.47 p.m</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-history">
+                <header>
+                    <div class="user-chatting-now">
+                       
+                        <div class="name-user">
+                            <p>Hải Quý</p>
+                            <span>Active 3 hours ago</span>
+                        </div>
+                        <div class="report">
+                            <i class="fas fa-ellipsis-h" data-toggle="modal" data-target="#myModal"></i>
+                        </div>
+                    </div>
+                </header>
+                <div class="message-box">
+                    <div id="content-message" class="message-box-content">
+                        <div class="message-row other-message">
+                            <!-- <div class="message-title">
+                                <span>Hải Quý</span>
+                            </div> -->
+                            <div class="message-text">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi
+                            </div>
+                            <div class="message-time">May 19</div>
+                        </div>
+                        <div class="message-row other-message">
+                            <!-- <div class="message-title">
+                                <span>Hải Quý</span>
+                            </div> -->
+                            <div class="message-text">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi
+                            </div>
+                            <div class="message-time">May 19</div>
+                        </div>
+                        <div class="message-row other-message">
+                            <!-- <div class="message-title">
+                                <span>Hải Quý</span>
+                            </div> -->
+                            <div class="message-text">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi
+                            </div>
+                            <div class="message-time">May 19</div>
+                        </div>
+                        <div class="message-row your-message">
+                            <!-- <div class="message-title">
+                                <span>Văn Chương</span>
+                            </div> -->
+                            <div class="message-text">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi
+                            </div>
+                            <div class="message-time">May 19</div>
+                        </div>
+                        <div class="message-row your-message">
+                            <!-- <div class="message-title">
+                                <span>Văn Chương</span>
+                            </div> -->
+                            <div class="message-text">
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi
+                            </div>
+                            <div class="message-time">May 19</div>
+                        </div>
+                    </div>
+                    <form id="submit-message" class="message-box-action">
+                        <input type="text" id="message" class="message" placeholder="Message Here..." autocomplete="off" />
+                        <button class="send_message">
+                <img src="/img/send_mes.png" alt="" srcset="" />
+              </button>
+                    </form>
+                </div>
+            </div>
+            <div class="notification-history">
+                <div class="information-user">
+                    @* <div class="avatar">
+                        <img class="rounded-circle" src="/img/avatar.jpg" alt="" srcset="" />
+                    </div> *@
+                    <h2 class="text-center font-weight-bold mt-2">Hải Quý</h2>
+                    <div class="nation">
+                        <img class="country mr-2" src="/img/VietNam.png" alt="" srcset="" />
+                        <a href="# ">Việt Nam</a>
+                    </div>
+                    <div class="city text-center mt-1">
+                        <a href="# ">TP.Hà Nội</a>
+                    </div>
+                    @* <i class="fas fa-thumbs-up like mt-2">
+              <span class="pl-2">10</span>
+            </i> *@
+                    <div class="group-btn-interactive mt-3">
+                        <button class="interactive">
+                <img src="/img/add-user.png" alt="" srcset="" />
+              </button>
+                        <button class="interactive">
+                <img src="/img/like.png" alt="" srcset="" />
+              </button>
+                        <button class="interactive">
+                <i class="fas fa-flag-checkered"></i>
+              </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="delete-conversation">
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h5 class="modal-title">Notifycations</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                  &times;
+                </button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            You want to delete the conversation ?
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                  OK
+                </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                  Close
+                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
