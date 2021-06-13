@@ -2,11 +2,19 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using Talktif.Models;
 using Talktif.Repository;
+using Talktif.Service;
 
 namespace Talktif.Hubs
 {
     public class ChatHub : Hub<IChatClient>
     {
+        private IChatRepo _chatRepo;
+        private ICookieService _cookieService;
+        ChatHub(IChatRepo chatRepo, ICookieService cookieService)
+        {
+            _chatRepo = chatRepo;
+            _cookieService = cookieService;
+        }
         public async Task SendMessage(string message)
         {
             RandomRoom room = RoomManager.Instance.GetRoom(Context.ConnectionId);
@@ -184,14 +192,15 @@ namespace Talktif.Hubs
             // }
         }
 
-        public async Task AddFriend()
+        public async Task AddFriend(string token)
         {
             RandomRoom room = RoomManager.Instance.GetRoom(Context.ConnectionId);
             if (room != null)
             {
                 foreach (WaitUser usr in room.Members)
                 {
-                    if (usr.UserID <= 0) {
+                    if (usr.UserID <= 0)
+                    {
                         await Clients.Group(room.ID).BroadcastMessage($"Người dùng {Context.ConnectionId} đề xuất kết bạn thất bại vì ít nhất 1 trong 2 người chưa đăng nhập!");
                         return;
                     }
@@ -203,13 +212,13 @@ namespace Talktif.Hubs
                 // Call API create chat room
                 if (room.Members.Length >= 2 && room.Members[0].FriendRequest && room.Members[1].FriendRequest)
                 {
-                    ChatRepo.Instance.CreateChatRoom(new CreateChatRoomRequest
+                    _chatRepo.CreateChatRoom(new CreateChatRoomRequest
                     {
                         User1Id = room.Members[0].UserID,
                         User2Id = room.Members[1].UserID,
                         User1NickName = room.Members[0].UserName,
                         User2NickName = room.Members[1].UserName
-                    });
+                    }, token);
                 }
             }
         }
