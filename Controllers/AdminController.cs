@@ -32,7 +32,6 @@ namespace Talktif.Controllers
             if (_userService.IsAdmin(Request) != true) return NotFound();
 
             long first = 8, last = 0;
-            //Cookie_Data cookie_Data = _userService.ReadCookie(Request);
             long NumberofUser = _adminService.GetNumberofUser(Request);
 
             if (String.IsNullOrEmpty(PageNum) == false)
