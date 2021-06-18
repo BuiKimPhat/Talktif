@@ -19,23 +19,29 @@
                 <form action="#" class="form">
                     <div class="user-info">
                         <span class="details">UserName :</span>
+                        <div class="name">
                         <input id="username" type="text" value=@((user == null) ? "" : user.name) placeholder="Username"
-                            required />
-                        <i class="fas fa-edit"></i>
+                            required disabled />
+                        <i class="fas fa-edit username"></i>
+                        </div>
                     </div>
                     <div class="user-info">
                         <span class="details">Email :</span>
                         <input id="email" type="email" value=@((user == null) ? "" : user.email) placeholder="Email"
-                            required />
+                            required disabled/>
                     </div>
                     <div class="user-info">
                         <span class="details">Password :</span>
-                        <input id="password" type="password" value="" placeholder="Password" required />
-                        <i class="fas fa-edit"></i>
+                        <div class="password">
+                            <input id="password" type="password" value="" placeholder="Password" required disabled />
+                            @* <span><i id="eye" class="fas fa-eye"></i> *@
+                        @* </span> *@
+                            <i class="fas fa-edit password"></i>
+                            </div>
                     </div>
                     <div class="user-info">
                         <span class="details">Confirm Password :</span>
-                        <input id="confirmpassword" type="password" value="" placeholder="Confirm Password" required />
+                        <input id="confirmpassword" type="password" value="" placeholder="Confirm Password" required disabled/>
                     </div>
                     <div class="hobbies-ls">
                         <div class="hobbies-title">
@@ -50,39 +56,39 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
+                                        <input type="checkbox" value="Travel" name="hobbies" /> Travel
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
+                                        <input type="checkbox" value="Camping" name="hobbies" /> Camping
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
+                                        <input type="checkbox" value="Jogging" name="hobbies" /> Jogging
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
+                                        <input type="checkbox" value="Alone" name="hobbies" /> Alone
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
+                                        <input type="checkbox" value="Talking" name="hobbies" /> Talking
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
+                                        <input type="checkbox" value="Swimming" name="hobbies" /> Swimming
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                                     <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
+                                        <input type="checkbox" value="Learning" name="hobbies" /> Learning
                                     </div>
                                 </div>
                             </div>

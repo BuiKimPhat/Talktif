@@ -45,10 +45,7 @@
                     <div class="textbox col-lg-7 col-md-7 col-sm-7 col-xs-7">
                         <h2 class="name">Chat App Community</h2>
                         <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi dolorum eligendi.
-                            @Message
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus voluptatibus earum modi dolorum eligendi.
                         </p>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
@@ -57,8 +54,7 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a class="submit mt-4 resize_font mr-1 action_home" asp-controller="Chat" asp-action="Index">Get
-                    Started</a>
+                <a class="submit mt-4 resize_font mr-1 action_home" asp-controller="User" asp-action="ChatSecret">Get Started</a>
                 <button id="dangnnhap" aria-expanded="false" class="mt-4 ml-3 resize_font submit">
                     Sign In
                 </button>
@@ -96,7 +92,7 @@
                 <input id="login_password" type="password" name="password" placeholder="Password" value=""
                     oninput="CheckPassword(event)" />
                 <div id="error_password" class="text-center font-error"></div>
-                <button type="submit" id="btnDangNhap" class="submit" type="button">
+                <button type="submit" id="btnDangNhap" class="submit" type="button" onclick="Confirm()">
                     Sign In
                 </button>
             </form>
@@ -147,13 +143,13 @@
                     <div id="error_password_sign_up" class="text-center font-error"></div>
                     <div id="error_confirm_password" class="text-center font-error"></div>
 
-                    <div class="hobbies-ls">
+                    @* <div class="hobbies-ls">
                         <div class="hobbies-title">
                             <span>Hobbies</span>
                         </div>
 
                         <div class="hobbies-select">
-
+                            <input id="hobbies" type="text" name="hobbies" placeholder="Hobbies" required />
                             <div class="hobbies">
                                 <input type="checkbox" value="Sport" name="hobbies" />Sport
                             </div>
@@ -191,7 +187,7 @@
 
 
                         </div>
-                    </div>
+                    </div> *@
 
                    <div class="gender-details">
                         <span class="gender-title">Gender</span>
@@ -232,6 +228,9 @@
 
     </div>
     <script>
+    function Confirm(){
+        if("@Message" !== "") alert("@Message");
+    }
         $(document).ready(function () {
             $("button").click(function () {
                 $("#wrapper").show();
@@ -241,12 +240,12 @@
                 $("#wrapper").hide();
                 $("section").removeClass("blurs");
             });
-            $(".close1").click(function () {
+            @* $(".close1").click(function () {
                 $("#Confirm1").hide();
             });
             $(".close2").click(function () {
                 $("#Confirm2").hide();
-            });
+            }); *@
             var width = $(window).width();
             $("#wrapper").hide();
             $(".img .exit").click(function () {
