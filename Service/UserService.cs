@@ -61,11 +61,14 @@ namespace Talktif.Service
         public User_Infor Get_User_Infor(HttpRequest Request, HttpResponse Response)
         {
             var cookie = _cookieService.ReadCookie(Request);
+            if (cookie == null) return null;
             var result = _userRepo.GetUserByID(cookie.id, cookie.token);
             string a = result.Content.ReadAsStringAsync().Result;
             if (result.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<User_Infor>(a);
+                User_Infor userInfo = JsonConvert.DeserializeObject<User_Infor>(a);
+                userInfo.token = cookie.token;
+                return userInfo;
             }
             else
             {
@@ -73,7 +76,9 @@ namespace Talktif.Service
                 cookie = _cookieService.ReadCookie(Request);
                 result = _userRepo.GetUserByID(cookie.id, cookie.token);
                 a = result.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<User_Infor>(a);
+                User_Infor userInfo = JsonConvert.DeserializeObject<User_Infor>(a);
+                userInfo.token = cookie.token;
+                return userInfo;
             }
         }
         public void RefreshToken(HttpResponse Response, Cookie_Data cookie)

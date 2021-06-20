@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.SignalR;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Talktif.Models;
 using Talktif.Repository;
@@ -8,12 +9,22 @@ namespace Talktif.Hubs
 {
     public class ChatHub : Hub<IChatClient>
     {
-        private IChatRepo _chatRepo;
-        private ICookieService _cookieService;
-        ChatHub(IChatRepo chatRepo, ICookieService cookieService)
-        {
-            _chatRepo = chatRepo;
-            _cookieService = cookieService;
+        private void Debug(){
+            // DEBUG
+            System.Console.WriteLine("\nRoom");
+            foreach (RandomRoom item in RoomManager.Instance.RoomList)
+            {
+                System.Console.WriteLine(item.ID);
+                foreach (WaitUser usr in item.Members)
+                {
+                    System.Console.WriteLine(usr.ConnectionID);
+                }
+            }
+            System.Console.WriteLine("Queue");
+            foreach (WaitUser item in QueueManager.Instance.UserQueue)
+            {
+                System.Console.WriteLine(item.ConnectionID);
+            }
         }
         public async Task SendMessage(string message)
         {
@@ -22,30 +33,16 @@ namespace Talktif.Hubs
             {
                 await Clients.Group(room.ID).ReceiveMessage(Context.ConnectionId, message);
             }
-
-            // DEBUG
-            // System.Console.WriteLine("\nRoom");
-            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            // {
-            //     System.Console.WriteLine(item.ID);
-            //     foreach (WaitUser usr in item.Members)
-            //     {
-            //         System.Console.WriteLine(usr.ConnectionID);
-            //     }
-            // }
-            // System.Console.WriteLine("Queue");
-            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            // {
-            //     System.Console.WriteLine(item.ConnectionID);
-            // }
+            Debug();
         }
-        public async Task AddToQueue(int userID, string username)
+        public async Task AddToQueue(int userID, string username, string filter)
         {
             RandomRoom room = QueueManager.Instance.Enqueue(new WaitUser
             {
                 ConnectionID = Context.ConnectionId,
                 UserID = userID,
-                UserName = username
+                UserName = username,
+                Filter = filter
             });
 
             if (room != null)
@@ -58,20 +55,7 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            // System.Console.WriteLine("\nRoom");
-            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            // {
-            //     System.Console.WriteLine(item.ID);
-            //     foreach (WaitUser usr in item.Members)
-            //     {
-            //         System.Console.WriteLine(usr.ConnectionID);
-            //     }
-            // }
-            // System.Console.WriteLine("Queue");
-            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            // {
-            //     System.Console.WriteLine(item.ConnectionID);
-            // }
+            Debug();
         }
 
         public async Task LeaveChat(int userID, string username)
@@ -112,25 +96,7 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            // System.Console.WriteLine("\nRoom");
-            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            // {
-            //     System.Console.WriteLine(item.ID);
-            //     foreach (WaitUser usr in item.Members)
-            //     {
-            //         System.Console.WriteLine(usr.ConnectionID);
-            //         System.Console.WriteLine("Skip");
-            //         foreach (string sid in usr.SkipID)
-            //         {
-            //             System.Console.WriteLine(sid);
-            //         }
-            //     }
-            // }
-            // System.Console.WriteLine("Queue");
-            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            // {
-            //     System.Console.WriteLine(item.ConnectionID);
-            // }
+            Debug();
         }
 
         public async Task SkipChat(int userID, string username)
@@ -176,20 +142,7 @@ namespace Talktif.Hubs
             }
 
             // DEBUG
-            // System.Console.WriteLine("\nRoom");
-            // foreach (RandomRoom item in RoomManager.Instance.RoomList)
-            // {
-            //     System.Console.WriteLine(item.ID);
-            //     foreach (WaitUser usr in item.Members)
-            //     {
-            //         System.Console.WriteLine(usr.ConnectionID);
-            //     }
-            // }
-            // System.Console.WriteLine("Queue");
-            // foreach (WaitUser item in QueueManager.Instance.UserQueue)
-            // {
-            //     System.Console.WriteLine(item.ConnectionID);
-            // }
+            Debug();
         }
 
         public async Task AddFriend(string token)
@@ -212,7 +165,8 @@ namespace Talktif.Hubs
                 // Call API create chat room
                 if (room.Members.Length >= 2 && room.Members[0].FriendRequest && room.Members[1].FriendRequest)
                 {
-                    _chatRepo.CreateChatRoom(new CreateChatRoomRequest
+                    IChatRepo chatRepo = new ChatRepo();
+                    chatRepo.CreateChatRoom(new CreateChatRoomRequest
                     {
                         User1Id = room.Members[0].UserID,
                         User2Id = room.Members[1].UserID,
@@ -221,6 +175,13 @@ namespace Talktif.Hubs
                     }, token);
                 }
             }
+
+            Debug();
+        }
+
+        public async Task SaveFilter(int userID, string username, string filter){
+            await LeaveChat(userID, username);
+            await AddToQueue(userID, username, filter);
         }
 
         // Friend Chat
