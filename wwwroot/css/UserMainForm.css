@@ -944,7 +944,7 @@ hr.new-hr {
         justify-content: space-evenly !important;
     }
     select {
-        width: 250px !important;
+        width: 250px;
     }
     .sidebar {
         display: none;

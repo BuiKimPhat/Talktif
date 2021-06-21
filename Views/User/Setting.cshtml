@@ -49,7 +49,7 @@
                         <span class="details">Confirm Password :</span>
                         <input id="confirmpassword" type="password" value="" placeholder="Confirm Password" required disabled/>
                     </div>
-                    <div class="hobbies-ls">
+                    @* <div class="hobbies-ls">
                         <div class="hobbies-title">
                             <span>Hobbies</span>
                         </div>
@@ -116,9 +116,12 @@
                                 </td>
                             </label>
                         </div>
-                    </div>
-                    <div class="city d-flex justify-content-center align-items-center mb-3">
-                        <select name="format" id="format">
+                    </div> *@
+                    <div class="city-setting d-flex align-items-start mb-3 mt-3 ">
+                         <div class="city-title">
+                            <span>City:</span>
+                        </div>
+                        <select name="format" id="format" class="select-setting">
                             @foreach (var city in cities)
                             {
                                 <option value="@city.id" selected="@((user != null) && (user.cityId == city.id))">
