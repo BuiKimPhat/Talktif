@@ -14,7 +14,6 @@ namespace Talktif.Service
         List<Report_Infor> GetAllReport(HttpRequest Request, HttpResponse Response, long first, long last);
         long GetNumberofUser(HttpRequest Request);
         long GetNumberofReport(HttpRequest Request);
-        string GetNameCity(int cityID);
     }
     public class AdminService : IAdminService
     {
@@ -45,7 +44,7 @@ namespace Talktif.Service
                 users = JsonConvert.DeserializeObject<List<user>>(a);
                 for (int i = 0; i < users.Count; i++)
                 {
-                    users[i].cityID = GetNameCity(Int32.Parse(users[i].cityID));
+                    users[i].cityID = _userService.GetNameCity(Int32.Parse(users[i].cityID));
                 }
             }
             else
@@ -57,7 +56,7 @@ namespace Talktif.Service
                 users = JsonConvert.DeserializeObject<List<user>>(a);
                 for (int i = 0; i < users.Count; i++)
                 {
-                    users[i].cityID = GetNameCity(Int32.Parse(users[i].cityID));
+                    users[i].cityID = _userService.GetNameCity(Int32.Parse(users[i].cityID));
                 }
             }
             return users;
@@ -93,14 +92,6 @@ namespace Talktif.Service
         {
             Statistic a = GetStatisticData(Request);
             return a.numOfReport;
-        }
-        public string GetNameCity(int cityID)
-        {
-            foreach (var city in _userService.GetCity())
-            {
-                if (cityID == city.id) return city.name;
-            }
-            return "";
         }
     }
 }

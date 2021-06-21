@@ -9,6 +9,12 @@
     User_Infor user = new User_Infor();
     user = ViewBag.Data;
     ViewData["Name"] = user.name;
+    string a = "";
+    foreach(var i in cities)
+    {
+        if(i.id == user.cityId) a = i.name;
+    }
+    ViewData["city"] = a;
     <link rel="stylesheet" href="../css/Setting.css" />
 }
 <div class="container-fluid">

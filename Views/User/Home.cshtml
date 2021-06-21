@@ -1,8 +1,7 @@
-@using Talktif.Models
-@model User_Infor
 @{
     Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
-    ViewData["Name"] = (Model != null) ? Model.name : "";
+    ViewData["Name"] = (ViewBag.nameUser != null) ? ViewBag.nameUser : "";
+    ViewData["city"] = (ViewBag.nameCity != null) ? ViewBag.nameCity : "";
 }
  <div class="container-fluid">
         <div class="row row-wrapper">

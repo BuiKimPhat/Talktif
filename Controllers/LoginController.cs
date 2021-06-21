@@ -27,6 +27,11 @@ namespace Talktif.Controllers
         [HttpPost]
         public IActionResult Sign_In(IFormCollection form)
         {
+            if (String.IsNullOrEmpty(form["Email"].ToString()) || String.IsNullOrEmpty(form["Password"].ToString()))
+            {
+                ViewBag.Message = "An error had occur !";
+                return View("Index");
+            }
             LoginRequest lr = new LoginRequest() { Email = form["Email"].ToString(), Password = form["Password"].ToString(), Device = (System.Environment.MachineName).ToString() };
             var loginResult = _userService.Sign_In(lr);
             string a = loginResult.Content.ReadAsStringAsync().Result;
@@ -43,6 +48,16 @@ namespace Talktif.Controllers
         [HttpPost]
         public IActionResult Sign_Up(IFormCollection form)
         {
+            if (String.IsNullOrEmpty(form["Name"].ToString()) ||
+                String.IsNullOrEmpty(form["Email"].ToString()) ||
+                String.IsNullOrEmpty(form["Password"].ToString()) ||
+                String.IsNullOrEmpty(form["Gender"].ToString()) ||
+                String.IsNullOrEmpty(form["format"].ToString())
+            )
+            {
+                ViewBag.Message = "An error had occur !";
+                return View("Index");
+            }
             SignUpRequest sr = new SignUpRequest()
             {
                 Name = form["Name"].ToString(),
@@ -50,7 +65,6 @@ namespace Talktif.Controllers
                 Password = form["Password"].ToString(),
                 Gender = (form["Gender"].ToString() == "Male") ? true : false,
                 CityId = Convert.ToInt32(form["format"].ToString()),
-                Hobbies = "Travel",
                 Device = System.Environment.MachineName,
             };
             var signUpResult = _userService.Sign_Up(sr);

@@ -17,12 +17,9 @@ namespace Talktif.Controllers
         public IActionResult Home()
         {
             User_Infor user = _userService.Get_User_Infor(Request, Response);
-            return View(user);
-        }
-        public IActionResult History()
-        {
-            User_Infor user = _userService.Get_User_Infor(Request, Response);
-            return View(user);
+            ViewBag.nameUser = user.name;
+            ViewBag.nameCity = _userService.GetNameCity(user.cityId);
+            return View();
         }
         public IActionResult Logout()
         {

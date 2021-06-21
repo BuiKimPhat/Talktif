@@ -19,6 +19,7 @@ namespace Talktif.Service
         User_Infor Get_User_Infor(HttpRequest Request, HttpResponse Response);
         void RefreshToken(HttpResponse Response, Cookie_Data cookie);
         List<City> GetCity();
+        string GetNameCity(int cityID);
     }
     public class UserService : IUserService
     {
@@ -92,6 +93,14 @@ namespace Talktif.Service
             string Result = result.Content.ReadAsStringAsync().Result;
             cities = JsonConvert.DeserializeObject<List<City>>(Result);
             return cities;
+        }
+        public string GetNameCity(int cityID)
+        {
+            foreach (var city in GetCity())
+            {
+                if (cityID == city.id) return city.name;
+            }
+            return "";
         }
     }
 }
