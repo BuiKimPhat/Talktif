@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="btn-group">
-                <a class="submit mt-4 resize_font mr-1 action_home" asp-controller="User" asp-action="ChatSecret">Get Started</a>
+                <a class="submit mt-4 resize_font mr-1 action_home" asp-controller="Chat" asp-action="Index">Get Started</a>
                 <button id="dangnnhap" aria-expanded="false" class="mt-4 ml-3 resize_font submit">
                     Sign In
                 </button>
@@ -142,53 +142,6 @@
                         oninput="CheckConfirmPassword(event)" />
                     <div id="error_password_sign_up" class="text-center font-error"></div>
                     <div id="error_confirm_password" class="text-center font-error"></div>
-
-                    @* <div class="hobbies-ls">
-                        <div class="hobbies-title">
-                            <span>Hobbies</span>
-                        </div>
-
-                        <div class="hobbies-select">
-                            <input id="hobbies" type="text" name="hobbies" placeholder="Hobbies" required />
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" />Sport
-                            </div>
-
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Travel
-                            </div>
-
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Camping
-                            </div>
-
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Jogging
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Alone
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Talking
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Swimming
-                            </div>
-
-                            <div class="hobbies">
-                                <input type="checkbox" value="Sport" name="hobbies" /> Learning
-                            </div>
-
-
-                        </div>
-                    </div> *@
-
                    <div class="gender-details">
                         <span class="gender-title">Gender</span>
                         <div class="category">
@@ -207,7 +160,7 @@
                         </div>
                     </div>
                     <div class="city">
-                        <select name="format" id="format" defaultValue="All">
+                        <select name="format" id="format" >
                             @foreach (var city in cities)
                             {
                                 <option value="@city.id">

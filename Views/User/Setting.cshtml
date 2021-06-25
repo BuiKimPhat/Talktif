@@ -14,6 +14,7 @@
     {
         if(i.id == user.cityId) a = i.name;
     }
+    string name = (user != null) ? user.name : "";
     ViewData["city"] = a;
     <link rel="stylesheet" href="../css/Setting.css" />
 }
@@ -22,84 +23,37 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
             <div class="user-profile">
                 <h2 class="title">User Profile</h2>
-                <form action="#" class="form">
+                <form action="/User/Setting" class="form" method="POST">
                     <div class="user-info">
                         <span class="details">UserName :</span>
                         <div class="name">
-                        <input id="username" type="text" value=@((user == null) ? "" : user.name) placeholder="Username"
+                        <input id="username" name = "name" type="text" value="@name" placeholder="Username"
                             required disabled />
                         <i class="fas fa-edit username"></i>
                         </div>
                     </div>
                     <div class="user-info">
                         <span class="details">Email :</span>
-                        <input id="email" type="email" value=@((user == null) ? "" : user.email) placeholder="Email"
+                        <input id="email" name = "email" type="email" value=@((user == null) ? "" : user.email) placeholder="Email"
                             required disabled/>
                     </div>
+                    @* need fixing *@
                     <div class="user-info">
-                        <span class="details">Password :</span>
+                        <span class="details">Old Password :</span>
                         <div class="password">
-                            <input id="password" type="password" value="" placeholder="Password" required disabled />
-                            @* <span><i id="eye" class="fas fa-eye"></i> *@
-                        @* </span> *@
+                            <input id="password" name = "pass" type="password" value="" placeholder="Password"/>
                             <i class="fas fa-edit password"></i>
                             </div>
                     </div>
                     <div class="user-info">
-                        <span class="details">Confirm Password :</span>
-                        <input id="confirmpassword" type="password" value="" placeholder="Confirm Password" required disabled/>
+                        <span class="details">New Password :</span>
+                        <input id="newpassword" name = "newpass" type="password" value="" placeholder="NewPassword"/>
                     </div>
-                    @* <div class="hobbies-ls">
-                        <div class="hobbies-title">
-                            <span>Hobbies</span>
-                        </div>
-                        <div class="hobbies-select">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Travel" name="hobbies" /> Travel
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Camping" name="hobbies" /> Camping
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Jogging" name="hobbies" /> Jogging
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Alone" name="hobbies" /> Alone
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Talking" name="hobbies" /> Talking
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Swimming" name="hobbies" /> Swimming
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Learning" name="hobbies" /> Learning
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="user-info">
+                        <span class="details">Confirm New Password :</span>
+                        <input id="confirmpassword" name = "confirmpassword" type="password" value="" placeholder="Confirm Password"/>
                     </div>
+                    @* need fixing *@
                     <div class="gender-details">
                         <span class="gender-title">Gender</span>
                         <div class="category">
@@ -116,7 +70,7 @@
                                 </td>
                             </label>
                         </div>
-                    </div> *@
+                    </div> 
                     <div class="city-setting d-flex align-items-start mb-3 mt-3 ">
                          <div class="city-title">
                             <span>City:</span>

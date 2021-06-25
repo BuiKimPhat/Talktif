@@ -71,10 +71,8 @@ namespace Talktif.Controllers
             string a = signUpResult.Content.ReadAsStringAsync().Result;
             if (signUpResult.IsSuccessStatusCode)
             {
-                //create cookie
                 User_Infor user = JsonConvert.DeserializeObject<User_Infor>(a);
                 _userService.CreateCookie(Response, new Cookie_Data() { id = user.id, IsAdmin = user.isAdmin, email = user.email, token = user.token });
-                //create cookie
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.Message = a;
