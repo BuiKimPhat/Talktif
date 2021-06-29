@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Talktif.Models;
@@ -8,10 +10,11 @@ namespace Talktif.Service
 {
     public interface IChatService
     {
-        List<Room_Infor> FetchAllChatRoom(HttpRequest Request, HttpResponse Response);
-        List<Message> FetchMessage(HttpRequest Request, HttpResponse Response, int ID_Room, int TopMessage);
-        ChatRoom_Info GetChatRoomInfo(HttpRequest Request, HttpResponse Response, int ID_Room);
-        void AddMessage(HttpRequest Request, HttpResponse Response, string message, int IDChatRoom);
+        Task<List<Room_Infor>> FetchAllChatRoom(HttpRequest Request, HttpResponse Response);
+        Task<List<Message>> FetchMessage(HttpRequest Request, HttpResponse Response, int ID_Room, int TopMessage);
+        Task<ChatRoom_Info> GetChatRoomInfo(HttpRequest Request, HttpResponse Response, int ID_Room);
+        Task AddMessage(HttpRequest Request, HttpResponse Response, string message, int IDChatRoom);
+        Task<List<ChatBox>> GetListChatBox(HttpRequest Request, HttpResponse Response, int ID_User);
     }
     public class ChatService : IChatService
     {
@@ -22,10 +25,10 @@ namespace Talktif.Service
             _chatRepo = chatRepo;
             _userService = userService;
         }
-        public List<Room_Infor> FetchAllChatRoom(HttpRequest Request, HttpResponse Response)
+        public async Task<List<Room_Infor>> FetchAllChatRoom(HttpRequest Request, HttpResponse Response)
         {
-            var cookie = _userService.ReadCookie(Request);
-            var result = _chatRepo.FetchAllChatRoom(cookie.id, cookie.token);
+            var cookie = _userService.ReadUserCookie(Request);
+            var result = await _chatRepo.FetchAllChatRoom(cookie.id, cookie.token);
             string a = result.Content.ReadAsStringAsync().Result;
             if (result.IsSuccessStatusCode)
             {
@@ -33,18 +36,18 @@ namespace Talktif.Service
             }
             else
             {
-                _userService.RefreshToken(Response, cookie);
-                cookie = _userService.ReadCookie(Request);
-                result = _chatRepo.FetchAllChatRoom(cookie.id, cookie.token);
+                await _userService.RefreshToken(Response, cookie);
+                cookie = _userService.ReadUserCookie(Request);
+                result = await _chatRepo.FetchAllChatRoom(cookie.id, cookie.token);
                 a = result.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<List<Room_Infor>>(a);
             }
         }
-        public List<Message> FetchMessage(HttpRequest Request, HttpResponse Response, int ID_Room, int TopMessage)
+        public async Task<List<Message>> FetchMessage(HttpRequest Request, HttpResponse Response, int ID_Room, int TopMessage)
         {
-            var cookie = _userService.ReadCookie(Request);
-            var result = _chatRepo.FecthMessage(cookie.id, ID_Room, TopMessage, cookie.token);
+            var cookie = _userService.ReadUserCookie(Request);
+            var result = await _chatRepo.FecthMessage(cookie.id, ID_Room, TopMessage, cookie.token);
             string a = result.Content.ReadAsStringAsync().Result;
             if (result.IsSuccessStatusCode)
             {
@@ -52,18 +55,18 @@ namespace Talktif.Service
             }
             else
             {
-                _userService.RefreshToken(Response, cookie);
-                cookie = _userService.ReadCookie(Request);
-                result = _chatRepo.FecthMessage(cookie.id, ID_Room, TopMessage, cookie.token);
+                await _userService.RefreshToken(Response, cookie);
+                cookie = _userService.ReadUserCookie(Request);
+                result = await _chatRepo.FecthMessage(cookie.id, ID_Room, TopMessage, cookie.token);
                 a = result.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<List<Message>>(a);
             }
         }
-        public ChatRoom_Info GetChatRoomInfo(HttpRequest Request, HttpResponse Response, int ID_Room)
+        public async Task<ChatRoom_Info> GetChatRoomInfo(HttpRequest Request, HttpResponse Response, int ID_Room)
         {
-            var cookie = _userService.ReadCookie(Request);
-            var result = _chatRepo.GetChatRoomInfo(ID_Room, cookie.id, cookie.token);
+            var cookie = _userService.ReadUserCookie(Request);
+            var result = await _chatRepo.GetChatRoomInfo(ID_Room, cookie.id, cookie.token);
             string a = result.Content.ReadAsStringAsync().Result;
             if (result.IsSuccessStatusCode)
             {
@@ -71,24 +74,67 @@ namespace Talktif.Service
             }
             else
             {
-                _userService.RefreshToken(Response, cookie);
-                cookie = _userService.ReadCookie(Request);
-                result = _chatRepo.GetChatRoomInfo(ID_Room, cookie.id, cookie.token);
+                await _userService.RefreshToken(Response, cookie);
+                cookie = _userService.ReadUserCookie(Request);
+                result = await _chatRepo.GetChatRoomInfo(ID_Room, cookie.id, cookie.token);
                 a = result.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<ChatRoom_Info>(a);
             }
         }
-        public void AddMessage(HttpRequest Request, HttpResponse Response, string message, int IDChatRoom)
+        public async Task AddMessage(HttpRequest Request, HttpResponse Response, string message, int IDChatRoom)
         {
-            var cookie = _userService.ReadCookie(Request);
-            var result = _chatRepo.AddMessage(message, cookie.id, IDChatRoom, cookie.token);
+            var cookie = _userService.ReadUserCookie(Request);
+            var result = await _chatRepo.AddMessage(message, cookie.id, IDChatRoom, cookie.token);
             if (!(result.IsSuccessStatusCode))
             {
-                _userService.RefreshToken(Response, cookie);
-                cookie = _userService.ReadCookie(Request);
-                result = _chatRepo.AddMessage(message, cookie.id, IDChatRoom, cookie.token);
+                await _userService.RefreshToken(Response, cookie);
+                cookie = _userService.ReadUserCookie(Request);
+                result = await _chatRepo.AddMessage(message, cookie.id, IDChatRoom, cookie.token);
             }
+        }
+        public async Task<List<ChatBox>> GetListChatBox(HttpRequest Request, HttpResponse Response, int Id_User)
+        {
+            List<ChatBox> list = new List<ChatBox>();
+            List<Room_Infor> room_Infors = await FetchAllChatRoom(Request, Response);
+            foreach (var room in room_Infors)
+            {
+                ChatRoom_Info infor = await GetChatRoomInfo(Request, Response, room.id);
+                List<Message> messages = await FetchMessage(Request, Response, room.id, 1);
+
+                int Id_Partner, Sender = 0;
+                string NamePartNer, Message = "";
+                DateTime date = DateTime.Now;
+                if (infor.user1Id == Id_User)
+                {
+                    Id_Partner = infor.user2Id;
+                    NamePartNer = infor.nickName2;
+                }
+                else
+                {
+                    Id_Partner = infor.user1Id;
+                    NamePartNer = infor.nickName1;
+                }
+                foreach (var mess in messages)
+                {
+                    Sender = mess.sender;
+                    Message = mess.content;
+                    date = mess.sentAt;
+                }
+
+                list.Add(new ChatBox()
+                {
+                    ID_User = Id_User,
+                    ID_Room = room.id,
+                    ID_Partner = Id_Partner,
+                    Name_PartNer = NamePartNer,
+                    Sender = Sender,
+                    LastMessage = Message,
+                    LastTime = date,
+                }
+                );
+            }
+            return list;
         }
     }
 }

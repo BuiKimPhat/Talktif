@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Talktif.Models;
@@ -22,17 +23,17 @@ namespace Talktif.Controllers
             _userService = userService;
             _adminService = adminService;
         }
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
-            return View(_adminService.GetStatisticData(Request));
+            return View( await _adminService.GetStatisticData(Request,Response));
         }
-        public IActionResult Users(string PageNum)
+        public async  Task<IActionResult> Users(string PageNum)
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
 
             long first = 8, last = 0;
-            long NumberofUser = _adminService.GetNumberofUser(Request);
+            long NumberofUser = await _adminService.GetNumberofUser(Request,Response);
 
             if (String.IsNullOrEmpty(PageNum) == false)
             {
@@ -42,18 +43,18 @@ namespace Talktif.Controllers
             }
             first = (NumberofUser < first) ? NumberofUser : first;
             List<user> users = new List<user>();
-            users = _adminService.GetAllUser(Request, Response, first, last);
+            users = await _adminService.GetAllUser(Request, Response, first, last);
 
             ViewBag.Users = users;
             ViewBag.NumberofUser = NumberofUser;
             return View();
         }
-        public IActionResult ReportUser(string PageNum)
+        public async Task<IActionResult> ReportUser(string PageNum)
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
 
             long first = 8, last = 0;
-            long NumberofReport = _adminService.GetNumberofReport(Request);
+            long NumberofReport =await _adminService.GetNumberofReport(Request,Response);
 
             if (String.IsNullOrEmpty(PageNum) == false)
             {
@@ -63,16 +64,19 @@ namespace Talktif.Controllers
             }
             first = (NumberofReport > first) ? first : NumberofReport;
             List<Report_Infor> reports = new List<Report_Infor>();
-            reports = _adminService.GetAllReport(Request, Response, first, last);
+            reports =await _adminService.GetAllReport(Request, Response, first, last);
 
             ViewBag.Reports = reports;
             ViewBag.NumberofReport = NumberofReport;
             return View();
         }
-        public IActionResult Setting()
+        public async Task<IActionResult> Setting()
         {
-            if (_userService.IsAdmin(Request) != true) return NotFound();
-            return View();
+            if( _userService.IsAdmin(Request) != true) return NotFound();
+            User_Infor user = await _userService.Get_User_Infor(Request, Response);
+            ViewBag.Data = user;
+            ViewBag.Cities =await _userService.GetCity();
+            return View("AdminSetting");
         }
     }
 }

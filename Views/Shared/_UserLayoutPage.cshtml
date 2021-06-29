@@ -69,6 +69,12 @@
                         </a>
                     </li>
                 </ul>
+                <div class="talktif_copy_right text-center">
+                <div class="copy-right">
+                    <div class="copyright">&copy;TalkTif-2021</div>
+                </div>
+                </div>
+                </div>
             </div>
         </div>
 
@@ -114,7 +120,6 @@
                 $(".Update-Profile").click(function() {
                 if($("#username").val() && $("#email").val() && $("#password").val() && $("#confirmpassword").val())
                 {
-                    console.log("Ok");
                     var r = confirm("Are you sure want to update profile ?");
                     if(r == true) alert("Update Profile Successfully.");
                 }

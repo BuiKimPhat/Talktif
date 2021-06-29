@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Service;
 
@@ -21,7 +22,7 @@ namespace Talktif.Controllers
         public IActionResult Index()
         {
             Cookie_Data data = new Cookie_Data();
-            data = _userService.ReadCookie(Request);
+            data = _userService.ReadUserCookie(Request);
 
             if (data == null)
             {

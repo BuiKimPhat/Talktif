@@ -8,6 +8,11 @@
     {
         cities = ViewBag.Cities;
     }
+    List<ChatBox> ChatBoxes = new List<ChatBox>();
+    if (ViewBag.ListChatBox != null)
+    {
+        ChatBoxes = ViewBag.ListChatBox;
+    }
 }
 <div class="container-fluid">
     <div class="row row-wrapper">
@@ -38,18 +43,51 @@
                 <div class="row">
                     <div
                         class="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex align-items-center justify-content-between tablet_gender">
-                        <button id="type" class="btn mr-1 type-actor one">
+                        @* <button id="type" class="btn mr-1 type-actor one">
                             <img src="/img/friendship.png" alt="" srcset="">
                             All
-                        </button>
-                        <button id="type" class="btn mr-1 type-actor two">
+                            </button>
+                            <button id="type" class="btn mr-1 type-actor two">
                             <img src="/img/boy.png" alt="" srcset="">
                             Male
-                        </button>
-                        <button id="type" class="btn mr-1 type-actor three">
+                            </button>
+                            <button id="type" class="btn mr-1 type-actor three">
                             <img src="/img/girl.png" alt="" srcset="">
                             Female
-                        </button>
+                            </button> *@
+                        <div class="category">
+                            @* <button id="type" class="btn mr-1 type-actor one"> *@
+                            <div class="select-gender">
+                                @Html.RadioButton("Gender","All")
+                                <label id="type" class="btn mr-1 type-actor one" for="All">
+                                    <td>
+                                        <img src="/img/friendship.png" alt="" srcset=""> All
+                                    </td>
+                                </label>
+                            </div>
+                            @* </button> *@
+                            @* <button id="type" class="btn mr-1 type-actor two"> *@
+                            <div class="select-gender">
+                                @Html.RadioButton("Gender","Male")
+                                <label id="type" class="btn mr-1 type-actor two">
+                                    <td>
+                                        <img src="/img/boy.png" alt="" srcset=""> Male
+                                    </td>
+                                </label>
+                            </div>
+                            @* </button> *@
+                            @* <button id="type" class="btn mr-1 type-actor three"> *@
+                            <div class="select-gender">
+                                @Html.RadioButton("Gender","Female")
+                                <label id="type" class="btn mr-1 type-actor three">
+                                    <td>
+                                        <img src="/img/girl.png" alt="" srcset=""> Female
+                                    </td>
+                                </label>
+                            </div>
+                            @* </button> *@
+                            @* </div> *@
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -144,85 +182,23 @@
                             <span class="ti-search"></span>
                         </div>
                         <div class="user-history-profile">
-                            <div class="user-history-item">
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
+                            @foreach (var item in ChatBoxes)
+                            {
+                                <div class="user-history-item">
+                                    <div class="name-user">
+                                        <p>
+                                            @item.Name_PartNer
+                                        </p>
+                                        <span>
+                                            @((item.Sender == item.ID_User) ? "you " : item.Name_PartNer)
+                                            : @item.LastMessage
+                                        </span>
+                                    </div>
+                                    <div class="time-chat">
+                                        @((item.LastTime).Hour) : @((item.LastTime).Minute)
+                                    </div>
                                 </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
-                            <div class="user-history-item">
-
-                                <div class="name-user">
-                                    <p>Hải Quý</p>
-                                    <span>Are you meeting today here you?</span>
-                                </div>
-                                <div class="time-chat">3.47 p.m</div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>

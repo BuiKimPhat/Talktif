@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Talktif.Models;
 using Talktif.Service;
 
@@ -18,40 +21,66 @@ namespace Talktif.Controllers
             _userService = userService;
             _chatService = chatService;
         }
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
-            ViewBag.Cities = _userService.GetCity();
-            User_Infor user = _userService.Get_User_Infor(Request, Response);
+            ViewBag.Cities = await _userService.GetCity();
+            User_Infor user =await _userService.Get_User_Infor(Request, Response);
             ViewBag.nameUser = user.name;
-            ViewBag.nameCity = _userService.GetNameCity(user.cityId);
+            ViewBag.nameCity = await _userService.GetNameCity(user.cityId);
+            List<ChatBox> list = await _chatService.GetListChatBox(Request,Response,user.id);
+            ViewBag.ListChatBox = list;
             return View();
         }
         public IActionResult Logout()
         {
-            _userService.RemoveCookie(Response);
+            _userService.RemoveUserCookie(Response);
             return RedirectToAction("Index", "Login");
         }
-        public IActionResult Setting()
+        public async Task<IActionResult> Setting()
         {
-            User_Infor user = _userService.Get_User_Infor(Request, Response);
+            User_Infor user =await _userService.Get_User_Infor(Request, Response);
             ViewBag.Data = user;
-            ViewBag.Cities = _userService.GetCity();
+            ViewBag.Cities =await _userService.GetCity();
             return View();
         }
         [HttpPost]
-        public IActionResult Setting(IFormCollection form)
+        public async Task<IActionResult> Setting(IFormCollection form)
         {
-            string name = form["name"].ToString();
-            string email = form["email"].ToString();
-            string pass = form["password"].ToString();
-            string newpass = form["newpassword"].ToString();
+
+            User_Infor user = await _userService.Get_User_Infor(Request, Response);
+            ViewBag.Data = user;
+            ViewBag.Cities =await _userService.GetCity();
+
+            string oldpass = form["pass"].ToString();
+            string newpass = form["newpass"].ToString();
             string confirmpass = form["confirmpassword"].ToString();
+            string name = (String.IsNullOrEmpty(form["name"].ToString())) ? user.name : form["name"].ToString();
+            string email = (String.IsNullOrEmpty(form["email"].ToString())) ? user.email : form["email"].ToString();
             bool gender = (form["Gender"].ToString() == "Male") ? true : false;
             int CityId = Convert.ToInt32(form["format"].ToString());
-            Console.WriteLine(pass);
-            Console.WriteLine(newpass);
-            Console.WriteLine(confirmpass);
-            return RedirectToAction("Home");
+
+            if (newpass != confirmpass)
+            {
+                ViewBag.message = "Confirm new password does not match";
+
+                return View("Setting");
+            }
+            else if (oldpass == "")
+            {
+                ViewBag.message = "The password field is requied";
+                return View("Setting");
+            }
+            else if (newpass == "")
+            {
+                newpass = oldpass;
+            }
+            string message =await _userService.UpdateUserInfor(Request, Response, name, email, newpass, oldpass, CityId, gender);
+            if (message == null) return RedirectToAction("Home");
+            else
+            {
+                ViewBag.message = message;
+                return View("Setting");
+            }
         }
     }
 }

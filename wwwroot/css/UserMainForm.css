@@ -111,7 +111,7 @@ a.btn-exit i {
     color: #fff;
     overflow-y: auto;
     transition: width 500ms;
-    overflow-x: hidden;
+    overflow: hidden;
     z-index: 100;
 }
 
@@ -157,6 +157,7 @@ a.btn-exit i {
 .sidebar-menu {
     padding: 0px !important;
     padding-right: 0px;
+    height: 100%;
 }
 
 .sidebar li {
@@ -216,6 +217,19 @@ span.icon {
     display: flex;
     justify-content: center;
 }
+.talktif_copy_right{
+    height: 100%;
+}
+
+
+.copyright{
+    position: absolute;
+    bottom: 5px;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+
+}
 
 
 /* Hobbies */
@@ -263,6 +277,35 @@ input[type="checkbox"] {
     height: 20px;
 }
 
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+label#type.type-actor {
+    border-radius: 50%;
+    outline: none;
+    border: 2px solid #00dd99 !important;
+    width: 115px;
+}
+
+label#type.three {
+    width: fit-content;
+}
+
+
+
+.tablet_gender .category {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input#Gender:checked+label#type.type-actor {
+    background: #00dd99 !important;
+}
 
 /* Main Content */
 
@@ -734,7 +777,7 @@ hr.new-hr {
         width: 200px;
         padding: 5px;
     }
-    button.btn-next-person {
+    .btn-next-person {
         width: 110px;
     }
     .message-box-content {
@@ -812,7 +855,7 @@ hr.new-hr {
         width: 230px;
         padding: 5px;
     }
-    button.btn-next-person {
+   .btn-next-person {
         width: 110px;
     }
     .message-box-content {
@@ -894,7 +937,7 @@ hr.new-hr {
         width: 370px;
         padding: 5px;
     }
-    button.btn-next-person {
+    .btn-next-person {
         width: 110px;
     }
     .message-box-content {
@@ -993,7 +1036,7 @@ hr.new-hr {
         width: 290px;
         padding: 5px;
     }
-    button.btn-next-person {
+   .btn-next-person {
         width: 110px;
     }
     .message-box-content {
