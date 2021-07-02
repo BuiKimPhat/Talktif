@@ -33,5 +33,9 @@ namespace Talktif.Controllers
             ViewBag.Infor = a;
             return View();
         }
+        public IActionResult Chat() 
+        {
+            return View("Chating");
+        }
     }
 }

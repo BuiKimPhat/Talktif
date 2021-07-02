@@ -26,7 +26,7 @@
             <div class="card-body">
                 <span class="ti-reload"></span>
                 <div>
-                    <h5>ChatRoom</h5>
+                    <h5>ChatRooms</h5>
                     <h4>@(Model.numOfChatRoom)</h4>
                 </div>
             </div>
@@ -47,12 +47,24 @@
                 <a href="/Admin/ReportUser">View all</a>
             </div>
         </div>
+         <div class="card-single">
+            <div class="card-body">
+                <span class="ti-id-badge"></span>
+                <div>
+                    <h5>Messages</h5>
+                    <h4>@(Model.numOfMessage)</h4>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#">View all</a>
+            </div>
+        </div>
     </div>
 
     <section class="recent">
         <div class="activity-grid">
             <div class="activity-card">
-                <h3>Recent activity</h3>
+                <h3>Group</h3>
 
                 <div class="table-responsive">
                     <table>
@@ -72,8 +84,8 @@
                                 <td>22 Aug, 2020</td>
                                 <td class="td-team">
                                     <div class="img-1"></div>
-                                    <div class="img-2"></div>
-                                    <div class="img-3"></div>
+                                    @* <div class="img-2"></div>
+                                    <div class="img-3"></div> *@
                                 </td>
                                 <td>
                                     <span class="badge success">Success</span>
@@ -85,8 +97,8 @@
                                 <td>22 Aug, 2020</td>
                                 <td class="td-team">
                                     <div class="img-1"></div>
-                                    <div class="img-2"></div>
-                                    <div class="img-3"></div>
+                                    @* <div class="img-2"></div>
+                                    <div class="img-3"></div> *@
                                 </td>
                                 <td>
                                     <span class="badge warning">Processing</span>
@@ -98,8 +110,8 @@
                                 <td>22 Aug, 2020</td>
                                 <td class="td-team">
                                     <div class="img-1"></div>
-                                    <div class="img-2"></div>
-                                    <div class="img-3"></div>
+                                    @* <div class="img-2"></div>
+                                    <div class="img-3"></div> *@
                                 </td>
                                 <td>
                                     <span class="badge success">Success</span>
@@ -111,14 +123,14 @@
                                 <td>22 Aug, 2020</td>
                                 <td class="td-team">
                                     <div class="img-1"></div>
-                                    <div class="img-2"></div>
-                                    <div class="img-3"></div>
+                                    @* <div class="img-2"></div>
+                                    <div class="img-3"></div> *@
                                 </td>
                                 <td>
                                     <span class="badge warning">Processing</span>
                                 </td>
                             </tr>
-                            <tr>
+                            @* <tr>
                                 <td>Web Development</td>
                                 <td>15 Aug, 2020</td>
                                 <td>22 Aug, 2020</td>
@@ -130,13 +142,13 @@
                                 <td>
                                     <span class="badge success">Success</span>
                                 </td>
-                            </tr>
+                            </tr> *@
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="summary">
+            @* <div class="summary">
                 <div class="summary-card">
                     <div class="summary-single">
                         <span class="ti-id-badge"></span>
@@ -177,7 +189,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </section>
 </main>
