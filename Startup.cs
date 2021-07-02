@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Talktif.Hubs;
+using Talktif.Data;
 using Talktif.Repository;
 using Talktif.Service;
 
@@ -35,6 +37,8 @@ namespace Talktif
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<IAdminService, AdminService>();
             services.AddControllersWithViews();
+            services.AddTransient<IUserFavRepository, UserFavRepository>();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +66,7 @@ namespace Talktif
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
