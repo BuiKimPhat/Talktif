@@ -12,7 +12,12 @@ namespace Talktif.Service
     {
         Task<Statistic> GetStatisticData(HttpRequest Request, HttpResponse Response);
         Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response, long first, long last);
+        Task<User_Infor> GetUserInfo(HttpRequest Request, HttpResponse Response, int ID_User);
+        Task<bool> UpdateUser(HttpRequest Request, HttpResponse Response, UpdateUserRequest updateRequest);
+        Task<bool> DeleteUser(HttpRequest Request, HttpResponse Response, int ID);
         Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response, long first, long last);
+        Task<Report_Infor> GetReportInfo(HttpRequest Request, HttpResponse Response, int ID_Report);
+        Task<bool> UpdateReport(HttpRequest Request, HttpResponse Response, UpdateReportRequest updateRequest);
         Task<long> GetNumberofUser(HttpRequest Request, HttpResponse Response);
         Task<long> GetNumberofReport(HttpRequest Request, HttpResponse Response);
     }
@@ -29,84 +34,239 @@ namespace Talktif.Service
         }
         public async Task<Statistic> GetStatisticData(HttpRequest Request, HttpResponse Response)
         {
-            Statistic statistic = new Statistic();
-            Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
-            var result = await _adminRepo.Statistic(cookie_Data.token);
-            string statisticsResult = result.Content.ReadAsStringAsync().Result;
             try
             {
-                statistic = JsonConvert.DeserializeObject<Statistic>(statisticsResult);
-                return statistic;
+                Statistic statistic = new Statistic();
+                Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.Statistic(cookie_Data.token);
+                string statisticsResult = result.Content.ReadAsStringAsync().Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Statistic>(statisticsResult);
+                }
+                else
+                {
+                    await _userService.RefreshToken(Response, cookie_Data);
+                    cookie_Data = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.Statistic(cookie_Data.token);
+                    statisticsResult = result.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<Statistic>(statisticsResult);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                await _userService.RefreshToken(Response, cookie_Data);
-                cookie_Data = _userService.ReadUserCookie(Request);
-                result = await _adminRepo.Statistic(cookie_Data.token);
-                statisticsResult = result.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<Statistic>(statisticsResult);
+                return new Statistic();
             }
         }
         public async Task<List<user>> GetAllUser(HttpRequest Request, HttpResponse Response, long first, long last)
         {
-            List<user> users = new List<user>();
-            Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
-            var result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
-            string a = result.Content.ReadAsStringAsync().Result;
-            if (result.IsSuccessStatusCode)
+            try
             {
-                users = JsonConvert.DeserializeObject<List<user>>(a);
-                for (int i = 0; i < users.Count; i++)
+                List<user> users = new List<user>();
+                Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
+                string a = result.Content.ReadAsStringAsync().Result;
+                if (result.IsSuccessStatusCode)
                 {
-                    users[i].cityID = await _userService.GetNameCity(Int32.Parse(users[i].cityID));
+                    users = JsonConvert.DeserializeObject<List<user>>(a);
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        users[i].cityID = await _userService.GetNameCity(Int32.Parse(users[i].cityID));
+                    }
+                }
+                else
+                {
+                    await _userService.RefreshToken(Response, cookie_Data);
+                    cookie_Data = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
+                    a = result.Content.ReadAsStringAsync().Result;
+                    users = JsonConvert.DeserializeObject<List<user>>(a);
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        users[i].cityID = await _userService.GetNameCity(Int32.Parse(users[i].cityID));
+                    }
+                }
+                return users;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new List<user>();
+            }
+        }
+        public async Task<User_Infor> GetUserInfo(HttpRequest Request, HttpResponse Response, int ID_User)
+        {
+            try
+            {
+                Cookie_Data cookie = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.GetUserInfo(ID_User, cookie.token);
+                string a = result.Content.ReadAsStringAsync().Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<User_Infor>(a);
+                }
+                else
+                {
+                    await _userService.RefreshToken(Response, cookie);
+                    cookie = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.GetUserInfo(ID_User, cookie.token);
+                    a = result.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<User_Infor>(a);
                 }
             }
-            else
+            catch (Exception e)
             {
-                await _userService.RefreshToken(Response, cookie_Data);
-                cookie_Data = _userService.ReadUserCookie(Request);
-                result = await _adminRepo.GetAllUser(first, last, cookie_Data.token);
-                a = result.Content.ReadAsStringAsync().Result;
-                users = JsonConvert.DeserializeObject<List<user>>(a);
-                for (int i = 0; i < users.Count; i++)
-                {
-                    users[i].cityID = await _userService.GetNameCity(Int32.Parse(users[i].cityID));
-                }
+                Console.WriteLine(e.Message);
+                return new User_Infor();
             }
-            return users;
+        }
+        public async Task<bool> UpdateUser(HttpRequest Request, HttpResponse Response, UpdateUserRequest updateRequest)
+        {
+            try
+            {
+                Cookie_Data cookie = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.UpdateUser(updateRequest, cookie.token);
+                if (result.IsSuccessStatusCode) return true;
+                else if ((result.StatusCode.ToString() == "Unauthorized"))
+                {
+                    await _userService.RefreshToken(Response, cookie);
+                    cookie = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.UpdateUser(updateRequest, cookie.token);
+                    return true;
+                }
+                else throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public async Task<bool> DeleteUser(HttpRequest Request, HttpResponse Response, int ID)
+        {
+            try
+            {
+                Cookie_Data cookie = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.DeleteUser(ID, cookie.token);
+                if (result.IsSuccessStatusCode) return true;
+                else if ((result.StatusCode.ToString() == "Unauthorized"))
+                {
+                    await _userService.RefreshToken(Response, cookie);
+                    cookie = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.DeleteUser(ID, cookie.token);
+                    return true;
+                }
+                else throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
         public async Task<List<Report_Infor>> GetAllReport(HttpRequest Request, HttpResponse Response, long first, long last)
         {
-            List<Report_Infor> reports = new List<Report_Infor>();
-            Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
-            var result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);
-            string a = result.Content.ReadAsStringAsync().Result;
-            if (result.IsSuccessStatusCode)
+            try
             {
-                Console.WriteLine("Success");
-                reports = JsonConvert.DeserializeObject<List<Report_Infor>>(a);
+                List<Report_Infor> reports = new List<Report_Infor>();
+                Cookie_Data cookie_Data = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);
+                string a = result.Content.ReadAsStringAsync().Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    ;
+                    reports = JsonConvert.DeserializeObject<List<Report_Infor>>(a);
+                }
+                else
+                {
+                    await _userService.RefreshToken(Response, cookie_Data);
+                    cookie_Data = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);
+                    a = result.Content.ReadAsStringAsync().Result;
+                    reports = JsonConvert.DeserializeObject<List<Report_Infor>>(a);
+                }
+                return reports;
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Toang");
-                await _userService.RefreshToken(Response, cookie_Data);
-                cookie_Data = _userService.ReadUserCookie(Request);
-                result = await _adminRepo.GetAllReport(first, last, cookie_Data.token);
-                a = result.Content.ReadAsStringAsync().Result;
-                reports = JsonConvert.DeserializeObject<List<Report_Infor>>(a);
+                Console.WriteLine(e.Message);
+                return new List<Report_Infor>();
             }
-            return reports;
+        }
+        public async Task<Report_Infor> GetReportInfo(HttpRequest Request, HttpResponse Response, int ID_Report)
+        {
+            try
+            {
+                Cookie_Data cookie = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.GetReportInfo(ID_Report, cookie.token);
+                string a = result.Content.ReadAsStringAsync().Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return JsonConvert.DeserializeObject<Report_Infor>(a);
+                }
+                else
+                {
+                    await _userService.RefreshToken(Response, cookie);
+                    cookie = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.GetReportInfo(ID_Report, cookie.token);
+                    a = result.Content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<Report_Infor>(a);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new Report_Infor();
+            }
+        }
+        public async Task<bool> UpdateReport(HttpRequest Request, HttpResponse Response, UpdateReportRequest updateRequest)
+        {
+            try
+            {
+                Cookie_Data cookie = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.UpdateReport(updateRequest, cookie.token);
+                if (result.IsSuccessStatusCode) return true;
+                else if ((result.StatusCode.ToString() == "Unauthorized"))
+                {
+                    await _userService.RefreshToken(Response, cookie);
+                    cookie = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.UpdateReport(updateRequest, cookie.token);
+                    return true;
+                }
+                else throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
         public async Task<long> GetNumberofUser(HttpRequest Request, HttpResponse Response)
         {
-            Statistic a = await GetStatisticData(Request, Response);
-            return a.numOfUser;
+            try
+            {
+                Statistic a = await GetStatisticData(Request, Response);
+                return a.numOfUser;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
         }
         public async Task<long> GetNumberofReport(HttpRequest Request, HttpResponse Response)
         {
-            Statistic a = await GetStatisticData(Request, Response);
-            return a.numOfReport;
+            try
+            {
+                Statistic a = await GetStatisticData(Request, Response);
+                return a.numOfReport;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 0;
+            }
         }
     }
 }

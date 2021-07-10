@@ -4,7 +4,7 @@
     ViewData["Title"] = "All User";
     <link rel="stylesheet" href="../css/AdminUser.css" />
     List<user> users = new List<user>();
-    if(ViewBag.Users != null)
+    if (ViewBag.Users != null)
     {
         users = ViewBag.Users;
     }
@@ -30,10 +30,10 @@
                 <tr>
                     @* <th>
                         <span class="custom-checkbox">
-                            <input type="checkbox" id="selectAll">
-                            <label for="selectAll"></label>
+                        <input type="checkbox" id="selectAll">
+                        <label for="selectAll"></label>
                         </span>
-                    </th> *@
+                        </th> *@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -49,10 +49,10 @@
                     <tr>
                         @* <td>
                             <span class="custom-checkbox">
-                                <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                <label for="checkbox1"></label>
+                            <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                            <label for="checkbox1"></label>
                             </span>
-                        </td> *@
+                            </td> *@
                         <td>
                             @Html.DisplayFor(modelItem => item.id)
                         </td>
@@ -75,10 +75,10 @@
                             @Html.DisplayFor(modelItem => item.cityID)
                         </td>
                         <td>
-                            <a href="#editUserModal" class="edit" data-toggle="modal"><i class="material-icons"
+                            <a href="/Admin/UpdateUser?id=@item.id" class="edit"><i class="material-icons"
                                 data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteUserModal" class="delete" data-toggle="modal"><i class="material-icons"
-                                data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="/Admin/DeleteUser?id=@item.id" class="delete"><i class="material-icons"
+                                data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
                         </td>
                     </tr>
                 }
@@ -136,97 +136,97 @@
                     @* <div class="form-group">
                         <label>Is Admin :</label>
                         <select name="format" id="format" defaultValue="False">
-                            <option value="True">True</option>
-                            <option value="False">False</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
                         </select>
-                    </div> *@
+                        </div> *@
                     @* <div class="form-group">
                         <label>Hobbies :</label>
                         <div class="hobbies-select">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
                         </div>
-                    </div> *@
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
+                        </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
                     <div class="form-group">
                         <label>Gender:</label>
-                         <div class="gender-details">
-                        @* <span class="gender-title">Gender :</span> *@
-                        <div class="category d-flex justify-content-around">
-                            <label>
-                                @Html.RadioButton("Gender","Male")
-                                <td>
-                                    Male
-                                </td>
-                            </label>
-                            <label>
-                                @Html.RadioButton("Gender","Female")
-                                <td>
-                                    Female
-                                </td>
-                            </label>
+                        <div class="gender-details">
+                            @* <span class="gender-title">Gender :</span> *@
+                            <div class="category d-flex justify-content-around">
+                                <label>
+                                    @Html.RadioButton("Gender","Male")
+                                    <td>
+                                        Male
+                                    </td>
+                                </label>
+                                <label>
+                                    @Html.RadioButton("Gender","Female")
+                                    <td>
+                                        Female
+                                    </td>
+                                </label>
+                            </div>
                         </div>
-                    </div> 
                         @* <div class="gender-details">
                             <input type="radio" name="gender" id="dot-1" />
                             <input type="radio" name="gender" id="dot-2" />
                             <input type="radio" name="gender" id="dot-3" />
                             <div class="category">
-                                <label for="dot-1">
-                                    <span class="dot one"></span>
-                                    <span class="gender">Female</span>
-                                </label>
-                                <label for="dot-2">
-                                    <span class="dot two"></span>
-                                    <span class="gender">Male</span>
-                                </label>
-                                <label for="dot-3">
-                                    <span class="dot three"></span>
-                                    <span class="gender">Underfied</span>
-                                </label>
+                            <label for="dot-1">
+                            <span class="dot one"></span>
+                            <span class="gender">Female</span>
+                            </label>
+                            <label for="dot-2">
+                            <span class="dot two"></span>
+                            <span class="gender">Male</span>
+                            </label>
+                            <label for="dot-3">
+                            <span class="dot three"></span>
+                            <span class="gender">Underfied</span>
+                            </label>
                             </div>
-                        </div> *@
+                            </div> *@
                     </div>
                     <div class="form-group">
                         <label>City :</label>
@@ -235,18 +235,18 @@
                             <option value="HN">HN</option>
                             <option value="TPHCM">TPHCM</option>
                             <option value="DN">DN</option>
-                        </select> *@
-                         @* <div class="city-setting d-flex align-items-center mb-3 mt-3 ">
-                         <div class="city-title">
+                            </select> *@
+                        @* <div class="city-setting d-flex align-items-center mb-3 mt-3 ">
+                            <div class="city-title">
                             <span>City:</span>
-                        </div> *@
+                            </div> *@
                         <div class="city-box w-100">
-                        <select name="format" id="format" class="select-setting d-flex">
-                            <option value="All">All</option>
-                            <option value="HN">HN</option>
-                            <option value="TPHCM">TPHCM</option>
-                            <option value="DN">DN</option>
-                        </select>
+                            <select name="format" id="format" class="select-setting d-flex">
+                                <option value="All">All</option>
+                                <option value="HN">HN</option>
+                                <option value="TPHCM">TPHCM</option>
+                                <option value="DN">DN</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -283,111 +283,111 @@
                     @* <div class="form-group">
                         <label>Is Admin :</label>
                         <select name="format" id="format" defaultValue="False">
-                            <option value="True">True</option>
-                            <option value="False">False</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
                         </select>
-                    </div>
-                    <div class="form-group">
+                        </div>
+                        <div class="form-group">
                         <label>Hobbies :</label>
                         <div class="hobbies-select">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="hobbies">
-                                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Sport
                         </div>
-                    </div> *@
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Travel
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Camping
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Jogging
+                        </div>
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Alone
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Talking
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Swimming
+                        </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <div class="hobbies">
+                        <input type="checkbox" value="Sport" name="hobbies" /> Learning
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
                     @* <div class="form-group">
                         <label>Gender :</label>
                         <div class="gender-details">
-                            <input type="radio" name="gender" id="dot-1" />
-                            <input type="radio" name="gender" id="dot-2" />
-                            <div class="category">
-                                <label for="dot-1">
-                                    <span class="dot one"></span>
-                                    <span class="gender">Female</span>
+                        <input type="radio" name="gender" id="dot-1" />
+                        <input type="radio" name="gender" id="dot-2" />
+                        <div class="category">
+                        <label for="dot-1">
+                        <span class="dot one"></span>
+                        <span class="gender">Female</span>
+                        </label>
+                        <label for="dot-2">
+                        <span class="dot two"></span>
+                        <span class="gender">Male</span>
+                        </label>
+                        </div>
+                        </div>
+                        </div> *@
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div class="gender-details">
+                            @* <span class="gender-title">Gender :</span> *@
+                            <div class="category d-flex justify-content-around">
+                                <label>
+                                    @Html.RadioButton("Gender","Male")
+                                    <td>
+                                        Male
+                                    </td>
                                 </label>
-                                <label for="dot-2">
-                                    <span class="dot two"></span>
-                                    <span class="gender">Male</span>
+                                <label>
+                                    @Html.RadioButton("Gender","Female")
+                                    <td>
+                                        Female
+                                    </td>
                                 </label>
                             </div>
                         </div>
-                    </div> *@
-                    <div class="form-group">
-                        <label>Gender:</label>
-                         <div class="gender-details">
-                        @* <span class="gender-title">Gender :</span> *@
-                        <div class="category d-flex justify-content-around">
-                            <label>
-                                @Html.RadioButton("Gender","Male")
-                                <td>
-                                    Male
-                                </td>
-                            </label>
-                            <label>
-                                @Html.RadioButton("Gender","Female")
-                                <td>
-                                    Female
-                                </td>
-                            </label>
-                        </div>
-                        </div>
-                    </div> 
+                    </div>
                     <div class="form-group">
                         <label>City :</label>
-                         <div class="city-box w-100">
-                        <select name="format" id="format" class="select-setting d-flex">
-                            <option value="All">All</option>
-                            <option value="HN">HN</option>
-                            <option value="TPHCM">TPHCM</option>
-                            <option value="DN">DN</option>
-                        </select>
-                        @* <select name="format" id="format" defaultValue="All">
-                            <option value="All">All</option>
-                            <option value="HN">HN</option>
-                            <option value="TPHCM">TPHCM</option>
-                            <option value="DN">DN</option>
-                        </select> *@
+                        <div class="city-box w-100">
+                            <select name="format" id="format" class="select-setting d-flex">
+                                <option value="All">All</option>
+                                <option value="HN">HN</option>
+                                <option value="TPHCM">TPHCM</option>
+                                <option value="DN">DN</option>
+                            </select>
+                            @* <select name="format" id="format" defaultValue="All">
+                                <option value="All">All</option>
+                                <option value="HN">HN</option>
+                                <option value="TPHCM">TPHCM</option>
+                                <option value="DN">DN</option>
+                                </select> *@
                         </div>
                     </div>
                 </div>
@@ -420,3 +420,15 @@
         </div>
     </div>
 </div>
+
+<script>
+   const HandleDelete = (event) =>{
+        var success =window.confirm("Are you want to delete user?\nThis action can\'t be done?");
+        if(success==true){
+            alert("Delete successfully");
+        }
+        else{
+          event.preventDefault();
+        }
+   }
+</script>

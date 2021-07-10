@@ -46,7 +46,6 @@ namespace Talktif.Controllers
         [HttpPost]
         public async Task<IActionResult> Setting(IFormCollection form)
         {
-
             User_Infor user = await _userService.Get_User_Infor(Request, Response);
             ViewBag.Data = user;
             ViewBag.Cities =await _userService.GetCity();
