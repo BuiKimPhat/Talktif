@@ -43,11 +43,7 @@ namespace Talktif.Repository
                 return await client.GetAsync("FetchAllChatRoom/" + userid);
             }
         }
-<<<<<<< HEAD
-        public HttpResponseMessage FetchMessage(int UserID, int RoomID, int Top, string token)
-=======
         public async Task<HttpResponseMessage> FecthMessage(int UserID, int RoomID, int Top, string token)
->>>>>>> Chuong
         {
             using (var client = new HttpClient())
             {
