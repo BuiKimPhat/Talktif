@@ -1,30 +1,55 @@
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/ChatLayout.cshtml";
+    String[] arr = new String[]{
+        "red","green","blue","dark-mode"
+    };
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         rel="stylesheet" />
     <!-- Latest compiled JavaScript -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+      />
 
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+       />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" href="../css/SecretChat.css" />
+    <link rel="stylesheet" href="../css/Chatting.css" />
     <title>Chatting</title>
 }
 
-<div class="secret_chat">
-    <div class="group-chat">
+
+<div class="chatting_box">
+    <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
+        <div class="back-home">
+            @* <button class="btn btn-primary">Back to Home</button> *@
+            <button class="btn-back d-flex justify-content-center align-items-center" type="submit">
+                <img class="icon_back" src="/img/left-arrow.png" alt="" srcset=""><p class="text ml-2 mb-0">Back to Home</p>
+            </button>
+        </div>
+        
+    </div>
+    <div class="group-chat col-lg-5 col-xs-5 col-md-5 col-sm-5">
+        <div class="row">
         <div class="box-secret message-box">
             <div class="chat-header">
-                <div class="logo-chatting">
-                    @* <i class="fab fa-facebook-messenger"></i> *@
+                @* <div class="logo-chatting">
+                    <i class="fab fa-facebook-messenger"></i>
                     <a href="#" class="logo">
                         <img src="/img/logo_main.png" alt="" />
                     </a>
                     <h3>Chatting</h3>
+                </div> *@
+                <div class="theme-title">
+                    <p>Theme:</p>
+                </div>
+                <div class="theme-chatting">
+                    @foreach (var item in arr) 
+                    {
+                      <div class="theme">
+                          <button class="@item"></button>
+                      </div>   
+                    }
                 </div>
             </div>
             <div class="message-box-content">
@@ -114,14 +139,33 @@
                 fa-flag-checkered"></i></button>
                 </div> *@
             <form class="message-box-action">
-                <input type="text" id="message" class="message" placeholder="Message Here..." autocomplete="off" />
-                <button class="send_message">
-                    <img src="/img/send_mes.png" alt="" srcset="">
+                <input type="text" id="message" class="message" placeholder="Message Here..." />
+                <button class="send_message" type="submit">
+                    @* <img src="/img/send_mes.png" alt="" srcset=""> *@
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </form>
+        </div>
+        </div>
+        <div class="row mt-2">
+             <div class="group-btn-interactive">
+                @* <button class="interactive"><img src="/img/like.png" alt="" srcset=""></button> *@
+                <button class="interactive" data-toggle="modal"><i class="fas
+                fa-flag-checkered"></i></button>
+                 <button class="interactive"><i class="fas fa-user-plus"></i></button>
+                </div>
         </div>
         @* <button class="btn-next-person d-flex justify-content-center align-items-center"><p class="text mr-2
             mb-0">Bắt đầu</p><img class="icon_next" src="/img/right-arrow.png" alt="" srcset=""></button> *@
     </div>
+    <div class="col-lg-3 col-xs-3 col-md-3 col-sm-3">
+        <div class="back-home">
+            @* <button class="btn btn-primary">Back to Home</button> *@
+            <button class="btn-next-person d-flex justify-content-center align-items-center" type="submit">
+                <p class="text mr-2 mb-0">Next</p><img class="icon_next" src="/img/right-arrow.png" alt="" srcset="">
+            </button>
+        </div>
+    </div>
 </div>
 </div>
+

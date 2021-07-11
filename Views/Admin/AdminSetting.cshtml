@@ -1,6 +1,5 @@
 @using Talktif.Models
 @{
-    Layout = "~/Views/Shared/_UserLayoutPage.cshtml";
     List<City> cities = new List<City>();
     if (ViewBag.Cities != null)
     {
@@ -16,15 +15,17 @@
     }
     string name = (user != null) ? user.name : "";
     ViewData["city"] = a;
-    string Message = (ViewBag.message != null) ? ViewBag.message : "";
-    <link rel="stylesheet" href="../css/Setting.css" />
+    @* <link rel="stylesheet" href="../css/Setting.css" /> *@
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    ViewData["Title"] = "Setting";
+    <link rel="stylesheet" href="../css/AdminSetting.css" />
 }
 <div class="container-fluid">
     <div class="row row-wrapper">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 tablet">
             <div class="user-profile">
                 <h2 class="title">User Profile</h2>
-                <form action="/User/Setting" class="form" method="POST">
+                <form action="/Admin/Setting" class="form" method="POST">
                     <div class="user-info">
                         <span class="details">UserName :</span>
                         <div class="name">
@@ -90,6 +91,3 @@
         </div>
     </div>
 </div>
-<script>
-    if ("@Message" != "") alert("@Message");
-</script>

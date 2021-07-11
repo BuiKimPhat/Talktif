@@ -40,6 +40,7 @@ namespace Talktif.Hubs
         }
         public RandomRoom Enqueue(WaitUser usr)
         {
+<<<<<<< HEAD
             int maxScore = 0;
             WaitUser targetUser = new WaitUser();
             if (usr.Filter != null)
@@ -119,5 +120,28 @@ namespace Talktif.Hubs
             }
             return equalCount;
         }
+=======
+            // RoomManager.Instance.RemoveRoom(usr);
+            for (int i = 0; i < UserQueue.Count; i++)
+            {
+                // TODO: Filter
+                
+
+                // Compulsory conditions
+                if (usr.ConnectionID != UserQueue[i].ConnectionID && !usr.SkipID.Contains(UserQueue[i].ConnectionID)
+                    && !UserQueue[i].SkipID.Contains(usr.ConnectionID))
+                {
+                    RandomRoom room = RoomManager.Instance.CreateRoom(new WaitUser[] {
+                        usr,
+                        UserQueue[i]
+                    });
+                    Dequeue(i);
+                    return room;
+                }
+            }
+            UserQueue.Add(usr);
+            return null;
+        }
+>>>>>>> Chuong
     }
 }
