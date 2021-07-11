@@ -33,7 +33,6 @@ connection.on("ReceiveMessage", function (user, message) {
   div.className = "row w-100 m-0";
   div.appendChild(span);
   document.getElementById("chatMessages").appendChild(div);
-<<<<<<< HEAD
   if (user != userCnnID) {
     var messAudio = new Audio("message.mp3");
     messAudio.play();
@@ -41,26 +40,21 @@ connection.on("ReceiveMessage", function (user, message) {
   document
     .getElementById("chatMessages")
     .scrollTo(0, document.getElementById("chatMessages").scrollHeight);
-=======
->>>>>>> Chuong
 });
 
-connection.on("BroadcastMessage", function (message) {
-  var msg = message
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-  var encodedMsg = msg;
-  var li = document.createElement("li");
-  li.textContent = encodedMsg;
-  document.getElementById("chatMessages").appendChild(li);
-<<<<<<< HEAD
-  document
-    .getElementById("chatMessages")
-    .scrollTo(0, document.getElementById("chatMessages").scrollHeight);
-=======
->>>>>>> Chuong
-});
+// connection.on("BroadcastMessage", function (message) {
+//   var msg = message
+//     .replace(/&/g, "&amp;")
+//     .replace(/</g, "&lt;")
+//     .replace(/>/g, "&gt;");
+//   var encodedMsg = msg;
+//   var li = document.createElement("li");
+//   li.textContent = encodedMsg;
+//   document.getElementById("chatMessages").appendChild(li);
+//   document
+//     .getElementById("chatMessages")
+//     .scrollTo(0, document.getElementById("chatMessages").scrollHeight);
+// });
 
 connection
   .start()

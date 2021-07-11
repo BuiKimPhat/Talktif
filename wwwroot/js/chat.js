@@ -1,10 +1,6 @@
 ("use strict");
 var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
-<<<<<<< HEAD
 var userCnnID;
-=======
-var userID;
->>>>>>> Chuong
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
@@ -17,11 +13,7 @@ connection.on("ReceiveMessage", function (user, message) {
   // var encodedMsg = user + " says " + msg;
   var span = document.createElement("span");
   span.className =
-<<<<<<< HEAD
     user != userCnnID
-=======
-    user != userID
->>>>>>> Chuong
       ? "msgtext p-2 mr-auto mb-1"
       : "msgtext-self p-2 ml-auto mb-1";
   span.textContent = msg;
@@ -29,14 +21,11 @@ connection.on("ReceiveMessage", function (user, message) {
   div.className = "row w-100 m-0";
   div.appendChild(span);
   document.getElementById("chatMessages").appendChild(div);
-<<<<<<< HEAD
   if (user != userCnnID) {
     var messAudio = new Audio('message.mp3');
     messAudio.play();  
   }
   document.getElementById("chatMessages").scrollTo(0,document.getElementById("chatMessages").scrollHeight);
-=======
->>>>>>> Chuong
 });
 
 connection.on("BroadcastMessage", function (message) {
@@ -48,24 +37,15 @@ connection.on("BroadcastMessage", function (message) {
   var li = document.createElement("li");
   li.textContent = encodedMsg;
   document.getElementById("chatMessages").appendChild(li);
-<<<<<<< HEAD
   document.getElementById("chatMessages").scrollTo(0,document.getElementById("chatMessages").scrollHeight);
-=======
->>>>>>> Chuong
 });
 
 connection
   .start()
   .then(function () {
-<<<<<<< HEAD
     if (!userCnnID) userCnnID = connection.connectionId;
     document.getElementById("sendButton").disabled = false;
     connection.invoke("AddToQueue", userID, username, null).catch((err) => {
-=======
-    if (!userID) userID = connection.connectionId;
-    document.getElementById("sendButton").disabled = false;
-    connection.invoke("AddToQueue").catch((err) => {
->>>>>>> Chuong
       return console.error(err.toString());
     });
   })
@@ -74,11 +54,7 @@ connection
   });
 
 window.onbeforeunload = function () {
-<<<<<<< HEAD
   connection.invoke("LeaveChat", userID, username).catch((err) => {
-=======
-  connection.invoke("LeaveChat").catch((err) => {
->>>>>>> Chuong
     return console.error(err.toString());
   });
 };
@@ -94,7 +70,6 @@ document
     });
   });
 
-<<<<<<< HEAD
 if (userID) {
   document
     .getElementById("addFriendButton")
@@ -120,17 +95,11 @@ if (userID) {
     });
 }
 
-=======
->>>>>>> Chuong
 document
   .getElementById("skipButton")
   .addEventListener("click", function (event) {
     event.preventDefault();
-<<<<<<< HEAD
     connection.invoke("SkipChat", userID, username).catch((err) => {
-=======
-    connection.invoke("SkipChat").catch((err) => {
->>>>>>> Chuong
       return console.error(err.toString());
     });
   });

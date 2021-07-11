@@ -24,7 +24,7 @@ namespace Talktif.Controllers
         public async Task<IActionResult> Home()
         {
             ViewBag.Cities = await _userService.GetCity();
-            User_Infor user =await _userService.Get_User_Infor(Request, Response);
+            User_Infor user = await _userService.Get_User_Infor(Request, Response);
             ViewBag.nameUser = user.name;
             ViewBag.nameCity = await _userService.GetNameCity(user.cityId);
             List<ChatBox> list = await _chatService.GetListChatBox(Request,Response,user.id);

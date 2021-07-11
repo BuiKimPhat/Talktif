@@ -25,15 +25,15 @@ namespace Talktif.Controllers
             _chatRepo = chatRepo;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            User_Infor usr = _userService.Get_User_Infor(Request, Response);
+            User_Infor usr = await _userService.Get_User_Infor(Request, Response);
             return View(usr);
         }
-        public IActionResult Friends(int? id)
+        public async Task<IActionResult> Friends(int? id)
         {
             // Get user info and pre-setup
-            User_Infor usr = _userService.Get_User_Infor(Request, Response);
+            User_Infor usr = await _userService.Get_User_Infor(Request, Response);
             if (usr == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -47,7 +47,7 @@ namespace Talktif.Controllers
             };
 
             // Fetch all chat rooms
-            var chatroomResult = _chatRepo.FetchAllChatRoom(usr.id, usr.token);
+            var chatroomResult = await _chatRepo.FetchAllChatRoom(usr.id, usr.token);
             string crstring = chatroomResult.Content.ReadAsStringAsync().Result;
             if (chatroomResult.IsSuccessStatusCode)
             {
@@ -57,7 +57,7 @@ namespace Talktif.Controllers
             // Fetch all messages
             if (vm.RoomID > 0)
             {
-                var messagesResult = _chatRepo.FetchMessage(usr.id, vm.RoomID, 20, usr.token);
+                var messagesResult = await _chatRepo.FetchMessage(usr.id, vm.RoomID, 20, usr.token);
                 string mrstring = messagesResult.Content.ReadAsStringAsync().Result;
                 if (messagesResult.IsSuccessStatusCode)
                 {
@@ -65,6 +65,11 @@ namespace Talktif.Controllers
                 }
             }
             return View(vm);
+        }
+        public async Task<IActionResult> Chating()
+        {
+            User_Infor usr = await _userService.Get_User_Infor(Request, Response);
+            return View(usr);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

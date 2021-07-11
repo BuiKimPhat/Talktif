@@ -47,7 +47,7 @@ namespace Talktif.Service
         public async Task<List<Message>> FetchMessage(HttpRequest Request, HttpResponse Response, int ID_Room, int TopMessage)
         {
             var cookie = _userService.ReadUserCookie(Request);
-            var result = await _chatRepo.FecthMessage(cookie.id, ID_Room, TopMessage, cookie.token);
+            var result = await _chatRepo.FetchMessage(cookie.id, ID_Room, TopMessage, cookie.token);
             string a = result.Content.ReadAsStringAsync().Result;
             if (result.IsSuccessStatusCode)
             {
@@ -57,7 +57,7 @@ namespace Talktif.Service
             {
                 await _userService.RefreshToken(Response, cookie);
                 cookie = _userService.ReadUserCookie(Request);
-                result = await _chatRepo.FecthMessage(cookie.id, ID_Room, TopMessage, cookie.token);
+                result = await _chatRepo.FetchMessage(cookie.id, ID_Room, TopMessage, cookie.token);
                 a = result.Content.ReadAsStringAsync().Result;
 
                 return JsonConvert.DeserializeObject<List<Message>>(a);

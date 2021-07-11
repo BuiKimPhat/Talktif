@@ -10,7 +10,7 @@ namespace Talktif.Repository
     {
         Task<HttpResponseMessage> CreateChatRoom(int this_UserID, int that_UserID, string this_UserIDNickName, string that_UserIDNickName, string token);
         Task<HttpResponseMessage> FetchAllChatRoom(int userid, string token);
-        Task<HttpResponseMessage> FecthMessage(int UserID, int RoomID, int Top, string token);
+        Task<HttpResponseMessage> FetchMessage(int UserID, int RoomID, int Top, string token);
         Task<HttpResponseMessage> GetChatRoomInfo(int ID, int UserID, string token);
         Task<HttpResponseMessage> AddMessage(string message, int IDSender, int IDChatRoom, string token);
         Task<HttpResponseMessage> DeleteChatRoom(int UserID, int RoomID, string token);
@@ -43,7 +43,7 @@ namespace Talktif.Repository
                 return await client.GetAsync("FetchAllChatRoom/" + userid);
             }
         }
-        public async Task<HttpResponseMessage> FecthMessage(int UserID, int RoomID, int Top, string token)
+        public async Task<HttpResponseMessage> FetchMessage(int UserID, int RoomID, int Top, string token)
         {
             using (var client = new HttpClient())
             {

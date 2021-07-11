@@ -1,16 +1,8 @@
 .chat-page {
-<<<<<<< HEAD
     text-align: center;
 }
 .chat-box {
     height: 70vh;
-=======
-    height: 70vh;
-    text-align: center;
-}
-.chat-box {
-    height: 100%;
->>>>>>> Chuong
     max-width: 80vh;
     border: 2px solid #dddddd;
     border-radius: 8%;
@@ -52,7 +44,6 @@
     overflow-y: auto;
     padding-bottom: 70px;
 }
-<<<<<<< HEAD
 #skipButton, #addFriendButton {
     height: 6em;
     width: 6em;
@@ -60,10 +51,4 @@
 }
 .modal-body {
     text-align: left;
-=======
-#skipButton {
-    height: 5em;
-    width: 5em;
-    border-radius: 50%;
->>>>>>> Chuong
 }
