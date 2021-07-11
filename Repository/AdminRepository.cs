@@ -16,6 +16,8 @@ namespace Talktif.Repository
         Task<HttpResponseMessage> DeleteUser(int id, string token);
         Task<HttpResponseMessage> DeleteNonReferenceChatRoom(string token);
         Task<HttpResponseMessage> CreateNewAdmin(SignUpRequest request, string token);
+        Task<HttpResponseMessage> GetUserInfo(int id, string token);
+        Task<HttpResponseMessage> GetReportInfo(int id, string token);
     }
     public class AdminRepo : IAdminRepo
     {
@@ -26,8 +28,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var statistics = await client.GetAsync("Count");
-                return statistics;
+                return await client.GetAsync("Count");
             }
         }
         public async Task<HttpResponseMessage> GetAllUser(long From, long To, string token)
@@ -36,8 +37,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var getAllUser = await client.GetAsync("GetAllUser/" + From + "/" + To + "/UserId");
-                return getAllUser;
+                return await client.GetAsync("GetAllUser/" + From + "/" + To + "/UserId");
             }
         }
         public async Task<HttpResponseMessage> GetAllReport(long From, long To, string token)
@@ -46,8 +46,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var getAllReport = await client.GetAsync("GetAllReport/" + From + "/" + To + "/ReportId");
-                return getAllReport;
+                return await client.GetAsync("GetAllReport/" + From + "/" + To + "/ReportId");
             }
         }
         public async Task<HttpResponseMessage> UpdateReport(UpdateReportRequest request, string token)
@@ -56,8 +55,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var upDateReport = await client.PutAsJsonAsync("UpdateReport", request);
-                return upDateReport;
+                return await client.PutAsJsonAsync("UpdateReport", request);
             }
         }
         public async Task<HttpResponseMessage> UpdateUser(UpdateUserRequest request, string token)
@@ -66,8 +64,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var upDateUser = await client.PutAsJsonAsync("UpdateUser", request);
-                return upDateUser;
+                return await client.PutAsJsonAsync("UpdateUser", request);
             }
         }
         public async Task<HttpResponseMessage> DeleteUser(int id, string token)
@@ -76,8 +73,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var deleteUser = await client.DeleteAsync("DeleteUser/" + id);
-                return deleteUser;
+                return await client.DeleteAsync("DeleteUser/" + id);
             }
         }
         public async Task<HttpResponseMessage> DeleteNonReferenceChatRoom(string token)
@@ -86,8 +82,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var deleteNonReferenceChatRoom = await client.DeleteAsync("DeleteNonReferenceChatRoom");
-                return deleteNonReferenceChatRoom;
+                return await client.DeleteAsync("DeleteNonReferenceChatRoom");
             }
         }
         public async Task<HttpResponseMessage> CreateNewAdmin(SignUpRequest request, string token)
@@ -96,8 +91,25 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var createNewAdmin = await client.PostAsJsonAsync("CreateNewAdmin", request);
-                return createNewAdmin;
+                return await client.PostAsJsonAsync("CreateNewAdmin", request);
+            }
+        }
+        public async Task<HttpResponseMessage> GetUserInfo(int id, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                return await client.GetAsync("GetUserInfo/" + id);
+            }
+        }
+        public async Task<HttpResponseMessage> GetReportInfo(int id, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(UriString);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                return await client.GetAsync("GetReportInfo/" + id);
             }
         }
     }

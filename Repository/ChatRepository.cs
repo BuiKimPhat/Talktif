@@ -31,8 +31,7 @@ namespace Talktif.Repository
                 };
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var createchatroom = await client.PostAsJsonAsync("CreateChatRoom", chatroom);
-                return createchatroom;
+                return await client.PostAsJsonAsync("CreateChatRoom", chatroom);
             }
         }
         public async Task<HttpResponseMessage> FetchAllChatRoom(int userid, string token)
@@ -41,8 +40,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var fetchallchatroom = await client.GetAsync("FetchAllChatRoom/" + userid);
-                return fetchallchatroom;
+                return await client.GetAsync("FetchAllChatRoom/" + userid);
             }
         }
         public async Task<HttpResponseMessage> FecthMessage(int UserID, int RoomID, int Top, string token)
@@ -51,8 +49,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var fetchMessage = await client.GetAsync("FetchMessage/" + UserID + "/" + RoomID + "/" + Top);
-                return fetchMessage;
+                return await client.GetAsync("FetchMessage/" + UserID + "/" + RoomID + "/" + Top);
             }
         }
         public async Task<HttpResponseMessage> GetChatRoomInfo(int ID, int UserID, string token)
@@ -61,8 +58,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var getChatRoomInfo = await client.GetAsync("GetChatRoomInfo/" + ID + "/" + UserID);
-                return getChatRoomInfo;
+                return await client.GetAsync("GetChatRoomInfo/" + ID + "/" + UserID);
             }
         }
         public async Task<HttpResponseMessage> AddMessage(string message, int IDSender, int IDChatRoom, string token)
@@ -77,8 +73,7 @@ namespace Talktif.Repository
                 };
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var addMessage = await client.PostAsJsonAsync("AddMessage", mess);
-                return addMessage;
+                return await client.PostAsJsonAsync("AddMessage", mess);
             }
         }
         public async Task<HttpResponseMessage> DeleteChatRoom(int UserID, int RoomID, string token)
@@ -87,8 +82,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var deleteChatRoom = await client.DeleteAsync("Delete/" + UserID + "/" + RoomID);
-                return deleteChatRoom;
+                return await client.DeleteAsync("Delete/" + UserID + "/" + RoomID);
             }
         }
     }

@@ -71,8 +71,7 @@ namespace Talktif.Repository
             {
                 ResetPassRequest resetPassRequest = new ResetPassRequest() { Email = email };
                 client.BaseAddress = new Uri(UriString);
-                var resetPass = await client.PostAsync("ResetPass", new StringContent(JsonConvert.SerializeObject(resetPassRequest), Encoding.UTF8, "application/json"));
-                return resetPass;
+                return await client.PostAsync("ResetPass", new StringContent(JsonConvert.SerializeObject(resetPassRequest), Encoding.UTF8, "application/json"));
             }
         }
         public async Task<HttpResponseMessage> ResetPasswordEmail(ResetPassEmailRequest resetPassEmailRequest)
@@ -80,8 +79,7 @@ namespace Talktif.Repository
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var resetPasswordEmail = await client.PostAsJsonAsync("ResetPasswordEmail", resetPassEmailRequest);
-                return resetPasswordEmail;
+                return await client.PostAsJsonAsync("ResetPasswordEmail", resetPassEmailRequest);
             }
         }
         public async Task<HttpResponseMessage> GetAllCountry()
@@ -89,8 +87,7 @@ namespace Talktif.Repository
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var getAllCountry = await client.GetAsync("GetAllCountry");
-                return getAllCountry;
+                return await client.GetAsync("GetAllCountry");
             }
         }
         public async Task<HttpResponseMessage> GetAllCityCountry(int id)
@@ -98,8 +95,7 @@ namespace Talktif.Repository
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(UriString);
-                var getAllCityCountry = await client.GetAsync("GetAllCityCountry/" + id);
-                return getAllCityCountry;
+                return await client.GetAsync("GetAllCityCountry/" + id);
             }
         }
         public async Task<HttpResponseMessage> GetUserByID(int ID, string token)
@@ -108,8 +104,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var getUserByID = await client.GetAsync(ID.ToString());
-                return getUserByID;
+                return await client.GetAsync(ID.ToString());
             }
         }
         public async Task<HttpResponseMessage> UpdateUserInfor(UpdateInfoRequest updateInfoRequest, string token)
@@ -118,8 +113,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var upDateUser = await client.PutAsJsonAsync("UpdateInfo", updateInfoRequest);
-                return upDateUser;
+                return await client.PutAsJsonAsync("UpdateInfo", updateInfoRequest);
             }
         }
         public async Task<HttpResponseMessage> InActiveUser(int id, string token)
@@ -128,8 +122,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var inActiveUser = await client.GetAsync("InActiveUser/" + id);
-                return inActiveUser;
+                return await client.GetAsync("InActiveUser/" + id);
             }
         }
         public async Task<HttpResponseMessage> RefreshToken(RefreshTokenRequest refreshTokenRequest, string token)
@@ -142,8 +135,7 @@ namespace Talktif.Repository
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             cookies.Add(client.BaseAddress, new Cookie("RefreshToken", rtoken.Refreshtoken));
             cookies.Add(client.BaseAddress, new Cookie("RefreshTokenId", rtoken.RefreshTokenId.ToString()));
-            var refreshToken = await client.PostAsJsonAsync("RefreshToken", refreshTokenRequest);
-            return refreshToken;
+            return await client.PostAsJsonAsync("RefreshToken", refreshTokenRequest);
         }
         public async Task<HttpResponseMessage> Report(ReportRequest request, string token)
         {
@@ -151,8 +143,7 @@ namespace Talktif.Repository
             {
                 client.BaseAddress = new Uri(UriString);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                var rePort = await client.PostAsJsonAsync("Report", request);
-                return rePort;
+                return await client.PostAsJsonAsync("Report", request);
             }
         }
     }

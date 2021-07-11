@@ -102,14 +102,14 @@
             </form>
             <p class="forgot-pass"><a asp-controller="Login" asp-action="ForgotPass">Forgot Password ?</a></p>
 
-            <div class="social-media">
+            @* <div class="social-media">
                 <ul>
-                    <li>
-                        <a href="https://www.facebook.com" target="_blank"><img src="../img/facebook.png" /></a>
-                    </li>
-                    <li><img src="../img/search (1).png" /></li>
+                <li>
+                <a href="https://www.facebook.com" target="_blank"><img src="../img/facebook.png" /></a>
+                </li>
+                <li><img src="../img/search (1).png" /></li>
                 </ul>
-            </div>
+                </div> *@
         </div>
         <div class="sub-cont">
             <div class="img">
@@ -150,7 +150,7 @@
                         <span class="gender-title">Giới tính</span>
                         <div class="category">
                             <label>
-                                @Html.RadioButton("Gender","Male")
+                                @Html.RadioButton("Gender","Male",true)
                                 <td>
                                     Nam
                                 </td>
