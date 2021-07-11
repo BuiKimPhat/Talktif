@@ -13,7 +13,8 @@
         <div class="user-info">
             <span class="details">Reporter :</span>
             <div class="name">
-                <input id="Reporter" name="Reporter" type="text" value=@((infor != null) ? infor.reporter.ToString() : "") required disabled />
+                <input id="Reporter" name="Reporter" type="text" value=@((infor != null) ? infor.reporter.ToString() :
+                    "") required disabled />
                 @* <i class="fas fa-edit reporter"></i> *@
             </div>
         </div>
@@ -54,7 +55,8 @@
                     Back to Home
                 </p>
             </a>
-            <button class="btn-next-person d-flex justify-content-center align-items-center" type="submit" onclick="HandleReport(event)">
+            <button class="btn-next-person d-flex justify-content-center align-items-center" type="submit"
+                onclick="HandleReport(event)">
                 <p class="text mr-2 mb-0">
                     OK
                 </p>
@@ -63,13 +65,13 @@
     </form>
 </div>
 <script>
-    function HandleReport(event){
-        var success =window.confirm("Are you want to update report?");
-        if(success==true){
+    function HandleReport(event) {
+        var success = window.confirm("Are you want to update report?");
+        if (success == true) {
             alert("Update successfully");
         }
-        else{
-          event.preventDefault();
+        else {
+            event.preventDefault();
         }
     }
     if ("@Message" != "") alert("@Message");

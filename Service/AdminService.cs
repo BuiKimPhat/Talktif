@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -20,6 +21,7 @@ namespace Talktif.Service
         Task<bool> UpdateReport(HttpRequest Request, HttpResponse Response, UpdateReportRequest updateRequest);
         Task<long> GetNumberofUser(HttpRequest Request, HttpResponse Response);
         Task<long> GetNumberofReport(HttpRequest Request, HttpResponse Response);
+        Task<string> CreateNewAdmin(HttpRequest Request, HttpResponse Response, SignUpRequest request);
     }
     public class AdminService : IAdminService
     {
@@ -266,6 +268,31 @@ namespace Talktif.Service
             {
                 Console.WriteLine(e.Message);
                 return 0;
+            }
+        }
+        public async Task<string> CreateNewAdmin(HttpRequest Request, HttpResponse Response, SignUpRequest request)
+        {
+            try
+            {
+                Cookie_Data cookie = _userService.ReadUserCookie(Request);
+                var result = await _adminRepo.CreateNewAdmin(request, cookie.token);
+                string message = await result.Content.ReadAsStringAsync();
+                if (result.IsSuccessStatusCode) return null;
+                else if ((result.StatusCode.ToString() == "Unauthorized"))
+                {
+                    await _userService.RefreshToken(Response, cookie);
+                    cookie = _userService.ReadUserCookie(Request);
+                    result = await _adminRepo.CreateNewAdmin(request, cookie.token);
+                    message = await result.Content.ReadAsStringAsync();
+                    if (result.IsSuccessStatusCode) return null;
+                    else return message;
+                }
+                else return message;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "An error has occur !";
             }
         }
     }

@@ -49,6 +49,7 @@ namespace Talktif.Controllers
             }
             MessageRequest m = new MessageRequest() { Message = a };
             ViewBag.Message = a;
+            ViewBag.Cities = await _userService.GetCity();
             return View("Index");
         }
         [HttpPost]
@@ -83,6 +84,7 @@ namespace Talktif.Controllers
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.Message = a;
+            ViewBag.Cities = await _userService.GetCity();
             return View("Index");
         }
         public IActionResult ForgotPass()

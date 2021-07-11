@@ -80,7 +80,8 @@
                     Back to Home
                 </p>
             </a>
-            <button class="btn-next-person d-flex justify-content-center align-items-center" type="submit" onclick="HandleUser(event)">
+            <button class="btn-next-person d-flex justify-content-center align-items-center" type="submit"
+                onclick="HandleUser(event)">
                 <p class="text mb-0">
                     OK
                 </p>
@@ -89,13 +90,13 @@
     </form>
 </div>
 <script>
-    function HandleUser(event){
-        var success =window.confirm("Are you want to update user?");
-        if(success==true){
+    function HandleUser(event) {
+        var success = window.confirm("Are you want to update user?");
+        if (success == true) {
             alert("Update successfully");
         }
-        else{
-          event.preventDefault();
+        else {
+            event.preventDefault();
         }
     }
     if ("@Message" != "") alert("@Message");

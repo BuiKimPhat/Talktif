@@ -54,7 +54,32 @@ namespace Talktif.Controllers
 
             ViewBag.Users = users;
             ViewBag.NumberofUser = NumberofUser;
+            ViewBag.Cities = await _userService.GetCity();
             return View();
+        }
+        [HttpPost,ActionName("Users")]
+        public async Task<IActionResult> CreateNewAdmin(IFormCollection form)
+        {
+            SignUpRequest data = new SignUpRequest()
+            {
+                Name = form["name"].ToString(),
+                Email = form["email"].ToString(),
+                Password = form["pass"].ToString(),
+                Gender = (form["Gender"].ToString() == "Male"),
+                CityId = Convert.ToInt32(form["format"].ToString()),
+                Device = System.Environment.MachineName
+            };
+            string a = await _adminService.CreateNewAdmin(Request,Response,data);
+            if(String.IsNullOrEmpty(a))  return RedirectToAction("Users");
+            else
+            {
+                ViewBag.Message = a;
+                long numOfUser = await _adminService.GetNumberofUser(Request, Response);
+                ViewBag.Users =await _adminService.GetAllUser(Request, Response, (numOfUser > 8) ? 8 : numOfUser, 0);
+                ViewBag.NumberofUser = numOfUser;
+                ViewBag.Cities = await _userService.GetCity();
+                return View();
+            }
         }
         public async Task<IActionResult> UpdateUser(int ID)
         {
