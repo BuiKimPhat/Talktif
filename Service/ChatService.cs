@@ -104,7 +104,7 @@ namespace Talktif.Service
 
                 int Id_Partner, Sender = 0;
                 string NamePartNer, Message = "";
-                DateTime date = DateTime.Now;
+                DateTime date = new DateTime(0);
                 if (infor.user1Id == Id_User)
                 {
                     Id_Partner = infor.user2Id;

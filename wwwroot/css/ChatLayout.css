@@ -63,3 +63,9 @@ a.btn-exit i {
     filter: sepia(1);
     margin-left: 5px;
 }
+
+.nav-icons {
+    margin: 1rem;
+    color: #00dd99;
+    font-size: 1.65rem;
+}

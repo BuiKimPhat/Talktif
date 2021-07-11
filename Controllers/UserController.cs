@@ -36,7 +36,7 @@ namespace Talktif.Controllers
             _userService.RemoveUserCookie(Response);
             return RedirectToAction("Index", "Login");
         }
-        public async Task<IActionResult> Setting()
+        public async Task<IActionResult> Index()
         {
             User_Infor user =await _userService.Get_User_Infor(Request, Response);
             ViewBag.Data = user;
@@ -44,7 +44,7 @@ namespace Talktif.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Setting(IFormCollection form)
+        public async Task<IActionResult> Index(IFormCollection form)
         {
             User_Infor user = await _userService.Get_User_Infor(Request, Response);
             ViewBag.Data = user;

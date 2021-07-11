@@ -429,7 +429,6 @@ button.interactive:hover {
     font-size: 25px;
     background-color: #00dd99 !important;
     border: none;
-    margin-bottom: 51px;
     border-radius: 30px;
 }
 
@@ -1199,4 +1198,10 @@ hr.new-hr {
 
 .tablet-pro {
     display: none;
+}
+
+.nav-icons {
+    margin: 1rem;
+    color: #00dd99;
+    font-size: 1.65rem;
 }

@@ -1,8 +1,7 @@
-
 @{
-     String[] arr = new String[]{
-        "red","green","blue","dark-mode"
-    };
+    String[] arr = new String[]{
+"red","green","blue","dark-mode"
+};
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -30,57 +29,33 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
-    <link rel="stylesheet" href="../css/ChatLayout.css" />
-    <title>Talktif</title>
+    <link rel="stylesheet" href="/css/ChatLayout.css" />
+    <title>Chat - Talktif</title>
 </head>
+
 <body>
-     <!-- Navbar -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom" style="height: 76px;z-index: 1;">
-            <label for="toggle-menu" class="icon-menu"></label>
-            @* <div class="overlay">
-            </div>
-            <div class="menu">
-                <ul>
-                    <li>
-                         <a asp-controller="User" asp-action="Home">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="User" asp-action="History" >
-                        Friend
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="User" asp-action="Setting">
-                            Setting
-                        </a>
-                    </li>
-                </ul>
-            </div> *@
-            <a href="#" class="navbar-brand text-center img-logo">
-                <img src="/img/logo_main.png" alt="" srcset="" />
-            </a>
-            @* <a class="btn-exit" asp-controller="Login" asp-action="Index">
-            Exit <i class="fas fa-chevron-circle-right"></i>
-        </a> *@
-        </nav>
+    <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom" style="height: 76px;z-index: 1;">
+        <a href="/User" class="nav-icons" title="Thông tin cá nhân"><i class="fas fa-user-circle"></i></a>
+        <a href="/Chat" class="nav-icons" title="Chat"><i class="fas fa-comment"></i></a>
+        <a href="/Chat/Friends" class="nav-icons" title="Bạn bè"><i class="fas fa-users"></i></a>
+        @* <label for="toggle-menu" class="icon-menu"></label> *@
+        <a href="/" class="navbar-brand text-center img-logo">
+            <img src="/img/logo_main.png" alt="" srcset="" />
+        </a>
+        <a asp-controller="User" asp-action="Logout" class="nav-icons" title="Đăng xuất"><i class="fas fa-sign-out-alt"></i></a>
+    </nav>
     @RenderBody()
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
     <script>
-        $(document).ready(function(){
-             $("button.red").click(function(){
+        $(document).ready(function () {
+            $("button.red").click(function () {
                 $(".chat-header").attr("style", "background : red !important");
-                $("button.red").attr("style","border: 1px solid black !important");
-                 @* for(int i =0;i<arr.length;i++)
-               {
-                console.log(arr[i]);
-               } *@
+                $("button.red").attr("style", "border: 1px solid black !important");
             }
-             )
+            )
         }
         )
     </script>

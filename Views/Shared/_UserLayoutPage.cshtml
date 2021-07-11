@@ -27,77 +27,83 @@
 
     <link href="../logo_main.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="../css/UserMainForm.css" />
-    <title>Talktif</title>
+    <title>Thông tin cá nhân - Talktif</title>
 </head>
 
 <body>
 
     <!-- SideBar -->
-    <input type="checkbox" id="sidebar-toggle" />
-    <div class="sidebar">
+    @* <input type="checkbox" id="sidebar-toggle" />
+        <div class="sidebar">
         <div class="sidebar-header">
-            <label for="sidebar-toggle" class="ti-menu-alt icon-toggle"></label>
+        <label for="sidebar-toggle" class="ti-menu-alt icon-toggle"></label>
         </div>
 
         <div class="sidebar-menu ">
-            <h5 class="text-center font-weight-bold mt-2 mb-2">
-                @ViewData["Name"]
-            </h5>
-            <div class="nation">
-                <img class="country mr-2" src="/img/VietNam.png" alt="" srcSet="" />
-                <a href="# ">Việt Nam</a>
-            </div>
-            <div class="city text-center mt-2 mb-5">
-                <a href="# ">@ViewData["city"]</a>
-            </div>
-            <ul class="mt-4 ml-2">
-                <li class="active">
-                    <a asp-controller="User" asp-action="Home">
-                        <i class="fab fa-discourse"></i>
-                        <span>Home</span>
-                    </a>
-                </li>
-                <li>
-                    <a asp-controller="Chat" asp-action="Index">
-                        <i class="fas fa-envelope"></i>
-                        <span>Nhắn tin</span>
-                    </a>
-                    </li>
-                <li>
-                    <a asp-controller="Chat" asp-action="Friends">
-                        <i class="fas fa-user-friends"></i>
-                        <span>Bạn Bè</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="talktif_copy_right text-center">
-                <div class="copy-right">
-                    <div class="copyright">&copy;TalkTif-2021</div>
-                </div>
-            </div>
+        <h5 class="text-center font-weight-bold mt-2 mb-2">
+        @ViewData["Name"]
+        </h5>
+        <div class="nation">
+        <img class="country mr-2" src="/img/VietNam.png" alt="" srcSet="" />
+        <a href="# ">Việt Nam</a>
         </div>
-    </div>
-    </div>
+        <div class="city text-center mt-2 mb-5">
+        <a href="# ">@ViewData["city"]</a>
+        </div>
+        <ul class="mt-4 ml-2">
+        <li class="active">
+        <a asp-controller="User" asp-action="Home">
+        <i class="fab fa-discourse"></i>
+        <span>Home</span>
+        </a>
+        </li>
+        <li>
+        <a asp-controller="Chat" asp-action="Index">
+        <i class="fas fa-envelope"></i>
+        <span>Nhắn tin</span>
+        </a>
+        </li>
+        <li>
+        <a asp-controller="Chat" asp-action="Friends">
+        <i class="fas fa-user-friends"></i>
+        <span>Bạn Bè</span>
+        </a>
+        </li>
+        </ul>
+        <div class="talktif_copy_right text-center">
+        <div class="copy-right">
+        <div class="copyright">&copy;TalkTif-2021</div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div> *@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom" style="height: 76px;z-index: 1;">
-        <label for="toggle-menu" class="icon-menu"></label>
-        <div class="overlay">
-        </div>
-        <div class="menu">
+        <a href="/User" class="nav-icons" title="Thông tin cá nhân"><i class="fas fa-user-circle"></i></a>
+        <a href="/Chat" class="nav-icons" title="Chat"><i class="fas fa-comment"></i></a>
+        <a href="/Chat/Friends" class="nav-icons" title="Bạn bè"><i class="fas fa-users"></i></a>
+
+        @* <label for="toggle-menu" class="icon-menu"></label> *@
+        @* <div class="overlay">
+            </div>
+            <div class="menu">
             <ul>
-                <li>
-                    <a asp-controller = "User" asp-action= "Setting">
-                        <!-- <span class="ti-settings icon"></span> -->
-                        <i class="fas fa-cogs"></i>
-                        <span>Cài Đặt</span>
-                    </a>
-                </li>
+            <li>
+            <a asp-controller = "User" asp-action= "Setting">
+            <!-- <span class="ti-settings icon"></span> -->
+            <i class="fas fa-cogs"></i>
+            <span>Cài Đặt</span>
+            </a>
+            </li>
             </ul>
-        </div>
+            </div> *@
         <a href="#" class="navbar-brand text-center img-logo">
             <img src="/img/logo_main.png" alt="" srcset="" />
         </a>
+        <a asp-controller="User" asp-action="Logout" class="nav-icons" title="Đăng xuất"><i
+                class="fas fa-sign-out-alt"></i></a>
         @* <a class="btn-exit" asp-controller="Login" asp-action="Index">
             Exit <i class="fas fa-chevron-circle-right"></i>
             </a> *@

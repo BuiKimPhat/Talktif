@@ -30,7 +30,7 @@ namespace Talktif.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            if (data.IsAdmin == false) return RedirectToAction("Home", "User");
+            if (data.IsAdmin == false) return RedirectToAction("Index", "Chat");
             else return RedirectToAction("Home", "Admin");
         }
 
