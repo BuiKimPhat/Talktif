@@ -38,9 +38,10 @@ namespace Talktif.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            User_Infor user =await _userService.Get_User_Infor(Request, Response);
+            User_Infor user = await _userService.Get_User_Infor(Request, Response);
+            if (user == null) return RedirectToAction("Index", "Login");
             ViewBag.Data = user;
-            ViewBag.Cities =await _userService.GetCity();
+            ViewBag.Cities = await _userService.GetCity();
             return View();
         }
         [HttpPost]

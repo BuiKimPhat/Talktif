@@ -19,6 +19,7 @@ namespace Talktif.Hubs
                 foreach (WaitUser usr in item.Members)
                 {
                     System.Console.WriteLine(usr.ConnectionID);
+                    System.Console.WriteLine(usr.FriendRequest);
                 }
             }
             System.Console.WriteLine("Queue");
