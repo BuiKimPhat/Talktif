@@ -219,11 +219,16 @@ namespace Talktif.Controllers
             {
                 ViewBag.message = "Confirm new password does not match";
 
+                ViewBag.Data = await _userService.Get_User_Infor(Request, Response);
+                ViewBag.Cities = await _userService.GetCity();
                 return View("AdminSetting");
             }
             else if (oldpass == "")
             {
                 ViewBag.message = "The password field is requied";
+
+                ViewBag.Data = await _userService.Get_User_Infor(Request, Response);
+                ViewBag.Cities = await _userService.GetCity();
                 return View("AdminSetting");
             }
             else if (newpass == "")
@@ -235,6 +240,8 @@ namespace Talktif.Controllers
             else
             {
                 ViewBag.message = message;
+                ViewBag.Data = await _userService.Get_User_Infor(Request, Response);
+                ViewBag.Cities = await _userService.GetCity();
                 return View("AdminSetting");
             }
         }
