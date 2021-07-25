@@ -37,15 +37,12 @@
                         </div>
                     </div>
                     <div class="message-box-content">
-                        @if (Model.Messages != null)
+                        @for (int i=Model.Messages.Count-1;i>=0;i--)
                         {
-                            foreach (Message item in Model.Messages)
-                            {
-                                <div class="@(item.sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
-                        title="@item.sentAt.ToLocalTime()">
-                                    <div class="message-text">@item.content</div>
-                                </div>
-                            }
+                        <div class="@(Model.Messages[i].sender != Model.UserID ? "message-row other-message" : "message-row your-message")"
+                        title="@Model.Messages[i].sentAt.ToLocalTime()">
+                            <div class="message-text">@Model.Messages[i].content</div>
+                        </div>
                         }
 
                         @* <div class="message-row your-message">
@@ -64,7 +61,7 @@
                             </div> *@
                     </div>
                     <form class="message-box-action">
-                        <input type="text" id="message" class="message" placeholder="Nhập tin nhắn..." />
+                        <input type="text" id="message" class="message" name="Message" placeholder="Nhập tin nhắn..." />
                         <button id="sendButton" class="send_message" type="submit">
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -76,6 +73,9 @@
                 <div class="group-btn-interactive">
                     <button class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
                 fa-flag-checkered"></i></button>
+                    <a asp-action="Unfriend" asp-route-uid="@Model.UserID" asp-route-roomid="@Model.RoomID"
+                    asp-route-token='@Model.UserToken'><button class="interactive" title="Hủy kết bạn"><i
+                            class="fas fa-user-times"></i></button></a>
                 </div>
             </div>
         </div>
