@@ -206,5 +206,36 @@ namespace Talktif.Hubs
         {
             await Clients.Group(roomID).ReceiveMessage(Context.ConnectionId, message);
         }
+
+        public async Task ReportUser(string userID, string reason, string note, string token)
+        {
+            RandomRoom room = RoomManager.Instance.GetRoom(Context.ConnectionId);
+            if (room != null)
+            {
+                foreach (WaitUser usr in room.Members)
+                {
+                    if (usr.UserID <= 0)
+                    {
+                        await Clients.Group(room.ID).BroadcastMessage($"Báo cáo người dùng {Context.ConnectionId} thất bại vì người dùng chưa đăng nhập!");
+                        return;
+                    }
+                    if (usr.ConnectionID != Context.ConnectionId) {
+                        UserRepo userRepo = new UserRepo();
+                        ReportRequest report = new ReportRequest
+                        {
+                            Reporter = userID,
+                            Suspect = usr.UserID.ToString(),
+                            Reason = reason,
+                            Note = note
+                        };
+                        await userRepo.Report(report, token);
+                        await Clients.Group(room.ID).BroadcastMessage($"Đã gửi báo cáo thành công!");
+                    };
+                }
+            }
+
+            Debug();
+
+        }
     }
 }

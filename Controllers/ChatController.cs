@@ -78,7 +78,7 @@ namespace Talktif.Controllers
             {
                 UserID = usr.id,
                 UserToken = usr.token,
-                RoomID = id != null ? (int)id : 0
+                RoomID = id != null ? (int)id : 0,
             };
 
             // Fetch all chat rooms
@@ -91,6 +91,7 @@ namespace Talktif.Controllers
             if (vm.RoomID > 0)
             {
                 vm.Messages = await _chatService.FetchMessage(Request, Response, vm.RoomID, 20);
+                vm.RoomInfo = await _chatService.GetChatRoomInfo(Request, Response, vm.RoomID);
             }
             return View(vm);
         }

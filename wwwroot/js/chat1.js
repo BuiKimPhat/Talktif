@@ -16,16 +16,21 @@ connection.on("ReceiveMessage", function (user, message) {
     user != userCnnID
       ? "message-row other-message"
       : "message-row your-message";
-var divContent = document.createElement("div");
-divContent.className = "message-text";
-divContent.textContent = msg;
+  var divContent = document.createElement("div");
+  divContent.className = "message-text";
+  divContent.textContent = msg;
   div.appendChild(divContent);
   document.getElementsByClassName("message-box-content")[0].appendChild(div);
   if (user != userCnnID) {
-    var messAudio = new Audio('/message.mp3');
-    messAudio.play();  
+    var messAudio = new Audio("/message.mp3");
+    messAudio.play();
   }
-  document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
+  document
+    .getElementsByClassName("message-box-content")[0]
+    .scrollTo(
+      0,
+      document.getElementsByClassName("message-box-content")[0].scrollHeight
+    );
 });
 
 connection.on("BroadcastMessage", function (message) {
@@ -37,7 +42,12 @@ connection.on("BroadcastMessage", function (message) {
   var li = document.createElement("li");
   li.textContent = encodedMsg;
   document.getElementsByClassName("message-box-content")[0].appendChild(li);
-  document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
+  document
+    .getElementsByClassName("message-box-content")[0]
+    .scrollTo(
+      0,
+      document.getElementsByClassName("message-box-content")[0].scrollHeight
+    );
 });
 
 connection
@@ -86,12 +96,18 @@ if (userID) {
       event.preventDefault();
       var filterString = "";
       var filterInputs = document.getElementsByClassName("filter-option");
-      if (filterInputs[0].checked) filterString += (filterString == "" ? "" : ",") + userHobbies;
-      if (filterInputs[1].checked) filterString += (filterString == "" ? "" : ",") + userAddress;
-      if (filterInputs[2].checked) filterString += (filterString == "" ? "" : ",") + (userGender ? "female" : "male");
-      connection.invoke("SaveFilter", userID, username, filterString).catch((err) => {
-        return console.error(err.toString());
-      });
+      if (filterInputs[0].checked)
+        filterString += (filterString == "" ? "" : ",") + userHobbies;
+      if (filterInputs[1].checked)
+        filterString += (filterString == "" ? "" : ",") + userAddress;
+      if (filterInputs[2].checked)
+        filterString +=
+          (filterString == "" ? "" : ",") + (userGender ? "female" : "male");
+      connection
+        .invoke("SaveFilter", userID, username, filterString)
+        .catch((err) => {
+          return console.error(err.toString());
+        });
     });
 }
 
@@ -102,4 +118,16 @@ document
     connection.invoke("SkipChat", userID, username).catch((err) => {
       return console.error(err.toString());
     });
+  });
+
+document
+  .getElementById("reportBtn")
+  .addEventListener("click", function (event) {
+    var reason = document.getElementById("reportReason").value;
+    var note = document.getElementById("reportNote").value;
+    connection
+      .invoke("ReportUser", String(userID), reason, note, token)
+      .catch(function (err) {
+        return console.error(err.toString());
+      });
   });

@@ -60,16 +60,46 @@
             <div class="group-btn-interactive">
                 @if (Model != null)
                 {
-                    <button class="interactive" data-toggle="modal" title="Báo cáo"><i class="fas
+                    <button class="interactive" data-toggle="modal" data-target="#reportModal" title="Báo cáo"><i class="fas
                 fa-flag-checkered"></i></button>
+                    <!-- Report Modal -->
+                    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportTitle"
+                    aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportTitle">Báo cáo người dùng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="input-group">
+                                        <label class="d-block w-100" for="reportReason">Lí do</label><br/>
+                                        <input type="text" class="form-control w-100" placeholder="Lỗi mà người dùng vi phạm"
+                                        id="reportReason"/>
+                                    </div>
+                                    <div class="input-group mt-3">
+                                        <label class="d-block w-100" for="reportNote">Ghi chú</label><br/>
+                                        <textarea class="w-100 p-2" placeholder="Ghi chú thêm chi tiết vi phạm (nếu có)"
+                                        id="reportNote"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-success" id="reportBtn" data-dismiss="modal">Gửi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 }
                 @if (Model != null)
                 {
                     <!-- Button trigger modal -->
-                    <button type="button" class="interactive" data-toggle="modal" data-target="#filterModal">
+                    <button type="button" class="interactive" data-toggle="modal" data-target="#filterModal" title="Tùy chọn ghép đôi">
                         <i class="fas fa-wrench"></i>
                     </button>
-                    <!-- Modal -->
+                    <!-- Setting Modal -->
                     <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterTitle"
                     aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -99,7 +129,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                    <button type="button" class="btn btn-danger" id="saveFilter"
+                                    <button type="button" class="btn btn-danger" id="saveFilter" data-dismiss="modal"
                                     title="Hành động này sẽ thoát khỏi phòng chat hiện tại và tiến hành đợi ghép phòng mới">Lưu
                                         tùy chọn</button>
                                 </div>
@@ -117,7 +147,6 @@
                     <p class="text mr-2 mb-0">Bỏ qua</p><img class="icon_next" src="/img/right-arrow.png" alt=""
                         srcset="">
                 </button>
-
             </div>
         </div>
     </div>
