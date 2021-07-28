@@ -62,6 +62,7 @@ button:focus {
     width: 0px;
 }
 
+
 /* Navbar */
 
 a.img-logo {
@@ -217,18 +218,17 @@ span.icon {
     display: flex;
     justify-content: center;
 }
-.talktif_copy_right{
+
+.talktif_copy_right {
     height: 100%;
 }
 
-
-.copyright{
+.copyright {
     position: absolute;
     bottom: 5px;
     text-align: center;
     width: 100%;
     font-size: 13px;
-
 }
 
 
@@ -241,30 +241,6 @@ span.icon {
     text-transform: uppercase;
     text-align: left;
     color: orange !important;
-}
-
-.hobbies-select {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-    column-gap: 15px;
-    row-gap: 30px;
-}
-
-.hobbies {
-    display: grid;
-    grid-template-columns: 20% 80%;
-    column-gap: 6px;
-    align-items: center;
-    margin: 10px 0;
-    font-size: 14px;
-    font-weight: 600;
-    color: #505f75;
-    text-transform: uppercase;
-    background-color: #00dd99;
-    border-radius: 5px;
-    padding: 15px 0px;
-    box-shadow: inset 0px 2px rgba(0.2, 0, 0.3, 0.3);
 }
 
 input[type="checkbox"] {
@@ -294,8 +270,6 @@ label#type.three {
     width: fit-content;
 }
 
-
-
 .tablet_gender .category {
     width: 100%;
     display: flex;
@@ -306,6 +280,7 @@ label#type.three {
 input#Gender:checked+label#type.type-actor {
     background: #00dd99 !important;
 }
+
 
 /* Main Content */
 
@@ -797,11 +772,10 @@ hr.new-hr {
         letter-spacing: 1px;
     }
     nav {
-        height: 70px !important;
+        height: 80px !important;
     }
     a.img-logo {
         height: 100%;
-        padding-left: 30px;
     }
     a.img-logo img {
         width: 66px;
@@ -854,12 +828,15 @@ hr.new-hr {
         width: 230px;
         padding: 5px;
     }
-   .btn-next-person {
+    .btn-next-person {
         width: 110px;
     }
     .message-box-content {
         height: 345px;
     }
+    /* a.nav-icons {
+        font-size: 1.35rem !important;
+    } */
 }
 
 
@@ -1035,7 +1012,7 @@ hr.new-hr {
         width: 290px;
         padding: 5px;
     }
-   .btn-next-person {
+    .btn-next-person {
         width: 110px;
     }
     .message-box-content {
@@ -1047,13 +1024,6 @@ hr.new-hr {
 /* Tablet Pro */
 
 @media only screen and (min-width: 1024px) and (max-width: 1300px) {
-    nav {
-        padding-left: 170px !important;
-        transition: padding-left 500ms;
-    }
-    .icon-menu {
-        display: none !important;
-    }
     .container-fluid {
         padding-left: 155px;
         overflow-y: hidden;
@@ -1088,6 +1058,8 @@ hr.new-hr {
 
 /* Menu Mobile */
 
+
+/* 
 .icon-menu {
     position: fixed;
     margin-bottom: 0px;
@@ -1190,15 +1162,7 @@ hr.new-hr {
 
 .menu ul li a:hover::before {
     transform: scale(1);
-}
-
-.your-video-mobile {
-    display: none;
-}
-
-.tablet-pro {
-    display: none;
-}
+} */
 
 .nav-icons {
     margin: 1rem;

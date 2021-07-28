@@ -2,18 +2,22 @@ document.querySelector(".img-btn").addEventListener("click", function () {
   document.querySelector(".cont").classList.toggle("s-signup");
 });
 
+function validateEmail(email) {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
 function CheckEmail(event) {
   var email = document.getElementById("login_email").value;
   var error_email = document.getElementById("error_email");
   event.preventDefault();
   if (email == "") {
     document.getElementById("login_email").style.borderColor = "red";
-    //  document.getElementById("login_email").style.backgroundColor = "yellow";
     error_email.innerHTML = "Not Invalid Email";
   } else {
-    if (email.slice(-10) !== "@gmail" + "." + "com") {
+    if (!validateEmail(email)) {
       document.getElementById("login_email").style.borderColor = "red";
-      //    document.getElementById("login_email").style.backgroundColor = "yellow";
       error_email.innerHTML = "Email Error";
     } else {
       document.getElementById("login_email").style.borderColor = "#2ecc71";
@@ -29,7 +33,6 @@ function CheckPassword(event) {
   var error_password = document.getElementById("error_password");
   if (password == "") {
     document.getElementById("login_password").style.borderColor = "red";
-    //   document.getElementById("login_password").style.backgroundColor = "yellow";
     error_password.innerHTML = "Not Invalid Password";
   } else {
     document.getElementById("login_password").style.borderColor = "#2ecc71";
@@ -46,7 +49,6 @@ function CheckName(event) {
   var error_name = document.getElementById("error_name");
   if (name == "") {
     error_name.innerHTML = "Name is not empty";
-    //   document.getElementById("name").style.backgroundColor = "yellow";
     document.getElementById("name").style.borderColor = "red";
   } else {
     document.getElementById("name").style.backgroundColor = "#fff";
@@ -60,12 +62,10 @@ function CheckEmail_SignUp(event) {
   var error_email = document.getElementById("error_email_sign_up");
   if (email == "") {
     error_email.innerHTML = "Email is not empty";
-    //   document.getElementById("email").style.backgroundColor = "yellow";
     document.getElementById("email").style.borderColor = "red";
   } else {
-    if (email.slice(-10) !== "@gmail" + "." + "com") {
+    if (!validateEmail(email)) {
       error_email.innerHTML = "Email not correct";
-      //       document.getElementById("email").style.backgroundColor = "yellow";
       document.getElementById("email").style.borderColor = "red";
     } else {
       document.getElementById("email").style.backgroundColor = "#fff";
@@ -80,7 +80,6 @@ function CheckPassword_SignUp(event) {
   var error_password = document.getElementById("error_password_sign_up");
   if (password == "") {
     error_password.innerHTML = "Password is not empty";
-    //   document.getElementById("password").style.backgroundColor = "yellow";
     document.getElementById("password").style.borderColor = "red";
   } else {
     document.getElementById("password").style.backgroundColor = "#fff";
@@ -98,12 +97,10 @@ function CheckConfirmPassword(event) {
   );
   if (confirm_password == "") {
     error_confirm_password.innerHTML = "Confirm Password is not empty";
-    //    document.getElementById("confirm_password").style.backgroundColor = "yellow";
     document.getElementById("confirm_password").style.borderColor = "red";
   } else {
     if (password != confirm_password) {
       error_confirm_password.innerHTML = "Confirm Password is not correct";
-      //       document.getElementById("confirm_password").style.backgroundColor = "yellow";
       document.getElementById("confirm_password").style.borderColor = "red";
     } else {
       document.getElementById("confirm_password").style.backgroundColor =
@@ -113,100 +110,17 @@ function CheckConfirmPassword(event) {
     }
   }
 }
-Dashboard = () => {
-  var url = "dashboard.html";
-  var referLink = document.createElement("a");
-  referLink.href = url;
-  document.body.appendChild(referLink);
-  referLink.click();
-};
 
-//var email_current = document.getElementById("login_email").value;
-//var password_current = document.getElementById("login_password").value;
-function postRequest(url, data) {
-  return fetch(url, {
-    credentials: "same-origin", // 'include', default: 'omit'
-    method: "POST", // 'GET', 'PUT', 'DELETE', etc.
-    body: JSON.stringify(data), // Coordinate the body type with 'Content-Type'
-    headers: new Headers({
-      "Content-Type": "application/json",
-    }),
-  })
-    .then((response) => {
-      if (response.status == "200") Dashboard();
-    })
-    .then((data) => console.log(data)) // Result from the `response.json()` call
-    .catch((error) => console.log(error));
-}
-
-function Sign_In(event) {
-  var email_value = document.getElementById("login_email").value;
-  var password_value = document.getElementById("login_password").value;
-  // alert(email_value + "-" + password_value);
-  if (
-    email_value.slice(-10) === "@gmail" + "." + "com" &&
-    password_value != ""
-  ) {
-    event.preventDefault();
-    postRequest("http://localhost:5000/auth/login", {
-      email: email_value,
-      password: password_value,
-    });
-    //  document.write("redirecting...");
-    //window.location.href = "http://127.0.0.1:5500/DesignUI/Home/dashboard.html";
-    // Dashboard();
-  }
-}
-
-function Sign_Up() {
-  var error_name = $("#error_name");
-  var error_password = $("#error_password_sign_up");
-  var error_email = $("#error_email_sign_up");
-  var error_confirm_password = $("#error_confirm_password");
-  if (
-    error_name.html() == "" &&
-    error_email.html() == "" &&
-    error_password.html() == "" &&
-    error_confirm_password.html() == ""
-  ) {
-    $("#Confirm1").show();
-    $("#Confirm2").hide();
-    setTimeout(() => {
-      var url = "dashboard.html";
-      var referLink = document.createElement("a");
-      referLink.href = url;
-      document.body.appendChild(referLink);
-      referLink.click();
-    }, 3000);
+function CheckValidation(event, data, errorData, name) {
+  event.preventDefault();
+  var dataValue = document.getElementById(`${data}`).value;
+  var error = document.getElementById(`${errorData}`);
+  if (dataValue === "") {
+    document.getElementById(`${data}`).style.borderColor = "red";
+    error.innerHTML = `Not Invalid ${name}`;
   } else {
-    $("#Confirm2").show();
-    $("#Confirm1").hide();
+    document.getElementById(`${data}`).style.borderColor = "#2ecc71";
+    document.getElementById(`${data}`).style.backgroundColor = "#fff";
+    error.innerHTML = "";
   }
 }
-
-// function postForm(url) {
-//   const formData = new FormData(document.querySelector("form.form_login"));
-
-//   return fetch(url, {
-//     method: "POST", // or 'PUT'
-//     body: formData, // a FormData will automatically set the 'Content-Type'
-//   }).then((response) => response.json());
-// }
-// GetUser = () => {
-//
-//   const myform = document.getElementById("form");
-//   myform.addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     const formData = new FormData(this);
-//     fetch("http://localhost:3000/auth/read")
-//       .then(function (response) {
-//         return response.text();
-//       })
-//       .then(function (text) {
-//         console.log(text);
-//       })
-//       .catch(function (err) {
-//         console.log(err);
-//       });
-//   });
-// };

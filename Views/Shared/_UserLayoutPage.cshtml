@@ -104,9 +104,6 @@
         </a>
         <a asp-controller="User" asp-action="Logout" class="nav-icons" title="Đăng xuất"><i
                 class="fas fa-sign-out-alt"></i></a>
-        @* <a class="btn-exit" asp-controller="Login" asp-action="Index">
-            Exit <i class="fas fa-chevron-circle-right"></i>
-            </a> *@
     </nav>
     @RenderBody()
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -126,12 +123,14 @@
                 $("#username").addClass("active-field");
                 $("#username").removeAttr("disabled").focus();
             })
-            $(".user-info i.password").click(function () {
+            @* $(".user-info i.fa-eye").click(function () {
                 $("#password").addClass("active-field");
                 $("#password").removeAttr("disabled").focus();
                 $("#confirmpassword").addClass("active-field");
                 $("#confirmpassword").removeAttr("disabled");
-            })
+                $("#newpassword").addClass("active-field");
+                $("#password").removeAttr("disabled");
+            }) *@
 
             $(".sidebar li").hover(
                 function () {
@@ -222,11 +221,6 @@
             $('.type-actor.three').toggleClass("choose-type");
         })
 
-        @* var height = $(window).height()
-                var width = $(window).width()
-                if($(window).width() <= 1023){
-                $('.form_1').attr("style",`height:${height}px !important");width : ${width}px !important`);
-                } *@
 
     </script>
 </body>
