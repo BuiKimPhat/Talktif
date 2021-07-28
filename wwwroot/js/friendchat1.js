@@ -32,11 +32,7 @@ function ReportUser(user, sus, reason, note, token) {
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
-  var msg = message
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-  // var encodedMsg = user + " says " + msg;
+  var msg = message;
   var div = document.createElement("div");
   div.className =
     user != userCnnID
@@ -58,18 +54,6 @@ connection.on("ReceiveMessage", function (user, message) {
       document.getElementsByClassName("message-box-content")[0].scrollHeight
     );
 });
-
-// connection.on("BroadcastMessage", function (message) {
-//   var msg = message
-//     .replace(/&/g, "&amp;")
-//     .replace(/</g, "&lt;")
-//     .replace(/>/g, "&gt;");
-//   var encodedMsg = msg;
-//   var li = document.createElement("li");
-//   li.textContent = encodedMsg;
-//   document.getElementsByClassName("message-box-content")[0].appendChild(li);
-//   document.getElementsByClassName("message-box-content")[0].scrollTo(0,document.getElementsByClassName("message-box-content")[0].scrollHeight);
-// });
 
 connection
   .start()

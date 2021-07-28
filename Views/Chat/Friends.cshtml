@@ -44,21 +44,6 @@
                                 <div class="message-text">@Model.Messages[i].content</div>
                             </div>
                         }
-
-                        @* <div class="message-row your-message">
-                            <div class="message-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi
-                            </div>
-                            </div>
-                            <div class="message-row other-message">
-                            <div class="message-text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae id totam sint impedit
-                            consequuntur culpa quia, sed corrupti doloremque odio delectus iusto esse alias natus
-                            voluptatibus earum modi
-                            </div>
-                            </div> *@
                     </div>
                     <form class="message-box-action">
                         <input type="text" id="message" class="message" name="Message" placeholder="Nhập tin nhắn..." />
@@ -114,15 +99,6 @@
             </div>
         </div>
     }
-    @* <div class="col-sm-4 p-5">
-        @if (Model.RoomList != null)
-        {
-        foreach (Room item in Model.RoomList)
-        {
-        <a class="btn btn-outline-dark d-block" asp-action="Friends" asp-route-id="@item.id">@item.name</a>
-        }
-        }
-        </div> *@
     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mt-4 tablet">
         <div class="list-group-chat">
             <div class="list-friend">
