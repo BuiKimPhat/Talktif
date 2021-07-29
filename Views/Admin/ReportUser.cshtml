@@ -32,10 +32,10 @@
                         <h2>Report <b>User</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <a href="#notificationforUser" class="btn btn-success" data-toggle="modal"><i
+                        @* <a href="#notificationforUser" class="btn btn-success" data-toggle="modal"><i
                                 class="material-icons">&#xE147;</i> <span>Notification for All User</span></a>
                         <a href="#deleteModal" class="btn btn-danger" data-toggle="modal"><i
-                                class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+                                class="material-icons">&#xE15C;</i> <span>Delete</span></a> *@
                     </div>
                 </div>
             </div>
@@ -99,17 +99,6 @@
                         entries *@
                 </div>
                 <ul class="pagination">
-                    @* @{
-                        long a = NumberofReport;
-                        long x = (a < 8) ? 1 : (a / (8) + (((a % (8)) != 0) ? 1 : 0));
-                        long i = 1;
-                        <li class="page-item"><a href="/Admin/ReportUser" class="page-link">1</a></li>
-                        while (i < x)
-                        {
-                        <li class="page-item"><a href="/Admin/ReportUser?PageNum=@(i+1)" class="page-link">@(i+1)</a></li>
-                        i++;
-                        }
-                        } *@
                 </ul>
             </div>
         </div>
@@ -233,7 +222,6 @@
               </tr>`;
         }
         buttonGenerator(limit);
-        totalReport = limit;
     }
     displayPage(2); //defecto
     text_user.innerHTML = `Showing <b>${totalReport}` + "</b> out of " + `<b>${stringToJsonObject.length}</b> entries.`
@@ -242,6 +230,8 @@
         const nofTr = stringToJsonObject.length;
         if (nofTr <= limit) {
             ul.style.display = "none";
+            totalReport = nofTr;
+            text_user.innerHTML = `Showing <b>${totalReport}` + "</b> out of " + `<b>${stringToJsonObject.length}</b> entries.`
         } else {
             ul.style.display = "flex";
             const nofPage = Math.ceil(nofTr / limit);
@@ -255,6 +245,7 @@
                 li.appendChild(a);
                 a.innerText = i;
                 ul.appendChild(li);
+                totalReport = limit;
                 a.onclick = (e) => {
                     let x = e.target.getAttribute("data-page");
                     tbody.innerHTML = "";
@@ -262,6 +253,8 @@
                     let start = limit * x;
                     let end = start + limit;
                     let page = stringToJsonObject.slice(start, end);
+                    totalReport = page.length;
+                    text_user.innerHTML = `Showing <b>${totalReport}` + "</b> out of " + `<b>${stringToJsonObject.length}</b> entries.`
                     for (let i = 0; i < page.length; i++) {
                         let item = page[i];
                         var id = item.id;
