@@ -13,7 +13,6 @@
     {
         cities = ViewBag.Cities;
     }
-    long NumberofUser = ViewBag.NumberofUser;
     string Message = (String.IsNullOrEmpty(ViewBag.Message)) ? "" : ViewBag.Message;
 }
 <div class="container admin-user">
@@ -98,7 +97,7 @@
                 </b>
                 out of
                 <b>
-                    @NumberofUser
+                    @users.Count()
                 </b>
                 entries
             </div>
@@ -382,7 +381,7 @@
         buttonGenerator(limit);
         totalUser = limit;
     }
-    displayPage(4); //defecto
+    displayPage(8); //defecto
      text_user.innerHTML = `Showing <b>${totalUser}`+"</b> out of " + `<b>${stringToJsonObject.length}</b> entries.` 
 
     function buttonGenerator(limit) {

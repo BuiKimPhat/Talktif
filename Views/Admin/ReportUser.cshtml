@@ -8,7 +8,6 @@
     {
         reports = ViewBag.Reports;
     }
-    long NumberofReport = ViewBag.NumberofReport;
 }
 
 <body>
@@ -20,12 +19,12 @@
             </div>
             <div class="filter">
                 <select name="filter" id="filter" onchange="Filter()">
-                   <option value="ID">ID</option>
-                   <option value="Suspect">Suspecter</option>
-                   <option value="Reason">Reason</option>
+                    <option value="ID">ID</option>
+                    <option value="Suspect">Suspecter</option>
+                    <option value="Reason">Reason</option>
                 </select>
             </div>
-    </header>
+        </header>
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -53,51 +52,51 @@
                 </thead>
                 <tbody>
                     @* @foreach (var item in reports)
-                    {
+                        {
                         <tr>
-                            <td>
-                                <span class="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                    <label for="checkbox1"></label>
-                                </span>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.reporter)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.suspect)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.reason)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.note)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.status)
-                            </td>
-                            <td>
-                                <a href="/Admin/UpdateReport?id=@item.id" class="edit"><i class="material-icons"
-                                    data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            </td>
+                        <td>
+                        <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                        <label for="checkbox1"></label>
+                        </span>
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.reporter)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.suspect)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.reason)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.note)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.status)
+                        </td>
+                        <td>
+                        <a href="/Admin/UpdateReport?id=@item.id" class="edit"><i class="material-icons"
+                        data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        </td>
                         </tr>
-                    } *@
+                        } *@
                 </tbody>
             </table>
             <div class="clearfix">
                 <div class="hint-text">
                     @* Showing
-                    <b>
+                        <b>
                         @(reports.Count() < 8 ? reports.Count() : 8)
-                    </b>
-                    out of
-                    <b>
+                        </b>
+                        out of
+                        <b>
                         @NumberofReport
-                    </b>
-                    entries *@
+                        </b>
+                        entries *@
                 </div>
                 <ul class="pagination">
                     @* @{
@@ -107,10 +106,10 @@
                         <li class="page-item"><a href="/Admin/ReportUser" class="page-link">1</a></li>
                         while (i < x)
                         {
-                            <li class="page-item"><a href="/Admin/ReportUser?PageNum=@(i+1)" class="page-link">@(i+1)</a></li>
-                            i++;
+                        <li class="page-item"><a href="/Admin/ReportUser?PageNum=@(i+1)" class="page-link">@(i+1)</a></li>
+                        i++;
                         }
-                    } *@
+                        } *@
                 </ul>
             </div>
         </div>
@@ -122,7 +121,7 @@
     var arrayToString = JSON.stringify(Object.assign([], arrayTr));  // convert array to string
     var stringToJsonObject = JSON.parse(arrayToString);  // convert string to json object
     var filter = 'ID';
-     function buildTable(data) {
+    function buildTable(data) {
         tbody.innerHTML = "";
         for (let i = 0; i < data.length; i++) {
             var id = data[i].id;
@@ -132,7 +131,7 @@
             var status = data[i].status;
             var suspect = data[i].suspect;
             tbody.innerHTML +=
-             `<tr>
+                `<tr>
                 <td>${id}</td>
                 <td>${reporter}</td>
                 <td>${suspect}</td>
@@ -147,39 +146,39 @@
         }
     }
 
-    const Filter = () =>{
+    const Filter = () => {
         filter = document.getElementById("filter").value;
     }
 
-       const searchUserBySuspect = (value,data) =>{
+    const searchUserBySuspect = (value, data) => {
         var filteredData = [];
-        for(let i =0;i<data.length;i++){
+        for (let i = 0; i < data.length; i++) {
             value = value.toLowerCase();
             var suspect = data[i].suspect;
-            if(suspect.toString().includes(value)){
+            if (suspect.toString().includes(value)) {
                 filteredData.push(data[i]);
             }
         }
         return filteredData;
 
     }
-     const searchUserByID = (value,data) =>{
+    const searchUserByID = (value, data) => {
         var filteredData = [];
-        for(let i =0;i<data.length;i++){
+        for (let i = 0; i < data.length; i++) {
             var id = data[i].id;
-            if(id.toString().includes(value)){
+            if (id.toString().includes(value)) {
                 filteredData.push(data[i]);
             }
         }
         return filteredData;
 
     }
-     const searchUserByReason = (value,data) =>{
+    const searchUserByReason = (value, data) => {
         var filteredData = [];
-        for(let i =0;i<data.length;i++){
+        for (let i = 0; i < data.length; i++) {
             value = value.toLowerCase();
             var reason = data[i].reason.toLowerCase();
-            if(reason.includes(value)){
+            if (reason.includes(value)) {
                 filteredData.push(data[i]);
             }
         }
@@ -187,19 +186,18 @@
 
     }
 
-    const FilterSearch = () =>{
+    const FilterSearch = () => {
         var valueSearch = document.getElementById("search").value;
-        if(filter === 'Suspect')
-        {
-            var data = searchUserBySuspect(valueSearch,stringToJsonObject);
+        if (filter === 'Suspect') {
+            var data = searchUserBySuspect(valueSearch, stringToJsonObject);
             buildTable(data);
         }
-        else if(filter === 'ID'){
-            var data = searchUserByID(valueSearch,stringToJsonObject);
+        else if (filter === 'ID') {
+            var data = searchUserByID(valueSearch, stringToJsonObject);
             buildTable(data);
         }
-        else{
-            var data = searchUserByReason(valueSearch,stringToJsonObject);
+        else {
+            var data = searchUserByReason(valueSearch, stringToJsonObject);
             buildTable(data);
         }
     }
@@ -214,14 +212,14 @@
     function displayPage(limit) {
         tbody.innerHTML = "";
         for (let i = 0; i < limit; i++) {
-           var id = stringToJsonObject[i].id;
+            var id = stringToJsonObject[i].id;
             var note = stringToJsonObject[i].note;
             var reason = stringToJsonObject[i].reason;
             var reporter = stringToJsonObject[i].reporter;
             var status = stringToJsonObject[i].status;
             var suspect = stringToJsonObject[i].suspect;
-           tbody.innerHTML +=
-             `<tr>
+            tbody.innerHTML +=
+                `<tr>
                 <td>${id}</td>
                 <td>${reporter}</td>
                 <td>${suspect}</td>
@@ -237,8 +235,8 @@
         buttonGenerator(limit);
         totalReport = limit;
     }
-    displayPage(1); //defecto
-     text_user.innerHTML = `Showing <b>${totalReport}`+"</b> out of " + `<b>${stringToJsonObject.length}</b> entries.` 
+    displayPage(2); //defecto
+    text_user.innerHTML = `Showing <b>${totalReport}` + "</b> out of " + `<b>${stringToJsonObject.length}</b> entries.`
 
     function buttonGenerator(limit) {
         const nofTr = stringToJsonObject.length;
@@ -289,6 +287,6 @@
                 };
             }
         }
-    } 
+    }
 
 </script>
