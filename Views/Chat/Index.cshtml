@@ -5,12 +5,10 @@
     @if (Model != null) ViewData["LoggedIn"] = true;
     else ViewData["LoggedIn"] = false;
     Layout = "~/Views/Shared/ChatLayout.cshtml";
-    String[] arr = new String[]{
-"red","green","blue","dark-mode"
-};
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         rel="stylesheet" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Latest compiled JavaScript -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -23,6 +21,15 @@
 
 
 <div class="chatting_box">
+    <div class="theme" title="Màu nền">
+        <span class="material-icons">
+            add
+        </span>
+    </div>
+    <div class='box_theme'>
+        <div class='item item1 light'><img src="../img/sunny.png" alt=""></div>
+        <div class='item item2 dark'><img src="../img/moon.png" alt=""></div>
+    </div>
     <div class="group-chat col-lg-6 col-xs-8 col-md-8 col-sm-8">
         <div class="row">
             <div class="box-secret message-box">
@@ -166,3 +173,32 @@ else
     </script>
 }
 <script src="~/js/chat1.js"></script>
+<script src="~/js/valid.js"></script>
+<script>
+  $(document).ready(function (){
+     $('.dark').click(function () {
+            $('nav').addClass('bg-dark');
+            $('.chatting_box').addClass('bg-dark');
+            $('.message-title span').attr("style", "color:white !important");
+            $('.message-box-content').attr("style", "background : #242526");
+            $('.message-box-action').attr("style", "background : #242526");
+             $('.group-btn-interactive').attr("style", "background : #343A40");
+            $('.message-box-action input').addClass('dark-message');
+            $('.other-message .message-text').addClass('dark-message');
+        });
+        $('.light').click(function () {
+            $('nav').removeClass('bg-dark');
+            $('.chatting_box').removeClass('bg-dark');
+            $('.message-title span').removeAttr("style", "color:white !important");
+            $('.message-box-content').removeAttr("style", "background : #242526");
+            $('.message-box-action').removeAttr("style", "background : #242526");
+            $('.group-btn-interactive').removeAttr("style", "background : #343A40");
+            $('.message-box-action input').removeClass('dark-message');
+            $('.other-message .message-text').removeClass('dark-message');
+        }); 
+  })
+  document.querySelector(".theme").addEventListener("click", function (e) {
+  document.querySelector(".box_theme").classList.toggle("box-active");
+  document.querySelector(".theme").classList.toggle("theme-active");
+});
+</script>

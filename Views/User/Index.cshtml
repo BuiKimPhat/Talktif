@@ -30,6 +30,7 @@
 
     
     <link rel="stylesheet" href="../css/Setting.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 }
 <div class="container-fluid">
     <div class="row row-wrapper">
@@ -54,7 +55,9 @@
                         <span class="details">Mật khẩu cũ (bắt buộc) :</span>
                         <div class="password">
                             <input id="password" name="pass" type="password" placeholder="Password" />
-                           <i id = "eye" class="fas fa-eye" onclick ="toggle()"></i>
+                            <span class="material-icons visibility" onclick="toggle()">
+                                visibility_off
+                            </span>
                         </div>
                     </div>
                     <div class="user-info">
@@ -156,14 +159,14 @@
             document.querySelector('#password').setAttribute("type", "password");
             document.querySelector('#newpassword').setAttribute("type", "password");
             document.querySelector('#confirmpassword').setAttribute("type", "password");
-            document.querySelector('#eye').style.color = "#5887ef";
+            document.querySelector('.visibility').innerHTML = 'visibility_off';
             state = false;
         }
         else{
             document.querySelector('#password').setAttribute("type", "text");
             document.querySelector('#newpassword').setAttribute("type", "text");
             document.querySelector('#confirmpassword').setAttribute("type", "text");
-            document.querySelector('#eye').style.color = "black";
+            document.querySelector('.visibility').innerHTML = 'visibility';
             state = true;
         }
     }

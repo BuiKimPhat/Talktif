@@ -101,7 +101,7 @@ h2.name {
 }
 
 .instruction_app {
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .resize_font {
@@ -600,7 +600,11 @@ button.submit_sign_up {
         display: none;
     }
     section {
-        width: 104% !important;
+        width: 100% !important;
+        height: 100%;
+    }
+    .container {
+        margin: 0px;
     }
 }
 
@@ -825,6 +829,54 @@ button.submit_sign_up {
     }
 }
 
+@media only screen and (min-width: 381px) and (max-width: 576px) {
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 80%;
+    }
+    .password span {
+        right: 55px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 70%;
+    }
+    .password span {
+        right: 110px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 80%;
+    }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 900px) {
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 60%;
+    }
+    .password span {
+        right: 180px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 70%;
+    }
+}
+
 @media only screen and (max-width: 880px) {
     /* Section Form */
     section {
@@ -892,6 +944,19 @@ button.submit_sign_up {
     #Gender {
         width: 10% !important;
         height: 18px !important;
+    }
+    .form input[type="text"],
+    .form input[type="password"],
+    .form input[type="email"] {
+        width: 90%;
+    }
+    .password span {
+        right: 30px;
+    }
+    .form input[type="text"]:focus,
+    .form input[type="password"]:focus,
+    .form input[type="email"]:focus {
+        width: 100%;
     }
 }
 

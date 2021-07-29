@@ -20,15 +20,14 @@
      <header>
             <div class="search-wrapper">
                 <span class="ti-search"></span>
-                <input id="search" type="search" placeholder="Search" />
+                <input id="search" type="search" placeholder="Search" oninput="FilterSearch()" />
             </div>
             <div class="filter">
-                <select name="format" id="format">
-                   <option value="Id">Id</option>
+                <select name="filter" id="filter" onchange="Filter()">
+                   <option value="ID">ID</option>
                    <option value="Name">Name</option>
                    <option value="Email">Email</option>
                 </select>
-                <button onclick="searchUser()">Search</button>
             </div>
     </header>
     <div class="table-wrapper">
@@ -58,7 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in users)
+                @* @foreach (var item in users)
                 {
                     <tr>
                         <td>
@@ -89,7 +88,7 @@
                                 data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
                         </td>
                     </tr>
-                }
+                } *@
             </tbody>
         </table>
         <div class="clearfix">
@@ -104,7 +103,7 @@
                 entries
             </div>
             <ul class="pagination">
-                @{
+                @* @{
                     long a = NumberofUser;
                     long x = (a < 8) ? 1 : (a / (8) + (((a % (8)) != 0) ? 1 : 0));
                     long i = 1;
@@ -114,7 +113,7 @@
                         <li class="page-item"><a href="/Admin/Users?PageNum=@(i+1)" class="page-link">@(i+1)</a></li>
                         i++;
                     }
-                }
+                } *@
             </ul>
         </div>
     </div>
@@ -181,7 +180,7 @@
         </div>
     </div>
 </div>
-<!-- Edit Modal HTML -->
+@* <!-- Edit Modal HTML -->
 <div id="editUserModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -241,29 +240,204 @@
             </form>
         </div>
     </div>
-</div>
+</div> *@
 
 <script>
     if ("@Message" != "") alert("@Message");
     const HandleDelete = (event) => {
-        var success = window.confirm("Are you want to delete user?\nThis action can\'t be done?");
+        var success = window.confirm("Bạn có muốn xóa tài khoản này?");
         if (success == true) {
-            alert("Delete successfully");
+            alert("Xóa thành công");
         }
         else {
             event.preventDefault();
         }
     }
 
-    const searchUser = () =>{
+    var arrayTr = @Html.Raw(Json.Serialize(users));
+    var arrayToString = JSON.stringify(Object.assign([], arrayTr));  // convert array to string
+    var stringToJsonObject = JSON.parse(arrayToString);  // convert string to json object
+    var filter = 'ID';
+
+     function buildTable(data) {
+        tbody.innerHTML = "";
+        for (let i = 0; i < data.length; i++) {
+            var id = data[i].id;
+            var cityID = data[i].cityID;
+            var gender = data[i].gender;
+            var email = data[i].email;
+            var isActive = data[i].isActive;
+            var isAdmin = data[i].isAdmin;
+            var name = data[i].name;
+            tbody.innerHTML +=
+             `<tr>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${gender ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isAdmin ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isActive ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${cityID}</td>
+                <td>
+                    <a href="/Admin/UpdateUser?id=${id}" class="edit"><i class="material-icons"
+                        data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="/Admin/DeleteUser?id=${id}" class="delete"><i class="material-icons"
+                        data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
+                </td>
+              </tr>`;
+        }
+    }
+
+    const Filter = () =>{
+        filter = document.getElementById("filter").value;
+    }
+
+       const searchUserByName = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            value = value.toLowerCase();
+            var name = data[i].name.toLowerCase();
+            if(name.includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+        return filteredData;
+
+    }
+     const searchUserByID = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            var id = data[i].id;
+            if(id.toString().includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+        return filteredData;
+
+    }
+     const searchUserByEmail = (value,data) =>{
+        var filteredData = [];
+        for(let i =0;i<data.length;i++){
+            value = value.toLowerCase();
+            var email = data[i].email.toLowerCase();
+            if(email.includes(value)){
+                filteredData.push(data[i]);
+            }
+        }
+        return filteredData;
+
+    }
+
+    const FilterSearch = () =>{
         var valueSearch = document.getElementById("search").value;
-        console.log(valueSearch);
-        var ObjUser = [@users];
-        console.log(ObjUser);
-         @* @foreach (var user in users)
-         {
-           Console.WriteLine(user.name);
-         } *@
+        if(filter === 'Name')
+        {
+            var data = searchUserByName(valueSearch,stringToJsonObject);
+            buildTable(data);
+        }
+        else if(filter === 'ID'){
+            var data = searchUserByID(valueSearch,stringToJsonObject);
+            buildTable(data);
+        }
+        else{
+            var data = searchUserByEmail(valueSearch,stringToJsonObject);
+            buildTable(data);
+        }
+    }
+
+
+    let tbody = document.querySelector("tbody");
+    let tr = tbody.getElementsByTagName("tr");
+    let ul = document.querySelector(".pagination");
+    var text_user = document.querySelector('.hint-text');
+    var totalUser = 0;
+
+    function displayPage(limit) {
+        tbody.innerHTML = "";
+        for (let i = 0; i < limit; i++) {
+            var id = stringToJsonObject[i].id;
+            var cityID = stringToJsonObject[i].cityID;
+            var gender = stringToJsonObject[i].gender;
+            var email = stringToJsonObject[i].email;
+            var isActive = stringToJsonObject[i].isActive;
+            var isAdmin = stringToJsonObject[i].isAdmin;
+            var name = stringToJsonObject[i].name;
+            tbody.innerHTML +=
+             `<tr>
+                <td>${id}</td>
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${gender ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isAdmin ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${isActive ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                <td>${cityID}</td>
+                <td>
+                    <a href="/Admin/UpdateUser?id=${id}" class="edit"><i class="material-icons"
+                        data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                    <a href="/Admin/DeleteUser?id=${id}" class="delete"><i class="material-icons"
+                        data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
+                </td>
+              </tr>`;
+        }
+        buttonGenerator(limit);
+        totalUser = limit;
+    }
+    displayPage(4); //defecto
+     text_user.innerHTML = `Showing <b>${totalUser}`+"</b> out of " + `<b>${stringToJsonObject.length}</b> entries.` 
+
+    function buttonGenerator(limit) {
+        const nofTr = stringToJsonObject.length;
+        if (nofTr <= limit) {
+            ul.style.display = "none";
+        } else {
+            ul.style.display = "flex";
+            const nofPage = Math.ceil(nofTr / limit);
+            for (i = 1; i <= nofPage; i++) {
+                let li = document.createElement("li");
+                li.className = "page-item";
+                let a = document.createElement("a");
+                a.className = "page-link";
+                a.href = "#";
+                a.setAttribute("data-page", i);
+                li.appendChild(a);
+                a.innerText = i;
+                ul.appendChild(li);
+                a.onclick = (e) => {
+                    let x = e.target.getAttribute("data-page");
+                    tbody.innerHTML = "";
+                    x--;
+                    let start = limit * x;
+                    let end = start + limit;
+                    let page = stringToJsonObject.slice(start, end);
+                    for (let i = 0; i < page.length; i++) {
+                        let item = page[i];
+                        var id = item.id;
+                        var cityID = item.cityID;
+                        var gender = item.gender;
+                        var email = item.email;
+                        var isActive = item.isActive;
+                        var isAdmin = item.isAdmin;
+                        var name = item.name;
+                        tbody.innerHTML +=
+                        `<tr>
+                            <td>${id}</td>
+                            <td>${name}</td>
+                            <td>${email}</td>
+                            <td>${gender ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                            <td>${isAdmin ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                            <td>${isActive ? `<input checked="checked" class="check-box" disabled="disabled" type="checkbox">` : `<input class="check-box" disabled="disabled" type="checkbox">`}</td>
+                            <td>${cityID}</td>
+                            <td>
+                                <a href="/Admin/UpdateUser?id=${id}" class="edit"><i class="material-icons"
+                                    data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                <a href="/Admin/DeleteUser?id=${id}" class="delete"><i class="material-icons"
+                                    data-toggle="tooltip" title="Delete" onclick="HandleDelete(event)">&#xE872;</i></a>
+                            </td>
+                        </tr>`;
+                    }
+                };
+            }
+        }
     }
 
 

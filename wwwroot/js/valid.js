@@ -2,6 +2,11 @@ document.querySelector(".img-btn").addEventListener("click", function () {
   document.querySelector(".cont").classList.toggle("s-signup");
 });
 
+document.querySelector(".theme").addEventListener("click", function (e) {
+  document.querySelector(".box_theme").classList.toggle(".box-active");
+  document.querySelector(".theme").classList.toggle("theme-active");
+});
+
 function validateEmail(email) {
   const re =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
