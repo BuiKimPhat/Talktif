@@ -35,6 +35,7 @@ namespace Talktif.Controllers
             if (String.IsNullOrEmpty(form["Email"].ToString()) || String.IsNullOrEmpty(form["Password"].ToString()))
             {
                 ViewBag.Message = "An error had occur !";
+                ViewBag.Cities = await _userService.GetCity();
                 return View("Index");
             }
             LoginRequest lr = new LoginRequest() { Email = form["Email"].ToString(), Password = form["Password"].ToString(), Device = (System.Environment.MachineName).ToString() };
@@ -47,7 +48,7 @@ namespace Talktif.Controllers
                 _userService.CreateUserCookie(Response, cookie_Data);
                 return RedirectToAction("Index", "Home");
             }
-            MessageRequest m = new MessageRequest() { Message = a };
+            //MessageRequest m = new MessageRequest() { Message = a };
             ViewBag.Message = a;
             ViewBag.Cities = await _userService.GetCity();
             return View("Index");
@@ -63,6 +64,7 @@ namespace Talktif.Controllers
             )
             {
                 ViewBag.Message = "An error had occur !";
+                ViewBag.Cities = await _userService.GetCity();
                 return View("Index");
             }
             SignUpRequest sr = new SignUpRequest()
