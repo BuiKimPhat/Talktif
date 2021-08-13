@@ -32,6 +32,7 @@ namespace Talktif.Controllers
         {
             _cookieService.RemoveCookie(Response, "id");
             if (_userService.IsAdmin(Request) != true) return NotFound();
+            
             ViewBag.Statistic = await _adminService.GetStatisticData(Request, Response);
             return View();
         }
@@ -54,6 +55,8 @@ namespace Talktif.Controllers
         [HttpPost, ActionName("Users")]
         public async Task<IActionResult> CreateNewAdmin(IFormCollection form)
         {
+            if (_userService.IsAdmin(Request) != true) return NotFound();
+
             SignUpRequest data = new SignUpRequest()
             {
                 Name = form["name"].ToString(),
@@ -75,6 +78,8 @@ namespace Talktif.Controllers
         }
         public async Task<IActionResult> UpdateUser(int ID)
         {
+            if (_userService.IsAdmin(Request) != true) return NotFound();
+
             User_Infor user = new User_Infor();
             user = await _adminService.GetUserInfo(Request, Response, ID);
 
@@ -87,6 +92,8 @@ namespace Talktif.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateUser(IFormCollection form)
         {
+            if (_userService.IsAdmin(Request) != true) return NotFound();
+
             int ID = Convert.ToInt32(_cookieService.ReadCookie(Request, "id"));
             var user = await _adminService.GetUserInfo(Request, Response, ID);
             _cookieService.RemoveCookie(Response, "id");
@@ -119,6 +126,7 @@ namespace Talktif.Controllers
         public async Task<IActionResult> DeleteUser(int ID)
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
+
             var result = await _adminService.DeleteUser(Request, Response, ID);
             if (result == false) Console.WriteLine("An error has occur !");
             return RedirectToAction("Users");
@@ -140,6 +148,7 @@ namespace Talktif.Controllers
         public async Task<IActionResult> UpdateReport(int ID)
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
+
             Report_Infor report = await _adminService.GetReportInfo(Request, Response, ID);
 
             _cookieService.CreateCookie(Response, ID.ToString(), "id");
@@ -151,6 +160,7 @@ namespace Talktif.Controllers
         public async Task<IActionResult> UpdateReport(IFormCollection form)
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
+
             int id = Convert.ToInt32(_cookieService.ReadCookie(Request, "id"));
             _cookieService.RemoveCookie(Response, "id");
             UpdateReportRequest data = new UpdateReportRequest()
@@ -172,6 +182,7 @@ namespace Talktif.Controllers
         public async Task<IActionResult> Setting()
         {
             if (_userService.IsAdmin(Request) != true) return NotFound();
+
             User_Infor user = await _userService.Get_User_Infor(Request, Response);
             ViewBag.Data = user;
             ViewBag.Cities = await _userService.GetCity();
@@ -180,6 +191,8 @@ namespace Talktif.Controllers
         [HttpPost]
         public async Task<IActionResult> Setting(IFormCollection form)
         {
+            if (_userService.IsAdmin(Request) != true) return NotFound();
+
             User_Infor user = await _userService.Get_User_Infor(Request, Response);
             ViewBag.Data = user;
             ViewBag.Cities = await _userService.GetCity();
