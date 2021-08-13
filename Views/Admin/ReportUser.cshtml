@@ -12,19 +12,21 @@
 
 <body>
     <div class="container admin-user">
-        <header>
-            <div class="search-wrapper">
-                <span class="ti-search"></span>
-                <input id="search" type="search" placeholder="Search" oninput="FilterSearch()" />
-            </div>
-            <div class="filter">
-                <select name="filter" id="filter" onchange="Filter()">
-                    <option value="ID">ID</option>
-                    <option value="Suspect">Suspecter</option>
-                    <option value="Reason">Reason</option>
-                </select>
-            </div>
-        </header>
+        <form  class="form_search" action="/Admin/SearchReport" method="POST">
+            <header>
+                    <div class="search-wrapper">
+                        <span class="ti-search"></span>
+                        <input id="search" type="search" placeholder="Search" name = "search" />
+                    </div>
+                    <div class="filter">
+                        <select name="filter" id="filter">
+                            <option value="ID">ID</option>
+                            <option value="Suspect">Suspecter</option>
+                            <option value="Reason">Reason</option>
+                        </select>
+                    </div>
+            </header>
+        </form>
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -223,7 +225,7 @@
         }
         buttonGenerator(limit);
     }
-    displayPage(2); //defecto
+    displayPage(8); //defecto
     text_user.innerHTML = `Showing <b>${totalReport}` + "</b> out of " + `<b>${stringToJsonObject.length}</b> entries.`
 
     function buttonGenerator(limit) {

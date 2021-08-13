@@ -174,6 +174,7 @@ namespace Talktif.Hubs
                         room.Members[0].UserName,
                         room.Members[1].UserName,
                         token);
+                    await Clients.Group(room.ID).BroadcastMessage($"2 bạn đã trở thành bạn bè!");
                 }
             }
 
@@ -214,7 +215,8 @@ namespace Talktif.Hubs
                         await Clients.Group(room.ID).BroadcastMessage($"Báo cáo người dùng thất bại vì người dùng chưa đăng nhập!");
                         return;
                     }
-                    if (usr.ConnectionID != Context.ConnectionId) {
+                    if (usr.ConnectionID != Context.ConnectionId)
+                    {
                         UserRepo userRepo = new UserRepo();
                         ReportRequest report = new ReportRequest
                         {
